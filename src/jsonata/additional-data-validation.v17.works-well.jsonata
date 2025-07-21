@@ -1,0 +1,460 @@
+    ( /* add customAppend function to handle array list 21-07-2025 */
+        $IO3000 := [];
+        $A1140 := [];
+        $A1460 := ["1", "0"];
+
+        $errorMap := {
+            "INVALID_IO_PARTNER": {
+                "en": "IO Partner is not valid",
+                "tr": "IO Partner geçerli değil"
+            },
+            "INVALID_IO_DIVISION3": {
+                "en": "IO Division 3 is not valid",
+                "tr": "IO Division 3 geçerli değil"
+            },
+            "INVALID_IO_REFERENCE": {
+                "en": "IO Reference is not valid",
+                "tr": "IO Reference geçerli değil"
+            },
+            "INVALID_OBJECT_NAME": {
+                "en": "Object name is not valid",
+                "tr": "Nesne adı geçerli değil"
+            },
+            "INVALID_OBJECT_ALIAS": {
+                "en": "Object alias is not valid",
+                "tr": "Nesne takma adı geçerli değil"
+            },
+            "INVALID_DECLARATION_TYPE": {
+                "en": "Declaration type is not valid",
+                "tr": "Beyanname türü geçerli değil"
+            },
+            "INVALID_USER_NAME": {
+                "en": "Username is not valid",
+                "tr": "Kullanıcı adı geçerli değil"
+            },
+            "INVALID_REFERENCE_NUMBER_OVERLAY": {
+                "en": "Reference number overlay is not valid",
+                "tr": "Referans numarası önblengi geçerli değil"
+            },
+            "INVALID_CUSTOMS_OFFICE": {
+                "en": "Customs office is not valid",
+                "tr": "Gümrük müdürlüğü geçerli değil"
+            },
+            "INVALID_REPRESENTATION_CODE": {
+                "en": "Representation relationship code is not valid",
+                "tr": "Temsil ilişkisi kodu geçerli değil"
+            },
+            "INVALID_CONTACT_PERSON_NAME": {
+                "en": "Contact person name is not valid",
+                "tr": "İletişim kişisi adı geçerli değil"
+            },
+            "INVALID_CONTACT_PERSON_PHONE": {
+                "en": "Contact person phone number is not valid",
+                "tr": "İletişim kişisi telefon numarası geçerli değil"
+            },
+            "INVALID_CONTACT_PERSON_POSITION": {
+                "en": "Contact person position is not valid",
+                "tr": "İletişim kişisi pozisyonu geçerli değil"
+            },
+            "INVALID_CONTACT_PERSON_EMAIL": {
+                "en": "Contact person email is not valid",
+                "tr": "İletişim kişisi e-posta adresi geçerli değil"
+            },
+            "INVALID_PROCEDURE_CODE": {
+                "en": "Procedure code is not valid",
+                "tr": "Prosedür kodu geçerli değil"
+            },
+            "INVALID_DEPARTURE_COUNTRY": {
+                "en": "Departure country is not valid",
+                "tr": "Kalkış ülkesi geçerli değil"
+            },
+            "INVALID_DESTINATION_STATE": {
+                "en": "Destination federal state is not valid",
+                "tr": "Hedef federal eyalet geçerli değil"
+            },
+            "INVALID_DESTINATION_COUNTRY": {
+                "en": "Destination country is not valid",
+                "tr": "Hedef ülke geçerli değil"
+            },
+            "INVALID_TRANSPORT_MEANS_IDENTITY": {
+                "en": "Transport means arrival identity is not valid",
+                "tr": "Taşıma aracı varış kimliği geçerli değil"
+            },
+            "INVALID_TRANSPORT_MEANS_NATIONALITY": {
+                "en": "Transport means nationality code is not valid",
+                "tr": "Taşıma aracı uyruk kodu geçerli değil"
+            },
+            "INVALID_PREVIOUS_REFERENCE_TYPE": {
+                "en": "Previous administrative reference type is not valid",
+                "tr": "Önceki idari referans türü geçerli değil"
+            },
+            "INVALID_PREVIOUS_REFERENCE_NUMBER": {
+                "en": "Previous administrative reference number is not valid",
+                "tr": "Önceki idari referans numarası geçerli değil"
+            },
+            "INVALID_DOCUMENT_DIVISION": {
+                "en": "Document division is not valid",
+                "tr": "Belge bölümü geçerli değil"
+            },
+            "INVALID_ADDRESS_TYPE": {
+                "en": "Address type is not valid",
+                "tr": "Adres türü geçerli değil"
+            },
+            "INVALID_ADDRESS_CODE": {
+                "en": "Address code is not valid",
+                "tr": "Adres kodu geçerli değil"
+            },
+            "INVALID_PARTICIPANT_EORI": {
+                "en": "Participant EORI is not valid",
+                "tr": "Katılımcı EORI geçerli değil"
+            },
+            "INVALID_PARTICIPANT_SUBSIDIARY_NUMBER": {
+                "en": "Participant subsidiary number is not valid",
+                "tr": "Katılımcı bağlı kuruluş numarası geçerli değil"
+            },
+            "INVALID_COMPANY_NAME": {
+                "en": "Company name is not valid",
+                "tr": "Şirket adı geçerli değil"
+            },
+            "INVALID_STREET_AND_NUMBER": {
+                "en": "Street and number is not valid",
+                "tr": "Sokak ve numara geçerli değil"
+            },
+            "INVALID_DISTRICT": {
+                "en": "District is not valid",
+                "tr": "İlçe geçerli değil"
+            },
+            "INVALID_COUNTRY_CODE": {
+                "en": "Country code is not valid",
+                "tr": "Ülke kodu geçerli değil"
+            },
+            "INVALID_POSTAL_CODE": {
+                "en": "Postal code is not valid",
+                "tr": "Posta kodu geçerli değil"
+            },
+            "INVALID_CITY": {
+                "en": "City is not valid",
+                "tr": "Şehir geçerli değil"
+            },
+            "MISSING_TRANSACTION": {
+                "en": "Transaction is missing",
+                "tr": "İşlem eksik"
+            },
+            "MISSING_IO_PARTNER": {
+                "en": "IO Partner is missing",
+                "tr": "IO Partner eksik"
+            },
+            "MISSING_IO_REFERENCE": {
+                "en": "IO Reference is missing",
+                "tr": "IO Reference eksik"
+            },
+            "MISSING_OBJECT_IDENTIFICATION": {
+                "en": "Object identification is missing",
+                "tr": "Nesne tanımlaması eksik"
+            },
+            "MISSING_OBJECT_NAME": {
+                "en": "Object name is missing",
+                "tr": "Nesne adı eksik"
+            },
+            "MISSING_USERNAME": {
+                "en": "Username is missing",
+                "tr": "Kullanıcı adı eksik"
+            },
+            "INVALID_DECLARANT_IS_CONSIGNEE": {
+                "en": "Declarant is consignee flag is not valid",
+                "tr": "Beyan eden alıcıdır işareti geçerli değil"
+            },
+            "INVALID_INPUT_TAX_DEDUCTION": {
+                "en": "Input tax deduction flag is not valid",
+                "tr": "KDV indirim işareti geçerli değil"
+            },
+            "INVALID_OBJECT_NAME_TOO_LONG": {
+                "en": "Object name is too long, declaration index: {{1}}",
+                "tr": "Nesne adı çok uzun, declaration index: {{1}}"
+            },
+            "INVALID_USERNAME": {
+                "en": "Username is too long declaration index: {{1}}",
+                "tr": "Kullanıcı adı çok uzun declaration index: {{1}}"
+            },
+            "NOT_EQUAL_INVOICE_TOTAL_AMOUNT": {
+                "en": "Invoice total amount is not equal to the sum of invoice items",
+                "tr": "Fatura toplam tutarı, fatura kalemlerinin toplamına eşit değil"
+            },
+            "NOT_EQUAL_DECLARATION_TOTAL_VALUE": {
+                "en": "Declaration total value is not equal to the sum of declaration items",
+                "tr": "Beyanname toplam değeri, beyanname kalemlerinin toplamına eşit değil"
+            },
+            "INVALID_INVOICE_COMMODITY_CODE": {
+                "en": "Invoice commodity code is not valid, invoice item index: {{1}}",
+                "tr": "Fatura eşya kodu geçerli değil, fatura item index: {{1}}"
+            },
+            "INVALID_DECLARATION_COMMODITY_CODE": {
+                "en": "Declaration commodity code is not valid, declaration index: {{1}}",
+                "tr": "Beyanname eşya kodu geçerli değil, declaration index: {{1}}"
+            },
+            "INVALID_INVOICE_CURRENCY": {
+                "en": "Invoice currency is not valid",
+                "tr": "Fatura para birimi geçerli değil"
+            },
+            "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN": {
+                "en": "Invoice item country of origin is not valid, invoice item index: {{1}}",
+                "tr": "Fatura kalemi menşe ülkesi geçerli değil, fatura item index: {{1}}"
+            },
+            "INVALID_DECLARATION_ITEM_COUNTRY_ORIGIN": {
+                "en": "Declaration item country of origin is not valid, declaration index: {{1}}",
+                "tr": "Beyanname kalemi menşe ülkesi geçerli değil, declaration index: {{1}}"
+            }
+        };
+
+        $isDeclarationExist := $exists(tr_export_declaration);
+        $isInvoiceExist := $exists(invoice);
+        $isCmrExist := $exists(cmr);
+        $isAtrExist := $exists(atr);
+
+        $atoi := function($data) {$type($data) = "string" ? $round($number($replace($data, ",", ".")), 2) : $data};
+
+        $isExist := function($data, $errorMessage) {$data ? null : $errorMessage};
+
+        $max := function($data, $value, $errorMessage) { $data ? $length($data) <= $value ? null : $errorMessage : null };
+        $min := function($data, $value, $errorMessage) { $data ?  $length($data) >= $value ? null : $errorMessage : null };
+        $eq := function($data, $value, $errorMessage) { $length($data) = $value ? null : $errorMessage };
+        $neq := function($data, $value, $errorMessage) { $length($data) != $value ? null : $errorMessage };
+
+        $between := function($data, $min, $max, $errorMessage) { $type($data) = "string" ? $length($data) > $min and $length($data) <= $max ? null : $errorMessage : null };
+        $betweene := function($data, $min, $max, $errorMessage) { $type($data) = "string" ? $length($data) >= $min and $length($data) <= $max ? null : $errorMessage : null };
+        $nbetween := function($data, $min, $max, $errorMessage) { $type($data) = "string" ? $length($data) < $min or $length($data) > $max ? null : $errorMessage : null };
+
+        $in := function($data, $values, $errorMessage) { $data in $values ? null : $errorMessage };
+        $nin := function($data, $values, $errorMessage) { $data in $values ? $errorMessage : null };
+        $like := function($data, $pattern, $errorMessage) { $match($data, $pattern) ? null : $errorMessage };
+        $nlike := function($data, $pattern, $errorMessage) { $match($data, $pattern) ? $errorMessage : null };
+        $startsWith := function($data, $prefix, $errorMessage) { $substring($data, 0, $length($prefix)) = $prefix ? null : $errorMessage };
+        $endsWith := function($data, $suffix, $errorMessage) { $substring($data, $length($data) - $length($suffix)) = $suffix ? null : $errorMessage };
+        $strContains := function($data, $substring, $errorMessage) { $contains($data, $substring) ? null : $errorMessage };
+        $nStrContains := function($data, $substring, $errorMessage) { $contains($data, $substring) ? $errorMessage : null };
+        $isNotNull := function($data, $errorMessage) { $data != null ? null : $errorMessage };
+        $isNull := function($data, $errorMessage) { $data = null ? null : $errorMessage };
+        $isNotEmpty := function($data, $errorMessage) { $data != null and $data != '' ? null : $errorMessage };
+        $isEmpty := function($data, $errorMessage) { $data = null or $data = '' ? null : $errorMessage };
+
+        $isBoolean := function($data, $errorMessage) { $data = true or $data = false ? null : $errorMessage };
+        $isNumber := function($data, $errorMessage) { $type($data) = "number" ? null : $errorMessage };
+        $isDateFormat := function($data, $errorMessage) {
+            $match($data) ? null : $errorMessage
+        };
+
+        $formatErrorMessageObject := function($errorObject) {(
+            $errorCode := $errorObject.code;
+            $errorMessageObject := $lookup($errorMap, $errorCode);
+
+            $message := $lookup($errorMessageObject, "en");
+
+            $formattedMessage := $reduce($errorObject.args, function($acc, $arg, $index) {
+                $replace($acc, "{{" & ($index + 1) & "}}", $string($arg))
+            }, $message);
+
+            {
+                "code": $errorCode,
+                "message": $formattedMessage,
+                "place": $errorObject.place ? $errorObject.place : 1
+            }
+        )};
+
+        $formatErrorMessageString := function($errorCode) {(
+            $list := $split($errorCode, "&");
+            $errorMessage := $lookup($errorMap, $list[0]);
+
+            $message := $lookup($errorMessage, "en");
+
+            {
+                "code": $list[0],
+                "message": $message ? $message : $list[0],
+                "place": 1
+            }
+        )};
+
+        $formatErrorMessage := function($errorCode) {
+            $type($errorCode) = "object" ? $formatErrorMessageObject($errorCode) : $formatErrorMessageString($errorCode)
+        };
+
+        $customAppend := function($data) {(
+            $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
+
+            $response := $reduce($data, $append)
+        )};
+
+        /* --- */
+        /*Additional ---*/
+        /* --- */
+        $additionalWarningFirst := $filter([
+            $between($.additional_data.transaction.ioPartner, 0, 100, "INVALID_IO_PARTNER"), /*IOPartner*/
+            $between($.additional_data.transaction.ioDivision3, 0, 10, "INVALID_IO_DIVISION3"), /*IODivision3*/
+            $between($.additional_data.transaction.ioReference, 0, 35, "INVALID_IO_REFERENCE"),
+
+            $map($.additional_data.declaration, function($v, $i) {
+                [
+                    $between($v.objectIdentification.objectName, 0, 35, "INVALID_OBJECT_NAME"),
+                    $between($v.objectIdentification.objectAlias, 0, 35, "INVALID_OBJECT_ALIAS"), /*ObjektAlias*/
+                    $between($v.objectIdentification.declarationType, 0, 5, "INVALID_DECLARATION_TYPE"), /*AnmeldungArt*/
+                    $between($v.objectIdentification.username, 0, 70, "INVALID_USER_NAME"),
+                    $between($v.objectIdentification.referenceNumberOverlay, 0, 35, "INVALID_REFERENCE_NUMBER_OVERLAY"), /*BezugsnummerVorblendung*/
+
+                    $between($v.headerData.addressedCustomsOffice, 0, 35, "INVALID_CUSTOMS_OFFICE"), /*AdressierteZollstelle*/
+                    $between($v.headerData.representationRelationshipCode, 0, 1, "INVALID_REPRESENTATION_CODE"), /*VertretungsverhaeltnisCode*/
+
+                    $between($v.headerData.agentContact.contactPersonName, 0, 35, "INVALID_CONTACT_PERSON_NAME"), /*NameAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonPhoneNumber, 0, 35, "INVALID_CONTACT_PERSON_PHONE"), /*TelefonnummerAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonPosition, 0, 35, "INVALID_CONTACT_PERSON_POSITION"), /*StellungAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonEmail, 0, 256, "INVALID_CONTACT_PERSON_EMAIL"), /*EmailAdresseAnmeldenderBearbeiter*/
+
+                    $between($v.headerData.procedureCodeRequested, 0, 2, "INVALID_PROCEDURE_CODE"), /*FiskalvertretungKz*/
+                    $between($v.headerData.departureCountry, 0, 2, "INVALID_DEPARTURE_COUNTRY"), /*ZollrechtlicherStatus*/
+                    $between($v.headerData.destinationFederalState, 0, 2, "INVALID_DESTINATION_STATE"), /*Bestimmungsbundesland*/
+                    $between($v.headerData.destinationCountry, 0, 2, "INVALID_DESTINATION_COUNTRY"), /*Bestimmungsland*/
+                    $between($v.headerData.transportMeansArrivalIdentity, 0, 30, "INVALID_TRANSPORT_MEANS_IDENTITY"), /*KennzeichenNameBefoerderungsmittelAnkunft*/
+                    $between($v.headerData.transportMeansNationalityCode, 0, 2, "INVALID_TRANSPORT_MEANS_NATIONALITY"), /*BefoerderungsmittelGrenzeStaatszugehoerigkeitCode*/
+                    $between($v.headerData.previousAdministrativeReferenceType, 0, 6, "INVALID_PREVIOUS_REFERENCE_TYPE"), /*VorpapierArtCode*/
+                    $between($v.headerData.previousAdministrativeReferenceNumber, 0, 28, "INVALID_PREVIOUS_REFERENCE_NUMBER"), /*VorpapierNr*/
+
+                    /*Kostenart (dv1CostAllocation.costType)*/
+                    /*Kosten (dv1CostAllocation.costs)*/
+                    /*KostenWaehrung (dv1CostAllocation.currencyCode)*/
+
+                    $between($v.headerData.base.documentDivision, 0, 1, "INVALID_DOCUMENT_DIVISION"),
+
+                    $map($v.addresses, function($vv, $ii) {
+                        [
+                            $between($vv.addressType, 0, 10, "INVALID_ADDRESS_TYPE"), /* "AdressTyp": $a.addressType, */
+                            $between($vv.addressCode, 0, 10, "INVALID_ADDRESS_CODE"), /* "AdressCode": "1", */
+                            $between($vv.participantEORI, 0, 17, "INVALID_PARTICIPANT_EORI"), /* "TeilnehmerEORI": $a.participantEORI, */
+                            $between($vv.participantSubsidiaryNumber, 0, 4, "INVALID_PARTICIPANT_SUBSIDIARY_NUMBER"),/* "TeilnehmerNLNR": $a.participantSubsidiaryNumber, */
+                            $between($vv.companyName, 0, 120, "INVALID_COMPANY_NAME"),/* "NameFirma": $a.companyName, */
+                            $between($vv.streetAndNumber, 0, 35, "INVALID_STREET_AND_NUMBER"), /* "StrasseHausNr": $a.streetAndNumber, */
+                            $between($vv.district, 0, 35, "INVALID_DISTRICT"), /* "Ortsteil": $a.district, */
+                            $between($vv.countryCode, 0, 3, "INVALID_COUNTRY_CODE"), /* "LandCode": $a.countryCode, */
+                            $between($vv.postalCode, 0, 9, "INVALID_POSTAL_CODE"), /* "PLZ-S": $a.postalCode, */
+                            $between($vv.city, 0, 35, "INVALID_CITY") /* "Ort-S": $a.city */
+                        ]
+                    }) ~> $customAppend()
+                ]
+            }) ~> $customAppend()
+        ], function($v) { $v != null });
+        $additionalErrorsFirst := $filter([
+            $isExist($.additional_data.transaction, "MISSING_TRANSACTION"), /*Transaktion*/
+            $isExist($.additional_data.transaction.ioPartner, "MISSING_IO_PARTNER"), /*IOPartner*/
+            $isExist($.additional_data.transaction.ioReference, "MISSING_IO_REFERENCE"), /*IOReferenz*/
+
+            $map($.additional_data.declaration, function($v, $i) {
+                [
+                    $isExist($v.objectIdentification, "MISSING_OBJECT_IDENTIFICATION"), /*ObjektIdentifizierung*/
+                    $isExist($v.objectIdentification.objectName, "MISSING_OBJECT_NAME"), /*ObjektName*/
+                    $isExist($v.objectIdentification.username, "MISSING_USERNAME"), /*Bearbeiter*/
+
+                    $isBoolean($v.headerData.declarantIsConsignee, "INVALID_DECLARANT_IS_CONSIGNEE"), /*AnmelderIstEmpfaenger*/
+                    $isBoolean($v.headerData.inputTaxDeduction, "INVALID_INPUT_TAX_DEDUCTION") /*Vorsteuerabzug*/
+                ]
+            }) ~> $customAppend()
+        ], function($v) { $v != null });
+        $additionalErrors := $count($additionalErrorsFirst) ? $map($additionalErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $additionalWarnings := $count($additionalWarningFirst) ? $map($additionalWarningFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
+        /* --- */
+        /*Invoice ---*/
+        /* --- */
+        $isInvoiceTotalAmountEqual := function($invoice, $index) {(
+            $totalAmount := $reduce($invoice.items, function($acc, $v) {
+                $acc + ($v.invoice_item_total_amount ? $v.invoice_item_total_amount : 0)
+            }, 0);
+            $invoiceTotalAmount := $.invoice.invoice_total_amount ? $.invoice.invoice_total_amount : 0;
+
+            $totalAmount = $invoiceTotalAmount ? null : {"code": "NOT_EQUAL_INVOICE_TOTAL_AMOUNT", "place": $index ? $index : 1}
+        )};
+        $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "object" ? 
+            $filter([
+                $isInvoiceTotalAmountEqual(invoice),
+                $max($.invoice.invoice_currency, 3, "INVALID_INVOICE_CURRENCY"),
+                $map($.invoice.items, function($v, $i) {
+                    [
+                        $max($v.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $i + 1, "args": [$v.invoice_item_no]}), /**/
+                        $max($v.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $i + 1, "args" : [$v.invoice_item_no]}) /**/
+                    ]
+                }) ~> $customAppend()
+            ], function($v) { $v != null }) : 
+        $isInvoiceExist and $type(invoice) = "array" ?
+            $filter([
+                $map(invoice, function($v, $i) {
+                    [
+                        $isInvoiceTotalAmountEqual($v, $i + 1),
+                        $max($v.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "place": $i + 1}),
+                        $map($v.items, function($vv, $ii) {
+                            [
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $ii + 1}), /**/
+                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $ii + 1}) /**/
+                            ]
+                        }) ~> $customAppend()
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $invoiceErrors := $count($invoiceErrorsFirst) and false ? $map($invoiceErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $invoiceWarnings := [];
+
+        /* --- */
+        /*tr_export_declaration ---*/
+        /* --- */
+        $isDeclarationTotalValueEqual := function() {(
+            $totalValue := $reduce($.tr_export_declaration.items, function($acc, $v) {
+                $acc + ($v.item_value ? $v.item_value : 0)
+            }, 0);
+            $declarationTotalWeight := $.tr_export_declaration.total_value ? $atoi($.tr_export_declaration.total_value) : 0;
+
+            $round($totalValue, 2) = $declarationTotalWeight ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "place": 1, "args": [] }
+        )};
+        $declarationErrorsFirst := $isDeclarationExist ? $filter([
+            $isDeclarationTotalValueEqual(),
+            $map($.tr_export_declaration.items, function($v, $i) {
+                [
+                    $max($v.commodity_code, 11, {"code": "INVALID_DECLARATION_COMMODITY_CODE", "place": $i + 1, "args": [$v.index]}), /**/
+                    $max($v.origin, 2, {"code": "INVALID_DECLARATION_ITEM_COUNTRY_ORIGIN", "place": $i + 1, "args" : [$v.index]}) /**/
+                ]
+            }) ~> $customAppend()
+        ], function($v) { $v != null }) : [];
+        $declarationErrors := $count($declarationErrorsFirst) ? $map($declarationErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $declarationWarnings := [];
+
+
+        /* --- */
+        /*Atr ---*/
+        /* --- */
+        $atrErrors := $isAtrExist ? $filter([
+        ], function($v) { $v 
+        != null }) : [];
+
+
+        {
+            "additional_data": {
+                "errors": $count($additionalErrors) = 1 ? [$additionalErrors] : $additionalErrors,
+                "warnings": $count($additionalWarnings) = 1 ? [$additionalWarnings] : $additionalWarnings
+            },
+            "invoice": {
+                "errors": $count($invoiceErrors) = 1 ? [$invoiceErrors] : $invoiceErrors,
+                "warnings": $count($invoiceWarnings) = 1 ? [$invoiceWarnings] : $invoiceWarnings
+            },
+            "atr": {
+                "errors": [],
+                "warnings": []
+            },
+            "tr_export_declaration": {
+                "errors": $count($declarationErrors) = 1 ? [$declarationErrors] : $declarationErrors,
+                "warnings": $count($declarationWarnings) = 1 ? [$declarationWarnings] : $declarationWarnings
+            }
+        }
+    )

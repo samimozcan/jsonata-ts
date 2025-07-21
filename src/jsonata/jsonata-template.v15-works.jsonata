@@ -1,0 +1,177 @@
+/* fix round need to check if null for round or number functions 27.06.2025 v1 */
+
+(
+
+$A1314 := ["AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR","HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK","XI"];
+$A1300 := ["CH","GB","GE","IS","LI","MK","NO","TR","UA","XS"];
+$1990 := ["1", "2", "3", "4", "5", "7", "8", "9"];
+
+$addressCustomOfficeMap := {"9651": "Aalen","4210": "Albbruck","9501": "Albstadt","7455": "Altötting (Autobahn)","3003": "Am Flughafen (Erfurt)","8801": "Amberg","8351": "Anröchte","8751": "Ansbach-Weißenburg (Ansbach)","3956": "Appenweier","8352": "Arnsberg","8851": "Aschaffenburg","7352": "Aschersleben","3401": "Bad Hersfeld","8005": "Bad Oeynhausen","7458": "Bad Reichenhall-Autobahn","4209": "Bad Säckingen","5853": "Baden-Baden","4105": "Bahnhof (Singen)","4213": "Baltersweil (Dettighofen)","8601": "Bamberg","4058": "Deutsches Zollamt Basel","8602": "Bayreuth","8356": "Beckum","3201": "Bensheim","2102": "Berlin-Flughafen Schönefeld (Schönefeld)","2105": "Berlin-Flughafen Tegel","9657": "Biberach","4101": "Bietingen (Gottmadingen)","9551": "Böblingen","8302": "Bocholt","8051": "Bochum","7152": "Bonn","5301": "Brake","4930": "Braunschweig-Broitzem","2325": "(Bremen)","2452": "Bremerhaven","5852": "Bruchsal","6151": "Brunsbüttel","4214": "Bühl (Klettgau)","4109": "Büßlingen (Tengen)","5111": "Celle","7054": "Charlottenburger Allee (Aachen)","5530": "Chemnitz","8605": "Coburg","8303": "Coesfeld","4501": "Cuxhaven","3230": "(Darmstadt)","4106": "Deißlingen","7361": "Dessau-Ost","8857": "Dettelbach-Mainfrankenpark","4215": "Dogern","9656": "Donautal (Ulm)","7402": "Donauwörth","2152": "Dreilinden (Berlin)","5580": "(Dresden)","7064": "Düren","3752": "Eberswalde","4110": "Ebringen (Gottmadingen)","8001": "Eckendorfer Straße (Bielefeld)","4224": "Eggingen","3002": "Eisenach","5004": "Emden","2701": "Emmerich","8752": "Erlangen-Tennenlohe","4201": "Erzingen (Klettgau)","2651": "Essen","8304": "Eulerstraße (Münster)","3601": "Finsterwalde","5380": "Fledder (Osnabrück)","6133": "Flensburg","2301": "Flughafen (Bremen)","8131": "Flughafen (Dortmund)","2601": "Flughafen (Düsseldorf)","8306": "Flughafen (Greven)","5103": "Flughafen (Langenhagen)","7650": "Flughafen (Hallbergmoos)","8755": "Flughafen (Nürnberg)","9304": "Flughafen (Saarbrücken)","9555": "Flughafen (Filderstadt)","5552": "Flughafen Dresden","7154": "Flughafen Köln/Bonn","5604": "Flughafen Leipzig","8380": "Flughafen Paderborn/Lippstadt","3603": "Forst-Autobahn","3302": "Fracht (Frankfurt)","3652": "Frankfurt (Oder) – Autobahn","3358": "Frankfurt am Main-Osthafen","3954": "Freiburg","9402": "Friedrichshafen","3430": "Fulda","3656": "Fürstenwalde","8902": "Furth im Wald","4216": "Fützen (Blumberg)","4111": "Gaienhofen (Gottmadingen)","4112": "Gailingen","7602": "Garching-Hochbrück","8052": "Gelsenkirchen","6653": "Germersheim","7401": "Göggingen (Augsburg)","9652": "Göppingen","5052": "Goslar","5080": "Göttingen","4115": "Gottmadingen","4051": "Grenzacherhorn (Grenzach-Wyhlen)","7153": "Gummersbach","4217": "Günzgen (Hohentengen am Hochrhein)","9452": "Heilbronn","8756": "Hafen (Nürnberg)","4603": "Hafencity (Hamburg)","9552": "Hafen (Stuttgart)","8101": "Hagen","6756": "Hahn-Flughafen (Lautzenhausen)","7501": "Hallbergmoos","7362": "Halle (Saale)","4701": "Hamburg-Flughafen","4851": "(Hamburg)","5053": "Hameln","3352": "Hanau","5102": "Hannover-Nord","5901": "Heidelberg","6302": "Heiligenhafen","7053": "Heinsberg","4506": "Helgoland","4961": "Helmstedt-Autobahn","4218": "Herdern (Hohentengen am Hochrhein)","5055": "Hildesheim","5756": "Hirschfeld","3354": "Höchst (Frankfurt am Main)","8715": "Hof-Marktredwitz (Hof)","7551": "Hörbranz-Autobahn","6155": "Husum","6752": "Idar-Oberstein","7403": "Ingolstadt","4060": "Inzlingen","3004": "Jena","4203": "Jestetten","6501": "Kaiserslautern","5880": "(Karlsruhe)","3454": "Kassel","7553": "Kempten (Allgäu)","6207": "(Kiel)","7157": "Wahn (Köln)","4005": "Konstanz-Autobahn","4001": "Konstanz-Emmishofer Tor","4002": "Konstanz-Güterbahnhof","4003": "Konstanz-Kreuzlinger Tor","4010": "Konstanz-Paradieser Tor","5330": "Kreyenbrück (Oldenburg)","9102": "Laage","4204": "Laufenburg","4207": "Laufenburg-Stadt","8004": "Lemgo","5356": "Lingen","5687": "Löbau","5355": "Lohne","4205": "Lottstetten","8008": "Lübbecke","6333": "Lübeck","8104": "Lüdenscheid","9453": "Ludwigsburg","3701": "Ludwigshafen am Rhein","9101": "Ludwigslust","5230": "Lüneburg","7380": "Magdeburg-Rothensee","6504": "Mainz","5904": "Mannheim","3452": "Marburg","2101": "Marzahn (Berlin)","7561": "Memmingen","5110": "Messe (Hannover)","6310": "Mölln","2904": "Mönchengladbach","9154": "Mukran (Sassnitz)","9030": "Neubrandenburg","4102": "Neuhaus (Blumberg)","2906": "Neuss","7202": "Köln-West","2604": "Nord (Düsseldorf)","5502": "Nossen","9503": "Nürtingen","4605": "Oberelbe (Hamburg)","3356": "Oberursel","4117": "Öhningen","8103": "Ost (Dortmund)","8355": "Paderborn","5008": "Papenburg","7703": "Passau","5858": "Pforzheim","6156": "Pinneberg","6502": "Pirmasens","7504": "Plattling","9004": "Pomellen","9404": "Ravensburg","4221": "Reckingen (Küssaberg)","8804": "(Regensburg)","4012": "Reichenau","7755": "Reischenhart (Raubling)","2607": "Reisholz","6206": "Rendsburg","9530": "Reutlingen","8305": "Rheine","4054": "Rheinfelden","4062": "Rheinfelden-Autobahn","6551": "Rheinhafen (Koblenz)","4222": "Rheinheim (Küssaberg)","4103": "Rielasingen","9104": "Rostock","4223": "Rötteln (Hohentengen am Hochrhein)","2656": "Ruhrort (Duisburg)","9303": "(Saarbrücken)","4119": "Schlatt am Randen (CH-Thayngen)","2151": "Schöneberg (Berlin)","5351": "Schüttorf","2901": "Schwanenhaus (Nettetal)","8853": "Schweinfurt-Londonstraße","8106": "Siegen","5202": "Soltau","5203": "Stade","7359": "Stendal","4053": "Stetten (Lörrach)","2702": "Straelen-Autobahn","9180": "Stralsund-Dänholm","4206": "Stühlingen","7701": "Suben-Autobahn (Österreich)","9456": "Tauberbischofsheim","5603": "Taucha","6753": "Trier-Ehrang","2903": "Uerdingen","9459": "Untermünkheim","3702": "Velten","5204": "Verden","4208": "Waldshut","4120": "Wangen (Bodensee) (Öhningen)","4219": "Wangental (Jestetten)","8904": "Weiden-Waidhaus (Weiden in der Oberpfalz)","4055": "Weil am Rhein-Autobahn","4056": "Weil am Rhein-Friedlingen","4061": "Weil am Rhein-Ost","4057": "Weil am Rhein-Otterbach","4083": "Weil am Rhein","7751": "Weilheim","3453": "Wetzlar","4121": "Wiechs-Dorf (CH-Altdorf)","4122": "Wiechs-Schlauch (Tengen)","3202": "Wiesbaden","6203": "Wik (Kiel)","5310": "Wilhelmshaven","9556": "Winnenden","9103": "Wismar","4906": "Wolfsburg","9152": "Wolgast","2956": "Wuppertal","9554": "Zuffenhausen (Stuttgart)"};
+$qpCountry := ["TR"]; /*TODO: Bu liste guncellenecek.*/
+
+$getFirstElement := function($array) { $filter($array, function($v) { $v != null or $v != undefined })[0] };
+
+/*ZollrechtlicherStatus condition @return "CO" "EU" "IM"*/
+/*https://atez.atlassian.net/wiki/spaces/relayhub/pages/3476291624/Relayhub+Algorithm+i+in+Alan+Dakosy+Analizleri*/
+$getZollrechtlicherStatus := function($departureCountry, $documentDivision, $isAtrExist) {(
+  $COStatus := $departureCountry in $A1314 and $documentDivision = "6" ? "CO" : null;
+  $EUStatus := $departureCountry in $1300 or ($departureCountry in $qpCountry and $isAtrExist) ? "EU" : null;
+  $IMStatus := "IM"; /* working like else */
+
+  $response := $COStatus ? $COStatus : $EUStatus ? $EUStatus : $IMStatus
+)};
+
+
+$isDeclarationExist := $exists(tr_export_declaration);
+$isInvoiceExist := $exists(invoice);
+$isCmrExist := $exists(cmr);
+
+$getWarenPosition := function($index) {(
+
+    $response := $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
+     $map(tr_export_declaration.items, function($v) {
+          {
+            "Positionsnummer": $v.index,
+            "WarenNummerEZT": $v.commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
+            "WarenBezeichnung": $v.commodity_description,
+            "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
+            "Eigenmasse": $getFirstElement([$round($v.net_weight, 1), 1]), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
+            "AHStatMengeMasseinheit": "NAR", /*default for now*/
+            "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "PackstueckAnzahl": $v.quantity,
+            "PackstueckArt": "PK", /* default */
+            "PackstueckZeichen": "OHNE", /* default */
+            "BeguenstigungBeantragtCode": 100, /* eur varsa 400 gibisinden bir kosul olacak onun donusu burasi setlenecek */
+            "Artikelpreis": tr_export_declaration.total_value,
+            "Zollwert": tr_export_declaration.total_value,
+            "AbzugHinzurechnung": {
+              "ArtCode": "R",
+              "Betrag": $v.item_value,
+              "Waehrung": tr_export_declaration.total_value_curr,
+              "KursVereinbartKz": "1"
+            }
+          }
+        })
+    }) : $isInvoiceExist ?
+        $map(invoice.items, function($v, $i) {(
+            {
+            "Positionsnummer": $v.invoice_item_no,
+            "WarenNummerEZT": $v.invoice_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
+            "WarenBezeichnung": $v.invoice_item_description,
+            "UrsprungslandCode": $getFirstElement([$v.invoice_item_country_of_origin, 'TR']), /*TODO: Burasi daima kisa kod olacak, bunun icin fonksiyon yazilmasi gerekebilir. */
+            "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+            "AHStatMenge": $v.invoice_item_package_quantity ? $round($v.invoice_item_package_quantity, 3) : undefined,
+            "AHStatMengeMasseinheit": "NAR", /*default for now*/
+            "AHStatWert": $floor($v.invoice_item_quantity < 1 ? 1 : $v.invoice_item_quantity), /*default for now*/
+            "PackstueckAnzahl": $v.invoice_item_quantity, /*default for now*/
+            "PackstueckArt": "PK", /*default*/
+            "PackstueckZeichen": "OHNE", /*default for now*/
+            "BeguenstigungBeantragtCode": 100, /*default for now*/
+            "Artikelpreis": invoice.invoice_total_amount,
+            "Zollwert": invoice.invoice_total_amount, /*default for now*/
+            "AbzugHinzurechnung": {
+              "ArtCode": "R", /*default*/
+              "Betrag": $v.invoice_item_total_amount,
+              "Waehrung": $invoice.invoice_currency,
+              "KursVereinbartKz": "1" /* default */
+            }
+          }
+        )}) : undefined
+)};
+
+$gesamtRohMasse := $isDeclarationExist ? $round($sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})), 1) : $isCmrExist ? $round(cmr.total_weight ? cmr.total_weight : 0, 1) : undefined; 
+
+{
+  "FreierVerkehrAktVeredelUmwandlung": {
+    "Transaktion": {
+      "IOPartner": additional_data.transaction.ioPartner,
+      "IODivision3": additional_data.transaction.ioDivision3,
+      "IOReferenz": additional_data.transaction.ioReference,
+      "IODatumZeit": $now(),
+      "Version": "004" /* Default */
+    },
+    "EinzelAnmeldung": $map(additional_data.declaration, function($v, $i) {
+      {
+        "ObjektIdentifizierung": {
+          "ObjektName": $v.objectIdentification.objectName,
+          "ObjektAlias": $v.objectIdentification.objectAlias,
+          "AnmeldungArt": $v.objectIdentification.declarationType,
+          "BezugsnummerVorblendung": $v.objectIdentification.referenceNumberOverlay,
+          "ObjektAktion": "CREATE",
+          "Bearbeiter": $v.objectIdentification.username
+        },
+        "KopfDaten": {
+          "AdressierteZollstelle": $v.headerData.addressedCustomsOffice,
+          "AnmelderIstEmpfaenger": $v.headerData.declarantIsConsignee ? "J" : "N",
+          "VertretungsverhaeltnisCode": $getFirstElement([$v.headerData.representationRelationshipCode, 1]), /* TODO: Burasi simdilik default atildi bakilacak */
+          "Vorsteuerabzug": $v.headerData.inputTaxDeduction ? "J" : "N",
+          "NameAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonName,
+          "TelefonnummerAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonPhoneNumber,
+          "StellungAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonPosition,
+          "EmailAdresseAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonEmail,
+          "FiskalvertretungKz": $v.headerData.procedureCodeRequested = "42" ? "J" : ($v.headerData.procedureCodeRequested = "40" ? "N" : null),
+          "ZusammenfassendeMeldungKzStdKto": $v.headerData.procedureCodeRequested = "42" ? "J" : undefined, /* TODO: Burası test edilecek...!!!*/
+          "IntrastatKzStdKto": $v.headerData.procedureCodeRequested = "42" ? "J" : undefined, /* TODO: Burası test edilecek...!!!*/
+          "Ausstellungsort": $lookup($addressCustomOfficeMap, $v.headerData.addressedCustomsOffice), /* TODO: Test ...!!!*/
+          "ZollrechtlicherStatus": $getZollrechtlicherStatus($v.headerData.departureCountry, $v.headerData.base.documentDivision, $exists(atr)),
+          "GesamtRohMasse": $gesamtRohMasse, /* DONE @alican burasi yoksa cmr den alinilicak denilmis ama baska gross goremedim, cmr tarafindaki gross weight ai service den total_weight olarak donuyor @alican @samim Ayni sekilde burasi da integer istiyor*/
+          "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
+          "VerkehrszweigInland": "3", /* TODO: Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
+          "VerkehrszweigGrenze": "3", /* TODO: @Alican tolgalar ile gorusecek bunun icin */
+          "VersendungslandCode": $v.headerData.departureCountry,
+          "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
+          "Bestimmungsland": $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
+          "KennzeichenNameBefoerderungsmittelAnkunft": $v.headerData.transportMeansArrivalIdentity,
+          "BefoerderungsmittelGrenzeStaatszugehoerigkeitCode": $v.headerData.transportMeansNationalityCode,
+          "BefoerderungsmittelGrenzeArt": "01", /* (Tasima araci tipi) AI den alinacak. Transit beyannamesinden alinabilinir. */
+          "LieferbedingungCode": "FOB", /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
+          "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
+          "LieferbedingungOrt": tr_export_declaration.delivery_place, /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
+          "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ? $v.headerData.previousAdministrativeReferenceType : "T1", /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
+          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceN : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
+          "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
+          "StatistikStatus": null, /* Template data olarak dolacak */
+          "Rechnungspreis": $getFirstElement([tr_export_declaration.total_value, invoice.invoice_total_amount]), /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
+          "Rechnungswaehrung": $getFirstElement([tr_export_declaration.total_value_curr, invoice.invoice_currency]), /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. Buranin validasyonu icin IO400 alani kullanilacak. */
+          "DV1Angaben": {
+            "DV1Kz": "0" /* default hep 0 */
+          },
+          "DV1Kostenverteilung": { /*LieferbedingungSchluessel eger 1 ise bu alan dolacak yoksa bos*/
+            "Kostenart": $v.headerData.dv1CostAllocation.costType,
+            "Kosten": $v.headerData.dv1CostAllocation.costs,
+            "KostenWaehrung": $v.headerData.dv1CostAllocation.currencyCode,
+            "WechselkursArt": "01", /* default */
+            "Wechselkurs": "1", /* default */
+            "Verteilungsart": "NETWEIGHT",
+            "Minimalbetrag": 0.01,
+            "ProzentualerAnteil": 123 /* TODO: @Emre @Tolga sorulacak */
+          },
+          "Unterlage": $v.headerData.procedureCodeRequested = "42" ? { /* Burasi array olacak, gelen dokumanlarin maplemesi yapilacak */
+            "Bereich": "4", /* default */
+            "Art":  "N380", /* default */
+            "Nummer": $isInvoiceExist ? invoice.invoice_id : undefined, /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
+            "DatumAusstellung": $isInvoiceExist ? invoice.invoice_date : undefined  /* @alican ayni sekilde invoice varsa oradan al diye yazdim Should date format or not create declaration */ /* AI den gelecek, kontrol icin validasyona format check eklenecek */
+          } : null,
+          "Zahlungsart": $v.headerData.procedureCodeRequested = "42" ? "D" : "E", /* A2060 dan kontrol.  */
+          "Adressen": $map($v.addresses, function($a) { /* Eger EORI varsa digerlerine ihtiyac yok, lakin yoksa gelmeleri gerekiyor, validasyona yazilacak. */
+            {
+              "AdressTyp": $a.addressType,
+              "AdressCode": "1",
+              "TeilnehmerEORI": $a.participantEORI,
+              "TeilnehmerNLNR": $a.participantSubsidiaryNumber,
+              "NameFirma": $a.companyName,
+              "StrasseHausNr": $a.streetAndNumber,
+              "Ortsteil": $a.district,
+              "LandCode": $a.countryCode,
+              "PLZ-S": $a.postalCode,
+              "Ort-S": $a.city
+            }
+          })
+        },
+        "WarenPosition": $getWarenPosition()
+      }
+    })
+  }
+}
+)

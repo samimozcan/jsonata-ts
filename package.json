@@ -1,0 +1,22 @@
+{
+  "name": "jsonata",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A project using JSONata and TypeScript",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "watch:ts": "tsc --watch --project tsconfig.json",
+    "start": "tsc && node dist/main.js",
+    "watch": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main.js",
+    "watch:validation": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main-validation.js"
+  },
+  "dependencies": {
+    "jsonata": "^2.0.6",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/node": "^24.0.4"
+  }
+}

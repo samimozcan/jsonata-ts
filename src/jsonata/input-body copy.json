@@ -1,0 +1,90 @@
+{
+  "invoice": {
+    "items": [
+      {
+        "invoice_item_no": 1,
+        "invoice_item_quantity": 1,
+        "invoice_item_unit_type": "Adet",
+        "invoice_item_product_id": null,
+        "invoice_item_unit_price": 18350,
+        "invoice_item_description": "MM1541656 480X 380X2705MM.TUBE PRODUCTION",
+        "invoice_item_total_amount": 18350,
+        "invoice_item_commodity_code": "8412904090",
+        "invoice_item_package_quantity": 1,
+        "invoice_item_country_of_origin": "TR"
+      }
+    ],
+    "invoice_id": "UNA2025000000006",
+    "invoice_date": "2025-01-10",
+    "invoice_currency": "EUR",
+    "invoice_po_number": null,
+    "invoice_payment_term": null,
+    "invoice_total_amount": 18350,
+    "invoice_customer_name": "Lindemann Germany Gmbh",
+    "invoice_delivery_term": "DAP",
+    "invoice_supplier_name": "ÜNVERLER MAKİNA SANAYİ VE TİCARET ANONİM ŞİRKETİ",
+    "invoice_total_quantity": null,
+    "invoice_customer_address": "Grafenberger Allee 337a-40235",
+    "invoice_customer_country": "DE",
+    "invoice_supplier_address": "KAYAPA MAH.KARANFİL CAD.NO:20",
+    "invoice_supplier_country": "TR",
+    "invoice_total_package_quantity": null,
+    "invoice_shipment_country_of_origin": "TR"
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "district": "Suben",
+            "postalCode": "4975",
+            "addressType": "CN",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 555
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonEmail": "test@test.com",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": "555 55 55"
+          },
+          "departureCountry": "AT",
+          "dv1CostAllocation": {
+            "costs": 10,
+            "costType": "test",
+            "currencyCode": "EUR"
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "addressedCustomsOffice": "7701",
+          "procedureCodeRequested": "42",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TEST22042025",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": 1,
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/2602211_TEST_0129",
+          "objectAlias": "4803/260220122042025_160905",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUB",
+      "ioReference": "4803/260220122042025_160905"
+    }
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 30000,
+          "invoice_item_unit_type": "Çift",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.53333,
+          "invoice_item_description": "BEBEK ÇORAP % 78 COTTON % 20 NYLON % 2 ELASTANE",
+          "invoice_item_total_amount": 16000,
+          "invoice_item_commodity_code": "611120900000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 30000,
+          "invoice_item_unit_type": "Çift",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.404,
+          "invoice_item_description": "ERKEK ÇORAP % 73 COTTON % 20 POLYESTER % 5 NYLON % 2 ELASTANE",
+          "invoice_item_total_amount": 12120,
+          "invoice_item_commodity_code": "611595000000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "IHD2025000000242",
+      "invoice_date": "2025-03-21",
+      "invoice_currency": "GBP",
+      "invoice_po_number": "M45757/906-9957",
+      "invoice_payment_term": "MAL MUKABİLİ",
+      "invoice_total_amount": 28120,
+      "invoice_customer_name": "MISIRLI UK.",
+      "invoice_delivery_term": "CIF",
+      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "UNIT 5 22 PINFOLD ROAD LEICESTE",
+      "invoice_customer_country": "United Kingdom",
+      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
+      "invoice_supplier_country": "Turkey",
+      "invoice_total_package_quantity": 84,
+      "invoice_shipment_country_of_origin": "Turkey"
+    },
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 16560,
+          "invoice_item_unit_type": "Çift",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.83841,
+          "invoice_item_description": "ERKEK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
+          "invoice_item_total_amount": 13884,
+          "invoice_item_commodity_code": "611595000000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "Turkey"
+        },
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 16560,
+          "invoice_item_unit_type": "Çift",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.83841,
+          "invoice_item_description": "ERKEK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
+          "invoice_item_total_amount": 13884,
+          "invoice_item_commodity_code": "611595000000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "Turkey"
+        }
+      ],
+      "invoice_id": "IHD2025000000244",
+      "invoice_date": "2025-03-21",
+      "invoice_currency": "GBP",
+      "invoice_po_number": "M45868/BWGM580",
+      "invoice_payment_term": "MAL MUKABİLİ",
+      "invoice_total_amount": 13884,
+      "invoice_customer_name": "MISIRLI UK.",
+      "invoice_delivery_term": "CIF",
+      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "UNIT 5 22 PİNFOLD ROAD LEICESTE",
+      "invoice_customer_country": "United Kingdom",
+      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
+      "invoice_supplier_country": "Turkey",
+      "invoice_total_package_quantity": 138,
+      "invoice_shipment_country_of_origin": "Turkey"
+    },
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 26720,
+          "invoice_item_unit_type": "Çift",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.43265,
+          "invoice_item_description": "ÇOCUK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
+          "invoice_item_total_amount": 11560.32,
+          "invoice_item_commodity_code": "611595000000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "Turkey"
+        }
+      ],
+      "invoice_id": "IHD2025000000243",
+      "invoice_date": "2025-03-21",
+      "invoice_currency": "GBP",
+      "invoice_po_number": "M45806/URSK1502",
+      "invoice_payment_term": "MAL MUKABİLİ",
+      "invoice_total_amount": 11560.32,
+      "invoice_customer_name": "MISIRLI UK.",
+      "invoice_delivery_term": "CIF",
+      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "UNIT 5 22 PİNFOLD ROAD LEICESTE",
+      "invoice_customer_country": "United Kingdom",
+      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
+      "invoice_supplier_country": "Turkey",
+      "invoice_total_package_quantity": 49,
+      "invoice_shipment_country_of_origin": "Turkey"
+    }
+  ],
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "district": "Suben",
+            "postalCode": "4975sdasdasdasdas",
+            "addressType": "CNasdasdasdasdasda",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 555
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonEmail": "test@test.com",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": "555 55 55"
+          },
+          "departureCountry": "AT",
+          "dv1CostAllocation": {
+            "costs": 10,
+            "costType": "test",
+            "currencyCode": "EUR"
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "addressedCustomsOffice": "7701",
+          "procedureCodeRequested": "42",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TEST22042025",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": 1,
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/2602203_TEST_0213",
+          "objectAlias": "4803/260220122042025_160905",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUBkasjdalsdjaldjasldjasj",
+      "ioReference": "4803/260220122042025_160905"
+    }
+  },
+  "tr_export_declaration": {
+    "id": "25590100EX00011997",
+    "date": "2025-03-21",
+    "buyer": "MISIRLI UK",
+    "items": [
+      {
+        "id": "TR-25590100EX00011997-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "10 00",
+        "quantity": 30000,
+        "item_value": 16000,
+        "net_weight": 415,
+        "gross_weight": 455,
+        "commodity_code": "6111209000",
+        "unit_of_measure": "ÇİFT",
+        "package_quantity": "Ticari Tanım : BEBEK ÇORAP % 78 COTTON % 20 NYLON % 2 ELASTANE",
+        "statistical_value": 20294.67,
+        "commodity_description": "Ticari Tanım : BEBEK ÇORAP % 78 COTTON % 20 NYLON % 2 ELASTANE"
+      },
+      {
+        "id": "TR-25590100EX00011997-ITEM2",
+        "index": "2",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 30000,
+        "item_value": 12120,
+        "net_weight": 415,
+        "gross_weight": 455,
+        "commodity_code": "6115950000",
+        "unit_of_measure": "ÇIFT",
+        "package_quantity": 1,
+        "statistical_value": 15195.12,
+        "commodity_description": "Ticari Tanımı:ERKEK ÇORAP % 73 COTTON % 20 POLYESTER % 5 NYLON % 2 ELASTANE - Marka Adı:, Tescilsiz,"
+      },
+      {
+        "id": "TR-25590100EX00011997-ITEM3",
+        "index": "3",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 26720,
+        "item_value": 11560.32,
+        "net_weight": 485,
+        "gross_weight": 535,
+        "commodity_code": "6115950000",
+        "unit_of_measure": "ÇİFT",
+        "package_quantity": 1,
+        "statistical_value": 14250.69,
+        "commodity_description": "Ticari Tanımı:%74 Cotton (20/1 Penye) %23 Polyamid Tekstürize (70/1)%3 Elasthan Boyalı Çocuk Çorap Marka Adı: - Tescilsiz,"
+      },
+      {
+        "id": "TR-25590100EX00011997-ITEM4",
+        "index": "4",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 16560,
+        "item_value": 13884,
+        "net_weight": 1365,
+        "gross_weight": 1505,
+        "commodity_code": "6115950000",
+        "unit_of_measure": "ÇİFT",
+        "package_quantity": 1,
+        "statistical_value": 17128.81,
+        "commodity_description": "Ticari Tanımı: %74 Cotton (20/1 Penye) %23 Polyamid Tekstürize (70/1)%3 Elasthan Boyalı Erkek Çorap Marka Adı: - Tescilsiz,"
+      }
+    ],
+    "sender": "EDA DIŞ TİCARET VE TEKSTİL PAZARLAMA A.Ş.",
+    "tax_id": "3240095795",
+    "invoice_no": "EX6366(IHD2025000000242-243-244) TPS E-Fatura V 25243160110886041256467/1 21.03.2025\nTPS-Kripto V 25153097211086068401795/1 21.03.2025\nVekalet:Çerkezköy 3.noterliği 00145;06.01.2021 OKSB:23/34/OKS/0779;15.08.2023 Tüm kalemlerde\nimalatçı:bony teks.işletmeleri san ve tic aş kapaklı vd:1790291777;Sic no**Yan Sanayici: Aloha Teks Tur İnş\nSan ve Tic Aş 0550244449**Örküm Teks San Ve Tic Aş 0570053368*Lila Kağıt San ve Tic AŞ 6120064446",
+    "total_value": "53564.32",
+    "total_weight": 2950,
+    "delivery_term": "CIF",
+    "total_package": "271",
+    "delivery_place": "BİRLEŞİK KRALLIK",
+    "total_line_item": "4",
+    "dispatch_country": "TR",
+    "total_value_curr": "GBP",
+    "mode_of_transport": "10",
+    "destination_country": "BİRLEŞİK KRALLIK"
+  }
+}
