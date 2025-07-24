@@ -1,4 +1,4 @@
-/* handle invoice array  21.07.2025 */
+/* VorpapierArtCode can be  24.07.2025 */
 
 (
 
@@ -166,7 +166,7 @@ $rechnungswaehrung := $isDeclarationExist ? tr_export_declaration.total_value_cu
           "LieferbedingungCode": "FOB", /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
           "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
           "LieferbedingungOrt": tr_export_declaration.delivery_place, /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
-          "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ? $v.headerData.previousAdministrativeReferenceType : "T1", /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
+          "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ? $v.headerData.previousAdministrativeReferenceType : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
           "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceN : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
