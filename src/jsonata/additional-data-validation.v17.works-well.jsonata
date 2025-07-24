@@ -1,4 +1,4 @@
-    ( /* add args for not equal errors, add new error to handle declaration item count 24-07-2025 */
+    ( /* add declaration gross weight error 24-07-2025 */
         $IO3000 := [];
         $A1140 := [];
         $A1460 := ["1", "0"];
@@ -207,6 +207,10 @@
             "NOT_EQUAL_DECLARATION_TOTAL_LINE_ITEM": {
                 "en": "Declaration total line item is not equal to the number of declaration items. Total line item field value: {{1}}, Declaration items count: {{2}}",
                 "tr": "Beyanname toplam satır kalemi, beyanname kalem sayısına eşit değil. Toplam satır kalem bilgisi: {{1}}, Beyanname kalem sayısı: {{2}}"
+            },
+            "NOT_EQUAL_DECLARATION_TOTAL_GROSS_WEIGHT": {
+                "en": "Declaration total gross weight is not equal to the sum of declaration items. Total gross weight field value: {{1}}, Declaration items total gross weight: {{2}}",
+                "tr": "Beyanname toplam brüt ağırlığı, beyanname kalemlerinin toplamına eşit değil. Toplam brüt ağırlık bilgisi: {{1}}, Beyanname kalemlerinin toplam brüt ağırlığı: {{2}}"
             }
         };
 
@@ -430,6 +434,14 @@
         /* --- */
         /* --- */
         /* --- */
+        $isEqualDeclarationTotalGrossWeight := function($declaration) {(
+            $grossWeight := $declaration.total_weight ? $declaration.total_weight : $declaration.items[0].gross_weight;
+            $itemTotalGrossWeight := $reduce($declaration.items, function($acc, $v) {
+                $acc + ($v.gross_weight ? $v.gross_weight : 0)
+            }, 0) ~> $round(2);
+
+            $round($grossWeight, 2) = $itemTotalGrossWeight ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_GROSS_WEIGHT", "place": 1, "args": [$grossWeight, $itemTotalGrossWeight] }
+        )};
         $isEqualDeclarationTotalItemLine := function($declaration) {(
             $totalLineItem := $declaration.total_line_item ~> $type() = "string" ? $atoi($declaration.total_line_item) : $declaration.total_line_item;
             $itemCount := $count($declaration.items);
@@ -445,6 +457,7 @@
             $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "place": 1, "args": [$declarationTotalValue, $itemTotalValue] }
         )};
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
+            $isEqualDeclarationTotalGrossWeight(tr_export_declaration),
             $isDeclarationTotalValueEqual(tr_export_declaration),
             $isEqualDeclarationTotalItemLine(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
