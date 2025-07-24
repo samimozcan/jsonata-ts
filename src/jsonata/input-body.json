@@ -1,126 +1,60 @@
 {
-  "invoice": [
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 30000,
-          "invoice_item_unit_type": "Çift",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 0.53333,
-          "invoice_item_description": "BEBEK ÇORAP % 78 COTTON % 20 NYLON % 2 ELASTANE",
-          "invoice_item_total_amount": 16000,
-          "invoice_item_commodity_code": "611120900000",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        },
-        {
-          "invoice_item_no": 2,
-          "invoice_item_quantity": 30000,
-          "invoice_item_unit_type": "Çift",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 0.404,
-          "invoice_item_description": "ERKEK ÇORAP % 73 COTTON % 20 POLYESTER % 5 NYLON % 2 ELASTANE",
-          "invoice_item_total_amount": 12120,
-          "invoice_item_commodity_code": "611595000000",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        }
-      ],
-      "invoice_id": "IHD2025000000242",
-      "invoice_date": "2025-03-21",
-      "invoice_currency": "GBP",
-      "invoice_po_number": "M45757/906-9957",
-      "invoice_payment_term": "MAL MUKABİLİ",
-      "invoice_total_amount": 28120,
-      "invoice_customer_name": "MISIRLI UK.",
-      "invoice_delivery_term": "CIF",
-      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "UNIT 5 22 PINFOLD ROAD LEICESTE",
-      "invoice_customer_country": "United Kingdom",
-      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
-      "invoice_supplier_country": "Turkey",
-      "invoice_total_package_quantity": 84,
-      "invoice_shipment_country_of_origin": "Turkey"
-    },
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 16560,
-          "invoice_item_unit_type": "Çift",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 0.83841,
-          "invoice_item_description": "ERKEK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
-          "invoice_item_total_amount": 13884,
-          "invoice_item_commodity_code": "611595000000",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "Turkey"
-        },
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 16560,
-          "invoice_item_unit_type": "Çift",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 0.83841,
-          "invoice_item_description": "ERKEK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
-          "invoice_item_total_amount": 13884,
-          "invoice_item_commodity_code": "611595000000",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "Turkey"
-        }
-      ],
-      "invoice_id": "IHD2025000000244",
-      "invoice_date": "2025-03-21",
-      "invoice_currency": "GBP",
-      "invoice_po_number": "M45868/BWGM580",
-      "invoice_payment_term": "MAL MUKABİLİ",
-      "invoice_total_amount": 13884,
-      "invoice_customer_name": "MISIRLI UK.",
-      "invoice_delivery_term": "CIF",
-      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "UNIT 5 22 PİNFOLD ROAD LEICESTE",
-      "invoice_customer_country": "United Kingdom",
-      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
-      "invoice_supplier_country": "Turkey",
-      "invoice_total_package_quantity": 138,
-      "invoice_shipment_country_of_origin": "Turkey"
-    },
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 26720,
-          "invoice_item_unit_type": "Çift",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 0.43265,
-          "invoice_item_description": "ÇOCUK ÇORABI %74 Cotton(30/1 Penye) %23 Polyamid Tekstürize (70/2)%3 Elasthan",
-          "invoice_item_total_amount": 11560.32,
-          "invoice_item_commodity_code": "611595000000",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "Turkey"
-        }
-      ],
-      "invoice_id": "IHD2025000000243",
-      "invoice_date": "2025-03-21",
-      "invoice_currency": "GBP",
-      "invoice_po_number": "M45806/URSK1502",
-      "invoice_payment_term": "MAL MUKABİLİ",
-      "invoice_total_amount": 11560.32,
-      "invoice_customer_name": "MISIRLI UK.",
-      "invoice_delivery_term": "CIF",
-      "invoice_supplier_name": "EDA DIŞ TİCARET VE TEKSTIL PAZARLAMA A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "UNIT 5 22 PİNFOLD ROAD LEICESTE",
-      "invoice_customer_country": "United Kingdom",
-      "invoice_supplier_address": "Çerkezköy Organize Sanayi Bölges",
-      "invoice_supplier_country": "Turkey",
-      "invoice_total_package_quantity": 49,
-      "invoice_shipment_country_of_origin": "Turkey"
-    }
-  ],
+  "invoice": {
+    "items": [
+      {
+        "invoice_item_no": 1,
+        "invoice_item_quantity": 15,
+        "invoice_item_unit_type": "Adet",
+        "invoice_item_product_id": "PNDNBY0397",
+        "invoice_item_unit_price": 22.9,
+        "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+        "invoice_item_total_amount": 343.5,
+        "invoice_item_commodity_code": "6204623190",
+        "invoice_item_package_quantity": null,
+        "invoice_item_country_of_origin": null
+      },
+      {
+        "invoice_item_no": 2,
+        "invoice_item_quantity": 15,
+        "invoice_item_unit_type": "Adet",
+        "invoice_item_product_id": "PNDNBY0397",
+        "invoice_item_unit_price": 19.5,
+        "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+        "invoice_item_total_amount": 292.5,
+        "invoice_item_commodity_code": "6204623190",
+        "invoice_item_package_quantity": null,
+        "invoice_item_country_of_origin": null
+      },
+      {
+        "invoice_item_no": 3,
+        "invoice_item_quantity": 13,
+        "invoice_item_unit_type": "Adet",
+        "invoice_item_product_id": "PNDNBY1791",
+        "invoice_item_unit_price": 24.5,
+        "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
+        "invoice_item_total_amount": 318.5,
+        "invoice_item_commodity_code": "6204623190",
+        "invoice_item_package_quantity": null,
+        "invoice_item_country_of_origin": null
+      }
+    ],
+    "invoice_id": "BAY2025000000424",
+    "invoice_date": "2025-03-28",
+    "invoice_currency": "EUR",
+    "invoice_po_number": null,
+    "invoice_payment_term": "Mal Mukabili",
+    "invoice_total_amount": 954.5,
+    "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
+    "invoice_delivery_term": "FCA",
+    "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
+    "invoice_total_quantity": null,
+    "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
+    "invoice_customer_country": "DE",
+    "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
+    "invoice_supplier_country": "TR",
+    "invoice_total_package_quantity": 3,
+    "invoice_shipment_country_of_origin": null
+  },
   "additional_data": {
     "declaration": [
       {
@@ -128,8 +62,8 @@
           {
             "city": "SUBEN",
             "district": "Suben",
-            "postalCode": "4975sdasdasdasdas",
-            "addressType": "CNasdasdasdasdasda",
+            "postalCode": "4975",
+            "addressType": "CN",
             "companyName": "TESTKUNDE",
             "countryCode": "AT",
             "participantEORI": "DE123456789",
@@ -164,7 +98,7 @@
         },
         "objectIdentification": {
           "username": "ANDREAS",
-          "objectName": "4803/2602203_TEST_0213",
+          "objectName": "4803/2602203_TEST_0244",
           "objectAlias": "4803/260220122042025_160905",
           "declarationType": "EZA-D",
           "referenceNumberOverlay": "AA_EZA_DE_IM4000"
@@ -173,8 +107,43 @@
     ],
     "transaction": {
       "ioPartner": "VERA",
-      "ioDivision3": "SUBkasjdalsdjaldjasldjasj",
+      "ioDivision3": "SUB",
       "ioReference": "4803/260220122042025_160905"
     }
+  },
+  "tr_export_declaration": {
+    "id": "25341453EX00086925",
+    "date": "28.03.2025",
+    "buyer": "S.OLIVER BERND FREIER GMBH&CO.KG",
+    "items": [
+      {
+        "id": "TR-25341453EX00086925-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 30,
+        "item_value": 636,
+        "net_weight": 20,
+        "gross_weight": 20,
+        "commodity_code": "6204623190",
+        "unit_of_measure": "ADET(UNIT)",
+        "package_quantity": "Ticari Tanım : %80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+        "statistical_value": 685.32,
+        "commodity_description": "Ticari Tanım : %80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON"
+      }
+    ],
+    "sender": "BAYKAN DENİM KONFEKSİYON ANONİM ŞİRKETİ",
+    "tax_id": "1540413450",
+    "invoice_no": "EX6938(BAY2025000000424) Tasima Belgesi- Konismento V 235 2955 9552 28.03.2025\nA.TR Dolasim Belgesi B N0080191 28.03.2025\nTPS E-Fatura V 25243160110886041401451/1 28.03.2025\nTPS E-Fatura V 25243160110886041401451/2 28.03.2025\nKantar Fisi V 235 2955 9552 28.03.2025\nTPS-Kripto V 25153097211086068683943/1 28.03.2025\nVEKALET:BAKIRKÖY 13. NOTERLİĞİ, 23935;30.11.2023 OKSB:22/34/OKS/0771;27.08.2024*TÜM\nKALEMLERDE\nİMALATÇI: KENDİSİDİR.T.C ZİRAAT BANKASI A.Ş ISTANBUL TRAKYA KURUMSAL ŞUBE",
+    "total_value": "954.50",
+    "total_weight": null,
+    "delivery_term": "FCA",
+    "total_package": "3",
+    "delivery_place": "İSTANBUL",
+    "total_line_item": "2",
+    "dispatch_country": "TR",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "4",
+    "destination_country": "DE"
   }
 }

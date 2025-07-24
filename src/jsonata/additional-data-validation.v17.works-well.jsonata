@@ -1,4 +1,4 @@
-    ( /* add customAppend function to handle array list 21-07-2025 */
+    ( /* add args for not equal errors, add new error to handle declaration item count 24-07-2025 */
         $IO3000 := [];
         $A1140 := [];
         $A1460 := ["1", "0"];
@@ -177,12 +177,12 @@
                 "tr": "Kullanıcı adı çok uzun declaration index: {{1}}"
             },
             "NOT_EQUAL_INVOICE_TOTAL_AMOUNT": {
-                "en": "Invoice total amount is not equal to the sum of invoice items",
-                "tr": "Fatura toplam tutarı, fatura kalemlerinin toplamına eşit değil"
+                "en": "Invoice total amount is not equal to the sum of invoice items. Total amount: {{1}}, Invoice items total amount: {{2}}",
+                "tr": "Fatura toplam tutarı, fatura kalemlerinin toplamına eşit değil . Toplam tutar: {{1}}, Fatura kalemlerinin toplam tutarı: {{2}}"
             },
             "NOT_EQUAL_DECLARATION_TOTAL_VALUE": {
-                "en": "Declaration total value is not equal to the sum of declaration items",
-                "tr": "Beyanname toplam değeri, beyanname kalemlerinin toplamına eşit değil"
+                "en": "Declaration total value is not equal to the sum of declaration items. Total value: {{1}}, Declaration items total value: {{2}}",
+                "tr": "Beyanname toplam değeri, beyanname kalemlerinin toplamına eşit değil. Toplam değer: {{1}}, Beyanname kalemlerinin toplam değeri: {{2}}"
             },
             "INVALID_INVOICE_COMMODITY_CODE": {
                 "en": "Invoice commodity code is not valid, invoice item index: {{1}}",
@@ -203,6 +203,10 @@
             "INVALID_DECLARATION_ITEM_COUNTRY_ORIGIN": {
                 "en": "Declaration item country of origin is not valid, declaration index: {{1}}",
                 "tr": "Beyanname kalemi menşe ülkesi geçerli değil, declaration index: {{1}}"
+            },
+            "NOT_EQUAL_DECLARATION_TOTAL_LINE_ITEM": {
+                "en": "Declaration total line item is not equal to the number of declaration items. Total line item field value: {{1}}, Declaration items count: {{2}}",
+                "tr": "Beyanname toplam satır kalemi, beyanname kalem sayısına eşit değil. Toplam satır kalem bilgisi: {{1}}, Beyanname kalem sayısı: {{2}}"
             }
         };
 
@@ -284,7 +288,13 @@
         )};
 
         /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         /*Additional ---*/
+        /* --- */
+        /* --- */
+        /* --- */
         /* --- */
         $additionalWarningFirst := $filter([
             $between($.additional_data.transaction.ioPartner, 0, 100, "INVALID_IO_PARTNER"), /*IOPartner*/
@@ -363,15 +373,21 @@
         }) : [];
 
         /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         /*Invoice ---*/
         /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         $isInvoiceTotalAmountEqual := function($invoice, $index) {(
-            $totalAmount := $reduce($invoice.items, function($acc, $v) {
+            $itemTotalAmount := $reduce($invoice.items, function($acc, $v) {
                 $acc + ($v.invoice_item_total_amount ? $v.invoice_item_total_amount : 0)
             }, 0);
-            $invoiceTotalAmount := $.invoice.invoice_total_amount ? $.invoice.invoice_total_amount : 0;
+            $invoiceTotalAmount := $invoice.invoice_total_amount ? $invoice.invoice_total_amount : 0;
 
-            $totalAmount = $invoiceTotalAmount ? null : {"code": "NOT_EQUAL_INVOICE_TOTAL_AMOUNT", "place": $index ? $index : 1}
+            $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "NOT_EQUAL_INVOICE_TOTAL_AMOUNT", "place": $index ? $index : 1, "args": [$invoiceTotalAmount, $itemTotalAmount]}
         )};
         $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "object" ? 
             $filter([
@@ -400,24 +416,37 @@
                 }) ~> $customAppend() 
             ], function($v) { $v != null })
         : [];
-        $invoiceErrors := $count($invoiceErrorsFirst) and false ? $map($invoiceErrorsFirst, function($error) {
+        $invoiceErrors := $count($invoiceErrorsFirst) ? $map($invoiceErrorsFirst, function($error) {
             $formatErrorMessage($error)
         }) : [];
         $invoiceWarnings := [];
 
         /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         /*tr_export_declaration ---*/
         /* --- */
-        $isDeclarationTotalValueEqual := function() {(
-            $totalValue := $reduce($.tr_export_declaration.items, function($acc, $v) {
+        /* --- */
+        /* --- */
+        /* --- */
+        $isEqualDeclarationTotalItemLine := function($declaration) {(
+            $totalLineItem := $declaration.total_line_item ~> $type() = "string" ? $atoi($declaration.total_line_item) : $declaration.total_line_item;
+            $itemCount := $count($declaration.items);
+
+            $totalLineItem = $itemCount ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_LINE_ITEM", "place": 1, "args": [$totalLineItem, $itemCount] }
+        )};
+        $isDeclarationTotalValueEqual := function($declaration) {(
+            $itemTotalValue := $reduce($declaration.items, function($acc, $v) {
                 $acc + ($v.item_value ? $v.item_value : 0)
             }, 0);
-            $declarationTotalWeight := $.tr_export_declaration.total_value ? $atoi($.tr_export_declaration.total_value) : 0;
+            $declarationTotalValue := $declaration.total_value ? $atoi($declaration.total_value) : 0;
 
-            $round($totalValue, 2) = $declarationTotalWeight ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "place": 1, "args": [] }
+            $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "place": 1, "args": [$declarationTotalValue, $itemTotalValue] }
         )};
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
-            $isDeclarationTotalValueEqual(),
+            $isDeclarationTotalValueEqual(tr_export_declaration),
+            $isEqualDeclarationTotalItemLine(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                     $max($v.commodity_code, 11, {"code": "INVALID_DECLARATION_COMMODITY_CODE", "place": $i + 1, "args": [$v.index]}), /**/
@@ -432,7 +461,13 @@
 
 
         /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         /*Atr ---*/
+        /* --- */
+        /* --- */
+        /* --- */
         /* --- */
         $atrErrors := $isAtrExist ? $filter([
         ], function($v) { $v 
