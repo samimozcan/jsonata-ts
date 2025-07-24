@@ -1,4 +1,4 @@
-/* fix round need to check if null for round or number functions 27.06.2025 v1 */
+/* handle invoice array  21.07.2025 */
 
 (
 
@@ -21,13 +21,22 @@ $getZollrechtlicherStatus := function($departureCountry, $documentDivision, $isA
   $response := $COStatus ? $COStatus : $EUStatus ? $EUStatus : $IMStatus
 )};
 
+$customAppend := function($data) {(
+  $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
+  $response := $reduce($data, $append)
+)};
 
 $isDeclarationExist := $exists(tr_export_declaration);
 $isInvoiceExist := $exists(invoice);
 $isCmrExist := $exists(cmr);
 
-$getWarenPosition := function($index) {(
+$invoiceArrayIndex := 0; /* This variable is used to track the index of the invoice items when invoice is an array. */
+$getInvoiceArrayIndex := function() {(
+  $invoiceArrayIndex := $invoiceArrayIndex + 1;
+  $response := $invoiceArrayIndex
+)};
 
+$getWarenPosition := function($index) {(
     $response := $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
      $map(tr_export_declaration.items, function($v) {
           {
@@ -53,34 +62,63 @@ $getWarenPosition := function($index) {(
             }
           }
         })
-    }) : $isInvoiceExist ?
+    }) : $isInvoiceExist and $type(invoice) = "object" ?
         $map(invoice.items, function($v, $i) {(
             {
-            "Positionsnummer": $v.invoice_item_no,
-            "WarenNummerEZT": $v.invoice_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
-            "WarenBezeichnung": $v.invoice_item_description,
-            "UrsprungslandCode": $getFirstElement([$v.invoice_item_country_of_origin, 'TR']), /*TODO: Burasi daima kisa kod olacak, bunun icin fonksiyon yazilmasi gerekebilir. */
-            "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
-            "AHStatMenge": $v.invoice_item_package_quantity ? $round($v.invoice_item_package_quantity, 3) : undefined,
-            "AHStatMengeMasseinheit": "NAR", /*default for now*/
-            "AHStatWert": $floor($v.invoice_item_quantity < 1 ? 1 : $v.invoice_item_quantity), /*default for now*/
-            "PackstueckAnzahl": $v.invoice_item_quantity, /*default for now*/
-            "PackstueckArt": "PK", /*default*/
-            "PackstueckZeichen": "OHNE", /*default for now*/
-            "BeguenstigungBeantragtCode": 100, /*default for now*/
-            "Artikelpreis": invoice.invoice_total_amount,
-            "Zollwert": invoice.invoice_total_amount, /*default for now*/
-            "AbzugHinzurechnung": {
-              "ArtCode": "R", /*default*/
-              "Betrag": $v.invoice_item_total_amount,
-              "Waehrung": $invoice.invoice_currency,
-              "KursVereinbartKz": "1" /* default */
-            }
+              "Positionsnummer": $v.invoice_item_no,
+              "WarenNummerEZT": $v.invoice_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
+              "WarenBezeichnung": $v.invoice_item_description,
+              "UrsprungslandCode": $getFirstElement([$v.invoice_item_country_of_origin, 'TR']), /*TODO: Burasi daima kisa kod olacak, bunun icin fonksiyon yazilmasi gerekebilir. */
+              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+              "AHStatMenge": $v.invoice_item_package_quantity ? $round($v.invoice_item_package_quantity, 3) : undefined,
+              "AHStatMengeMasseinheit": "NAR", /*default for now*/
+              "AHStatWert": $floor($v.invoice_item_quantity < 1 ? 1 : $v.invoice_item_quantity), /*default for now*/
+              "PackstueckAnzahl": $v.invoice_item_quantity, /*default for now*/
+              "PackstueckArt": "PK", /*default*/
+              "PackstueckZeichen": "OHNE", /*default for now*/
+              "BeguenstigungBeantragtCode": 100, /*default for now*/
+              "Artikelpreis": invoice.invoice_total_amount,
+              "Zollwert": invoice.invoice_total_amount, /*default for now*/
+              "AbzugHinzurechnung": {
+                "ArtCode": "R", /*default*/
+                "Betrag": $v.invoice_item_total_amount,
+                "Waehrung": $invoice.invoice_currency,
+                "KursVereinbartKz": "1" /* default */
+              }
           }
-        )}) : undefined
+        )}) : $isInvoiceExist and $type(invoice) = "array" ?
+        $map(invoice, function($v, $i) {(
+          $map($v.items, function($vv, $ii) {(
+            $invoiceArrayIndex = $invoiceArrayIndex + 1;
+            {
+              "Positionsnummer": $getInvoiceArrayIndex(),
+              "WarenNummerEZT": $vv.invoice_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
+              "WarenBezeichnung": $vv.invoice_item_description,
+              "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), /*TODO: Burasi daima kisa kod olacak, bunun icin fonksiyon yazilmasi gerekebilir. */
+              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
+              "AHStatMengeMasseinheit": "NAR", /*default for now*/
+              "AHStatWert": $floor($vv.invoice_item_quantity < 1 ? 1 : $vv.invoice_item_quantity), /*default for now*/
+              "PackstueckAnzahl": $vv.invoice_item_quantity, /*default for now*/
+              "PackstueckArt": "PK", /*default*/
+              "PackstueckZeichen": "OHNE", /*default for now*/
+              "BeguenstigungBeantragtCode": 100, /*default for now*/
+              "Artikelpreis": invoice.invoice_total_amount ~> $sum(),
+              "Zollwert": invoice.invoice_total_amount ~> $sum(), /*default for now*/
+              "AbzugHinzurechnung": {
+                "ArtCode": "R", /*default*/
+                "Betrag": $vv.invoice_item_total_amount,
+                "Waehrung": $v.invoice_currency,
+                "KursVereinbartKz": "1" /* default */
+              }
+            }
+          )})
+        )}) ~> $customAppend() ~> function($data) {$map($data, function($v, $i) {($merge([$v, {"Positionsnummer": $i + 1}]))})} : undefined
 )};
 
 $gesamtRohMasse := $isDeclarationExist ? $round($sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})), 1) : $isCmrExist ? $round(cmr.total_weight ? cmr.total_weight : 0, 1) : undefined; 
+$rechnungspreis := $isDeclarationExist ? tr_export_declaration.total_value : $isInvoiceExist and $type(invoice) = "object" ? invoice.invoice_total_amount : $isInvoiceExist and $type(invoice) = "array" ? invoice.invoice_total_amount ~> $sum() : undefined;
+$rechnungswaehrung := $isDeclarationExist ? tr_export_declaration.total_value_curr : $isInvoiceExist and $type(invoice) = "object" ? invoice.invoice_currency : $isInvoiceExist and $type(invoice) = "array" ? invoice[0].invoice_currency : undefined;
 
 {
   "FreierVerkehrAktVeredelUmwandlung": {
@@ -132,8 +170,8 @@ $gesamtRohMasse := $isDeclarationExist ? $round($sum($map(tr_export_declaration.
           "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceN : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
-          "Rechnungspreis": $getFirstElement([tr_export_declaration.total_value, invoice.invoice_total_amount]), /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
-          "Rechnungswaehrung": $getFirstElement([tr_export_declaration.total_value_curr, invoice.invoice_currency]), /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. Buranin validasyonu icin IO400 alani kullanilacak. */
+          "Rechnungspreis": $rechnungspreis, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
+          "Rechnungswaehrung": $rechnungswaehrung, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. Buranin validasyonu icin IO400 alani kullanilacak. */
           "DV1Angaben": {
             "DV1Kz": "0" /* default hep 0 */
           },
@@ -147,7 +185,7 @@ $gesamtRohMasse := $isDeclarationExist ? $round($sum($map(tr_export_declaration.
             "Minimalbetrag": 0.01,
             "ProzentualerAnteil": 123 /* TODO: @Emre @Tolga sorulacak */
           },
-          "Unterlage": $v.headerData.procedureCodeRequested = "42" ? { /* Burasi array olacak, gelen dokumanlarin maplemesi yapilacak */
+          "Unterlage": $v.headerData.procedureCodeRequested = "42" ? { /* Burasi array olacak, gelen dokumanlarin maplemesi yapilacak @alican burasi tam nasil olacak */ 
             "Bereich": "4", /* default */
             "Art":  "N380", /* default */
             "Nummer": $isInvoiceExist ? invoice.invoice_id : undefined, /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
