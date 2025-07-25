@@ -1,60 +1,118 @@
 {
-  "invoice": {
-    "items": [
-      {
-        "invoice_item_no": 1,
-        "invoice_item_quantity": 15,
-        "invoice_item_unit_type": "Adet",
-        "invoice_item_product_id": "PNDNBY0397",
-        "invoice_item_unit_price": 22.9,
-        "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-        "invoice_item_total_amount": 343.5,
-        "invoice_item_commodity_code": "6204623190",
-        "invoice_item_package_quantity": null,
-        "invoice_item_country_of_origin": null
-      },
-      {
-        "invoice_item_no": 2,
-        "invoice_item_quantity": 15,
-        "invoice_item_unit_type": "Adet",
-        "invoice_item_product_id": "PNDNBY0397",
-        "invoice_item_unit_price": 19.5,
-        "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-        "invoice_item_total_amount": 292.5,
-        "invoice_item_commodity_code": "6204623190",
-        "invoice_item_package_quantity": null,
-        "invoice_item_country_of_origin": null
-      },
-      {
-        "invoice_item_no": 3,
-        "invoice_item_quantity": 13,
-        "invoice_item_unit_type": "Adet",
-        "invoice_item_product_id": "PNDNBY1791",
-        "invoice_item_unit_price": 24.5,
-        "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
-        "invoice_item_total_amount": 318.5,
-        "invoice_item_commodity_code": "6204623190",
-        "invoice_item_package_quantity": null,
-        "invoice_item_country_of_origin": null
-      }
-    ],
-    "invoice_id": "BAY2025000000424",
-    "invoice_date": "2025-03-28",
-    "invoice_currency": "EUR",
-    "invoice_po_number": null,
-    "invoice_payment_term": "Mal Mukabili",
-    "invoice_total_amount": 954.5,
-    "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
-    "invoice_delivery_term": "FCA",
-    "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
-    "invoice_total_quantity": null,
-    "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
-    "invoice_customer_country": "DE",
-    "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
-    "invoice_supplier_country": "TR",
-    "invoice_total_package_quantity": 3,
-    "invoice_shipment_country_of_origin": null
-  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 15,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY0397",
+          "invoice_item_unit_price": 22.9,
+          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+          "invoice_item_total_amount": 343.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "123qwe"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 15,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY0397",
+          "invoice_item_unit_price": 19.5,
+          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+          "invoice_item_total_amount": 292.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 13,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY1791",
+          "invoice_item_unit_price": 24.5,
+          "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
+          "invoice_item_total_amount": 318.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "invoice_id": "BAY2025000000424",
+      "invoice_date": "2025-03-28",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "Mal Mukabili",
+      "invoice_total_amount": 954.5,
+      "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
+      "invoice_delivery_term": "FCA",
+      "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 3,
+      "invoice_shipment_country_of_origin": null
+    },
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 15,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY0397",
+          "invoice_item_unit_price": 22.9,
+          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+          "invoice_item_total_amount": 343.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "123qwe"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 15,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY0397",
+          "invoice_item_unit_price": 19.5,
+          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
+          "invoice_item_total_amount": 292.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 13,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "PNDNBY1791",
+          "invoice_item_unit_price": 24.5,
+          "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
+          "invoice_item_total_amount": 318.5,
+          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "invoice_id": "BAY2025000000424",
+      "invoice_date": "2025-03-28",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "Mal Mukabili",
+      "invoice_total_amount": 954.5,
+      "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
+      "invoice_delivery_term": "FCA",
+      "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 3,
+      "invoice_shipment_country_of_origin": null
+    }
+  ],
   "additional_data": {
     "declaration": [
       {

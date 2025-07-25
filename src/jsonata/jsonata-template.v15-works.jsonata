@@ -29,11 +29,42 @@ $customAppend := function($data) {(
 $isDeclarationExist := $exists(tr_export_declaration);
 $isInvoiceExist := $exists(invoice);
 $isCmrExist := $exists(cmr);
+$isAtrExist := $exists(atr);
 
 $invoiceArrayIndex := 0; /* This variable is used to track the index of the invoice items when invoice is an array. */
 $getInvoiceArrayIndex := function() {(
   $invoiceArrayIndex := $invoiceArrayIndex + 1;
   $response := $invoiceArrayIndex
+)};
+
+$getUnterlage := function($unterlage) {(
+  $invoiceUnterlage := $isInvoiceExist and $type($.invoice) = "object" ? {
+    "Bereich": "4", /* default */
+    "Art":  "N380", /* default */
+    "Nummer": invoice.invoice_id, /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
+    "DatumAusstellung": invoice.invoice_date /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
+  } : $isInvoiceExist and $type($.invoice) = "array" ? $map(invoice, function($v, $i) {(
+    {
+      "Bereich": "4", /* default */
+      "Art":  "N380", /* default */
+      "Nummer": $v.invoice_id, /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
+      "DatumAusstellung": $v.invoice_date /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
+    }
+  )}) : undefined;
+
+  $cmrUnterlage := $isCmrExist ? {
+    "Bereich": "4", /* default */
+    "Art":  "7HHF", /* default */
+    "Nummer": "CMR", /* AI den alinacak @alican burayi cmr varsa oradan al seklinde yazdim */
+    "DatumAusstellung": cmr.date /* AI den alinacak @alican burayi cmr varsa oradan al seklinde yazdim */
+  } : undefined;
+
+  $atrUnderlage := $isAtrExist ? {
+    "Bereich": "4", /* default */
+    "Art":  "N380", /* @alican default */
+    "Nummer": atr.atr_id, /* AI den alinacak @alican burayi atr varsa oradan al seklinde yazdim */
+    "DatumAusstellung": atr.atr_date /* AI den alinacak @alican burayi atr varsa oradan al seklinde yazdim */
+  } : undefined;
 )};
 
 $getWarenPosition := function($index) {(

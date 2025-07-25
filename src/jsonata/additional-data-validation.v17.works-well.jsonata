@@ -1,4 +1,4 @@
-    ( /* add declaration gross weight error 24-07-2025 */
+    ( /*  is declaration and invoice total amount equal  25-07-2025 */
         $IO3000 := [];
         $A1140 := [];
         $A1460 := ["1", "0"];
@@ -211,6 +211,10 @@
             "NOT_EQUAL_DECLARATION_TOTAL_GROSS_WEIGHT": {
                 "en": "Declaration total gross weight is not equal to the sum of declaration items. Total gross weight field value: {{1}}, Declaration items total gross weight: {{2}}",
                 "tr": "Beyanname toplam brüt ağırlığı, beyanname kalemlerinin toplamına eşit değil. Toplam brüt ağırlık bilgisi: {{1}}, Beyanname kalemlerinin toplam brüt ağırlığı: {{2}}"
+            },
+            "NOT_EQUAL_DECLARATION_INVOICE_TOTAL_VALUE": {
+                "en": "Declaration total value is not equal to the invoice total value. Declaration total value: {{1}}, Invoice total value: {{2}}",
+                "tr": "Beyanname toplam değeri, fatura toplam değerine eşit değil. Beyanname toplam değeri: {{1}}, Fatura toplam değeri: {{2}}"
             }
         };
 
@@ -263,7 +267,7 @@
 
             {
                 "code": $errorCode,
-                "message": $formattedMessage,
+                "message": $formattedMessage ? $formattedMessage : $message,
                 "place": $errorObject.place ? $errorObject.place : 1
             }
         )};
@@ -412,8 +416,8 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "place": $i + 1}),
                         $map($v.items, function($vv, $ii) {
                             [
-                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $ii + 1}), /**/
-                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $ii + 1}) /**/
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $ii + 1, "args": [$vv.invoice_item_no]}), /**/
+                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $ii + 1, "args": [$vv.invoice_item_no]}) /**/
                             ]
                         }) ~> $customAppend()
                     ]
@@ -434,6 +438,12 @@
         /* --- */
         /* --- */
         /* --- */
+        $isEqualTotalValueDeclarationInvoice := function($declaration) {(
+            $invoiceTotalValue := $isInvoiceExist and $type($.invoice) = "object" ? $.invoice.invoice_total_amount : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice.invoice_total_amount ~> $sum() : 0;
+            $declarationTotalValue := $isDeclarationExist and $declaration.total_value ? $atoi($declaration.total_value) : 0;
+
+            $invoiceTotalValue = 0 or $declarationTotalValue = 0 or $round($invoiceTotalValue, 2) = $round($declarationTotalValue, 2) ? null : {"code": "NOT_EQUAL_DECLARATION_INVOICE_TOTAL_VALUE", "place": 1, "args": [$declarationTotalValue, $invoiceTotalValue] }
+        )};
         $isEqualDeclarationTotalGrossWeight := function($declaration) {(
             $grossWeight := $declaration.total_weight ? $declaration.total_weight : $declaration.items[0].gross_weight;
             $itemTotalGrossWeight := $reduce($declaration.items, function($acc, $v) {
@@ -460,6 +470,7 @@
             $isEqualDeclarationTotalGrossWeight(tr_export_declaration),
             $isDeclarationTotalValueEqual(tr_export_declaration),
             $isEqualDeclarationTotalItemLine(tr_export_declaration),
+            $isEqualTotalValueDeclarationInvoice(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                     $max($v.commodity_code, 11, {"code": "INVALID_DECLARATION_COMMODITY_CODE", "place": $i + 1, "args": [$v.index]}), /**/
