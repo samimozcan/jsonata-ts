@@ -310,71 +310,71 @@
         /* --- */
         /* --- */
         $additionalWarningFirst := $filter([
-            $between($.additional_data.transaction.ioPartner, 0, 100, "INVALID_IO_PARTNER"), /*IOPartner*/
-            $between($.additional_data.transaction.ioDivision3, 0, 10, "INVALID_IO_DIVISION3"), /*IODivision3*/
-            $between($.additional_data.transaction.ioReference, 0, 35, "INVALID_IO_REFERENCE"),
+            $between($.additional_data.transaction.ioPartner, 0, 100, {"code": "INVALID_IO_PARTNER", "path": ["additional_data", "transaction", "ioPartner"], "args": []}), /*IOPartner*/
+            $between($.additional_data.transaction.ioDivision3, 0, 10, {"code": "INVALID_IO_DIVISION3", "path": ["additional_data", "transaction", "ioDivision3"], "args": []}), /*IODivision3*/
+            $between($.additional_data.transaction.ioReference, 0, 35, {"code": "INVALID_IO_REFERENCE", "path": ["additional_data", "transaction", "ioReference"], "args": []}),
 
             $map($.additional_data.declaration, function($v, $i) {
                 [
-                    $between($v.objectIdentification.objectName, 0, 35, "INVALID_OBJECT_NAME"),
-                    $between($v.objectIdentification.objectAlias, 0, 35, "INVALID_OBJECT_ALIAS"), /*ObjektAlias*/
-                    $between($v.objectIdentification.declarationType, 0, 5, "INVALID_DECLARATION_TYPE"), /*AnmeldungArt*/
-                    $between($v.objectIdentification.username, 0, 70, "INVALID_USER_NAME"),
-                    $between($v.objectIdentification.referenceNumberOverlay, 0, 35, "INVALID_REFERENCE_NUMBER_OVERLAY"), /*BezugsnummerVorblendung*/
+                    $between($v.objectIdentification.objectName, 0, 35, {"code": "INVALID_OBJECT_NAME", "path": ["additional_data", "declaration", $i, "objectIdentification", "objectName"], "args": [$i]}),
+                    $between($v.objectIdentification.objectAlias, 0, 35, {"code": "INVALID_OBJECT_ALIAS", "path": ["additional_data", "declaration", $i, "objectIdentification", "objectAlias"], "args": [$i]}), /*ObjektAlias*/
+                    $between($v.objectIdentification.declarationType, 0, 5, {"code": "INVALID_DECLARATION_TYPE", "path": ["additional_data", "declaration", $i, "objectIdentification", "declarationType"], "args": [$i]}), /*AnmeldungArt*/
+                    $between($v.objectIdentification.username, 0, 70, {"code": "INVALID_USER_NAME", "path": ["additional_data", "declaration", $i, "objectIdentification", "username"], "args": [$i]}),
+                    $between($v.objectIdentification.referenceNumberOverlay, 0, 35, {"code": "INVALID_REFERENCE_NUMBER_OVERLAY", "path": ["additional_data", "declaration", $i, "objectIdentification", "referenceNumberOverlay"], "args": [$i]}), /*BezugsnummerVorblendung*/
 
-                    $between($v.headerData.addressedCustomsOffice, 0, 35, "INVALID_CUSTOMS_OFFICE"), /*AdressierteZollstelle*/
-                    $between($v.headerData.representationRelationshipCode, 0, 1, "INVALID_REPRESENTATION_CODE"), /*VertretungsverhaeltnisCode*/
+                    $between($v.headerData.addressedCustomsOffice, 0, 35, {"code": "INVALID_CUSTOMS_OFFICE", "path": ["additional_data", "declaration", $i, "headerData", "addressedCustomsOffice"], "args": [$i]}), /*AdressierteZollstelle*/
+                    $between($v.headerData.representationRelationshipCode, 0, 1, {"code": "INVALID_REPRESENTATION_CODE", "path": ["additional_data", "declaration", $i, "headerData", "representationRelationshipCode"], "args": [$i]}), /*VertretungsverhaeltnisCode*/
 
-                    $between($v.headerData.agentContact.contactPersonName, 0, 35, "INVALID_CONTACT_PERSON_NAME"), /*NameAnmeldenderBearbeiter*/
-                    $between($v.headerData.agentContact.contactPersonPhoneNumber, 0, 35, "INVALID_CONTACT_PERSON_PHONE"), /*TelefonnummerAnmeldenderBearbeiter*/
-                    $between($v.headerData.agentContact.contactPersonPosition, 0, 35, "INVALID_CONTACT_PERSON_POSITION"), /*StellungAnmeldenderBearbeiter*/
-                    $between($v.headerData.agentContact.contactPersonEmail, 0, 256, "INVALID_CONTACT_PERSON_EMAIL"), /*EmailAdresseAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonName, 0, 35, {"code": "INVALID_CONTACT_PERSON_NAME", "path": ["additional_data", "declaration", $i, "headerData", "agentContact", "contactPersonName"], "args": [$i]}), /*NameAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonPhoneNumber, 0, 35, {"code": "INVALID_CONTACT_PERSON_PHONE", "path": ["additional_data", "declaration", $i, "headerData", "agentContact", "contactPersonPhoneNumber"], "args": [$i]}), /*TelefonnummerAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonPosition, 0, 35, {"code": "INVALID_CONTACT_PERSON_POSITION", "path": ["additional_data", "declaration", $i, "headerData", "agentContact", "contactPersonPosition"], "args": [$i]}), /*StellungAnmeldenderBearbeiter*/
+                    $between($v.headerData.agentContact.contactPersonEmail, 0, 256, {"code": "INVALID_CONTACT_PERSON_EMAIL", "path": ["additional_data", "declaration", $i, "headerData", "agentContact", "contactPersonEmail"], "args": [$i]}), /*EmailAdresseAnmeldenderBearbeiter*/
 
-                    $between($v.headerData.procedureCodeRequested, 0, 2, "INVALID_PROCEDURE_CODE"), /*FiskalvertretungKz*/
-                    $between($v.headerData.departureCountry, 0, 2, "INVALID_DEPARTURE_COUNTRY"), /*ZollrechtlicherStatus*/
-                    $between($v.headerData.destinationFederalState, 0, 2, "INVALID_DESTINATION_STATE"), /*Bestimmungsbundesland*/
-                    $between($v.headerData.destinationCountry, 0, 2, "INVALID_DESTINATION_COUNTRY"), /*Bestimmungsland*/
-                    $between($v.headerData.transportMeansArrivalIdentity, 0, 30, "INVALID_TRANSPORT_MEANS_IDENTITY"), /*KennzeichenNameBefoerderungsmittelAnkunft*/
-                    $between($v.headerData.transportMeansNationalityCode, 0, 2, "INVALID_TRANSPORT_MEANS_NATIONALITY"), /*BefoerderungsmittelGrenzeStaatszugehoerigkeitCode*/
-                    $between($v.headerData.previousAdministrativeReferenceType, 0, 6, "INVALID_PREVIOUS_REFERENCE_TYPE"), /*VorpapierArtCode*/
-                    $between($v.headerData.previousAdministrativeReferenceNumber, 0, 28, "INVALID_PREVIOUS_REFERENCE_NUMBER"), /*VorpapierNr*/
+                    $between($v.headerData.procedureCodeRequested, 0, 2, {"code": "INVALID_PROCEDURE_CODE", "path": ["additional_data", "declaration", $i, "headerData", "procedureCodeRequested"], "args": [$i]}), /*FiskalvertretungKz*/
+                    $between($v.headerData.departureCountry, 0, 2, {"code": "INVALID_DEPARTURE_COUNTRY", "path": ["additional_data", "declaration", $i, "headerData", "departureCountry"], "args": [$i]}), /*ZollrechtlicherStatus*/
+                    $between($v.headerData.destinationFederalState, 0, 2, {"code": "INVALID_DESTINATION_STATE", "path": ["additional_data", "declaration", $i, "headerData", "destinationFederalState"], "args": [$i]}), /*Bestimmungsbundesland*/
+                    $between($v.headerData.destinationCountry, 0, 2, {"code": "INVALID_DESTINATION_COUNTRY", "path": ["additional_data", "declaration", $i, "headerData", "destinationCountry"], "args": [$i]}), /*Bestimmungsland*/
+                    $between($v.headerData.transportMeansArrivalIdentity, 0, 30, {"code": "INVALID_TRANSPORT_MEANS_IDENTITY", "path": ["additional_data", "declaration", $i, "headerData", "transportMeansArrivalIdentity"], "args": [$i]}), /*KennzeichenNameBefoerderungsmittelAnkunft*/
+                    $between($v.headerData.transportMeansNationalityCode, 0, 2, {"code": "INVALID_TRANSPORT_MEANS_NATIONALITY", "path": ["additional_data", "declaration", $i, "headerData", "transportMeansNationalityCode"], "args": [$i]}), /*BefoerderungsmittelGrenzeStaatszugehoerigkeitCode*/
+                    $between($v.headerData.previousAdministrativeReferenceType, 0, 6, {"code": "INVALID_PREVIOUS_REFERENCE_TYPE", "path": ["additional_data", "declaration", $i, "headerData", "previousAdministrativeReferenceType"], "args": [$i]}), /*VorpapierArtCode*/
+                    $between($v.headerData.previousAdministrativeReferenceNumber, 0, 28, {"code": "INVALID_PREVIOUS_REFERENCE_NUMBER", "path": ["additional_data", "declaration", $i, "headerData", "previousAdministrativeReferenceNumber"], "args": [$i]}), /*VorpapierNr*/
 
                     /*Kostenart (dv1CostAllocation.costType)*/
                     /*Kosten (dv1CostAllocation.costs)*/
                     /*KostenWaehrung (dv1CostAllocation.currencyCode)*/
 
-                    $between($v.headerData.base.documentDivision, 0, 1, "INVALID_DOCUMENT_DIVISION"),
+                    $between($v.headerData.base.documentDivision, 0, 1, {"code": "INVALID_DOCUMENT_DIVISION", "path": ["additional_data", "declaration", $i, "headerData", "base", "documentDivision"], "args": [$i]}),
 
                     $map($v.addresses, function($vv, $ii) {
                         [
-                            $between($vv.addressType, 0, 10, "INVALID_ADDRESS_TYPE"), /* "AdressTyp": $a.addressType, */
-                            $between($vv.addressCode, 0, 10, "INVALID_ADDRESS_CODE"), /* "AdressCode": "1", */
-                            $between($vv.participantEORI, 0, 17, "INVALID_PARTICIPANT_EORI"), /* "TeilnehmerEORI": $a.participantEORI, */
-                            $between($vv.participantSubsidiaryNumber, 0, 4, "INVALID_PARTICIPANT_SUBSIDIARY_NUMBER"),/* "TeilnehmerNLNR": $a.participantSubsidiaryNumber, */
-                            $between($vv.companyName, 0, 120, "INVALID_COMPANY_NAME"),/* "NameFirma": $a.companyName, */
-                            $between($vv.streetAndNumber, 0, 35, "INVALID_STREET_AND_NUMBER"), /* "StrasseHausNr": $a.streetAndNumber, */
-                            $between($vv.district, 0, 35, "INVALID_DISTRICT"), /* "Ortsteil": $a.district, */
-                            $between($vv.countryCode, 0, 3, "INVALID_COUNTRY_CODE"), /* "LandCode": $a.countryCode, */
-                            $between($vv.postalCode, 0, 9, "INVALID_POSTAL_CODE"), /* "PLZ-S": $a.postalCode, */
-                            $between($vv.city, 0, 35, "INVALID_CITY") /* "Ort-S": $a.city */
+                            $between($vv.addressType, 0, 10, {"code": "INVALID_ADDRESS_TYPE", "path": ["additional_data", "declaration", $i, "addresses", $ii, "addressType"], "args": [$i, $ii]}), /* "AdressTyp": $a.addressType, */
+                            $between($vv.addressCode, 0, 10, {"code": "INVALID_ADDRESS_CODE", "path": ["additional_data", "declaration", $i, "addresses", $ii, "addressCode"], "args": [$i, $ii]}), /* "AdressCode": "1", */
+                            $between($vv.participantEORI, 0, 17, {"code": "INVALID_PARTICIPANT_EORI", "path": ["additional_data", "declaration", $i, "addresses", $ii, "participantEORI"], "args": [$i, $ii]}), /* "TeilnehmerEORI": $a.participantEORI, */
+                            $between($vv.participantSubsidiaryNumber, 0, 4, {"code": "INVALID_PARTICIPANT_SUBSIDIARY_NUMBER", "path": ["additional_data", "declaration", $i, "addresses", $ii, "participantSubsidiaryNumber"], "args": [$i, $ii]}),/* "TeilnehmerNLNR": $a.participantSubsidiaryNumber, */
+                            $between($vv.companyName, 0, 120, {"code": "INVALID_COMPANY_NAME", "path": ["additional_data", "declaration", $i, "addresses", $ii, "companyName"], "args": [$i, $ii]}),/* "NameFirma": $a.companyName, */
+                            $between($vv.streetAndNumber, 0, 35, {"code": "INVALID_STREET_AND_NUMBER", "path": ["additional_data", "declaration", $i, "addresses", $ii, "streetAndNumber"], "args": [$i, $ii]}), /* "StrasseHausNr": $a.streetAndNumber, */
+                            $between($vv.district, 0, 35, {"code": "INVALID_DISTRICT", "path": ["additional_data", "declaration", $i, "addresses", $ii, "district"], "args": [$i, $ii]}), /* "Ortsteil": $a.district, */
+                            $between($vv.countryCode, 0, 3, {"code": "INVALID_COUNTRY_CODE", "path": ["additional_data", "declaration", $i, "addresses", $ii, "countryCode"], "args": [$i, $ii]}), /* "LandCode": $a.countryCode, */
+                            $between($vv.postalCode, 0, 9, {"code": "INVALID_POSTAL_CODE", "path": ["additional_data", "declaration", $i, "addresses", $ii, "postalCode"], "args": [$i, $ii]}), /* "PLZ-S": $a.postalCode, */
+                            $between($vv.city, 0, 35, {"code": "INVALID_CITY", "path": ["additional_data", "declaration", $i, "addresses", $ii, "city"], "args": [$i, $ii]}) /* "Ort-S": $a.city */
                         ]
                     }) ~> $customAppend()
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null });
         $additionalErrorsFirst := $filter([
-            $isExist($.additional_data.transaction, "MISSING_TRANSACTION"), /*Transaktion*/
-            $isExist($.additional_data.transaction.ioPartner, "MISSING_IO_PARTNER"), /*IOPartner*/
-            $isExist($.additional_data.transaction.ioReference, "MISSING_IO_REFERENCE"), /*IOReferenz*/
+            $isExist($.additional_data.transaction, {"code": "MISSING_TRANSACTION", "path": ["additional_data", "transaction"], "args": []}), /*Transaktion*/
+            $isExist($.additional_data.transaction.ioPartner, {"code": "MISSING_IO_PARTNER", "path": ["additional_data", "transaction", "ioPartner"], "args": []}), /*IOPartner*/
+            $isExist($.additional_data.transaction.ioReference, {"code": "MISSING_IO_REFERENCE", "path": ["additional_data", "transaction", "ioReference"], "args": []}), /*IOReferenz*/
 
             $map($.additional_data.declaration, function($v, $i) {
                 [
-                    $isExist($v.objectIdentification, "MISSING_OBJECT_IDENTIFICATION"), /*ObjektIdentifizierung*/
-                    $isExist($v.objectIdentification.objectName, "MISSING_OBJECT_NAME"), /*ObjektName*/
-                    $isExist($v.objectIdentification.username, "MISSING_USERNAME"), /*Bearbeiter*/
+                    $isExist($v.objectIdentification, {"code": "MISSING_OBJECT_IDENTIFICATION", "path": ["additional_data", "declaration", $i, "objectIdentification"], "args": [$i]}), /*ObjektIdentifizierung*/
+                    $isExist($v.objectIdentification.objectName, {"code": "MISSING_OBJECT_NAME", "path": ["additional_data", "declaration", $i, "objectIdentification", "objectName"], "args": [$i]}), /*ObjektName*/
+                    $isExist($v.objectIdentification.username, {"code": "MISSING_USERNAME", "path": ["additional_data", "declaration", $i, "objectIdentification", "username"], "args": [$i]}), /*Bearbeiter*/
 
-                    $isBoolean($v.headerData.declarantIsConsignee, "INVALID_DECLARANT_IS_CONSIGNEE"), /*AnmelderIstEmpfaenger*/
-                    $isBoolean($v.headerData.inputTaxDeduction, "INVALID_INPUT_TAX_DEDUCTION") /*Vorsteuerabzug*/
+                    $isBoolean($v.headerData.declarantIsConsignee, {"code": "INVALID_DECLARANT_IS_CONSIGNEE", "path": ["additional_data", "declaration", $i, "headerData", "declarantIsConsignee"], "args": [$i]}), /*AnmelderIstEmpfaenger*/
+                    $isBoolean($v.headerData.inputTaxDeduction, {"code": "INVALID_INPUT_TAX_DEDUCTION", "path": ["additional_data", "declaration", $i, "headerData", "inputTaxDeduction"], "args": [$i]}) /*Vorsteuerabzug*/
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null });
@@ -406,11 +406,11 @@
         $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "object" ? 
             $filter([
                 $isInvoiceTotalAmountEqual(invoice),
-                $max($.invoice.invoice_currency, 3, "INVALID_INVOICE_CURRENCY"),
+                $max($.invoice.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "path": ["invoice", "invoice_currency"], "args": []}),
                 $map($.invoice.items, function($v, $i) {
                     [
-                        $max($v.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "path": ["invoice", "items", $i, "invoice_item_commodity_code"], "args": [$v.invoice_item_no]}), /**/
-                        $max($v.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "path": ["invoice", "items", $i, "invoice_item_country_of_origin"], "args" : [$v.invoice_item_no]}) /**/
+                        $max($v.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "path": ["invoice", "items", $i, "invoice_item_commodity_code"], "args": [$i]}),
+                        $max($v.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "path": ["invoice", "items", $i, "invoice_item_country_of_origin"], "args": [$i]})
                     ]
                 }) ~> $customAppend()
             ], function($v) { $v != null }) : 
@@ -419,11 +419,11 @@
                 $map(invoice, function($v, $i) {
                     [
                         $isInvoiceTotalAmountEqual($v, $i),
-                        $max($v.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "place": $i + 1}),
+                        $max($v.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
-                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $ii + 1, "args": [$vv.invoice_item_no]}), /**/
-                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $ii + 1, "args": [$vv.invoice_item_no]}) /**/
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]}),
+                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
                             ]
                         }) ~> $customAppend()
                     ]
@@ -448,7 +448,7 @@
             $invoiceTotalValue := $isInvoiceExist and $type($.invoice) = "object" ? $.invoice.invoice_total_amount : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice.invoice_total_amount ~> $sum() : 0;
             $declarationTotalValue := $isDeclarationExist and $declaration.total_value ? $atoi($declaration.total_value) : 0;
 
-            $invoiceTotalValue = 0 or $declarationTotalValue = 0 or $round($invoiceTotalValue, 2) = $round($declarationTotalValue, 2) ? null : {"code": "NOT_EQUAL_DECLARATION_INVOICE_TOTAL_VALUE", "place": 1, "args": [$declarationTotalValue, $invoiceTotalValue] }
+            $invoiceTotalValue = 0 or $declarationTotalValue = 0 or $round($invoiceTotalValue, 2) = $round($declarationTotalValue, 2) ? null : {"code": "NOT_EQUAL_DECLARATION_INVOICE_TOTAL_VALUE", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $invoiceTotalValue] }
         )};
         $isEqualDeclarationTotalGrossWeight := function($declaration) {(
             $grossWeight := $declaration.total_weight ? $declaration.total_weight : $declaration.items[0].gross_weight;
@@ -456,13 +456,13 @@
                 $acc + ($v.gross_weight ? $v.gross_weight : 0)
             }, 0) ~> $round(2);
 
-            $round($grossWeight, 2) = $itemTotalGrossWeight ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_GROSS_WEIGHT", "place": 1, "args": [$grossWeight, $itemTotalGrossWeight] }
+            $round($grossWeight, 2) = $itemTotalGrossWeight ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_GROSS_WEIGHT", "path": ["tr_export_declaration", "total_weight"], "args": [$grossWeight, $itemTotalGrossWeight] }
         )};
         $isEqualDeclarationTotalItemLine := function($declaration) {(
             $totalLineItem := $declaration.total_line_item ~> $type() = "string" ? $atoi($declaration.total_line_item) : $declaration.total_line_item;
             $itemCount := $count($declaration.items);
 
-            $totalLineItem = $itemCount ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_LINE_ITEM", "place": 1, "args": [$totalLineItem, $itemCount] }
+            $totalLineItem = $itemCount ? null : {"code": "NOT_EQUAL_DECLARATION_TOTAL_LINE_ITEM", "path": ["tr_export_declaration", "total_line_item"], "args": [$totalLineItem, $itemCount] }
         )};
         $isDeclarationTotalValueEqual := function($declaration) {(
             $itemTotalValue := $reduce($declaration.items, function($acc, $v) {
@@ -470,7 +470,7 @@
             }, 0);
             $declarationTotalValue := $declaration.total_value ? $atoi($declaration.total_value) : 0;
 
-            $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "place": 1, "args": [$declarationTotalValue, $itemTotalValue] }
+            $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"NOT_EQUAL_DECLARATION_TOTAL_VALUE", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $itemTotalValue] }
         )};
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
             $isEqualDeclarationTotalGrossWeight(tr_export_declaration),
@@ -479,8 +479,8 @@
             $isEqualTotalValueDeclarationInvoice(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
-                    $max($v.commodity_code, 11, {"code": "INVALID_DECLARATION_COMMODITY_CODE", "place": $i + 1, "args": [$v.index]}), /**/
-                    $max($v.origin, 2, {"code": "INVALID_DECLARATION_ITEM_COUNTRY_ORIGIN", "place": $i + 1, "args" : [$v.index]}) /**/
+                    $max($v.commodity_code, 11, {"code": "INVALID_DECLARATION_COMMODITY_CODE", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]}),
+                    $max($v.origin, 2, {"code": "INVALID_DECLARATION_ITEM_COUNTRY_ORIGIN", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]})
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];
