@@ -265,10 +265,15 @@
                 $replace($acc, "{{" & ($index + 1) & "}}", $string($arg))
             }, $message);
 
+            $pathTmp := $reduce($errorObject.path, function($acc, $v, $i) {
+                $isNumber($v, "") = null ?
+                    ($i = 0 ? "[" & $v & "]" : $acc & "[" & $v & "]") : ($i = 0 ? $v : $acc & "." & $v)
+            }, "");
+
             {
                 "code": $errorCode,
                 "message": $formattedMessage ? $formattedMessage : $message,
-                "place": $errorObject.place ? $errorObject.place : 1
+                "path": $pathTmp ? $pathTmp : "unknown"
             }
         )};
 
@@ -380,6 +385,7 @@
             $formatErrorMessage($error)
         }) : [];
 
+
         /* --- */
         /* --- */
         /* --- */
@@ -395,7 +401,7 @@
             }, 0);
             $invoiceTotalAmount := $invoice.invoice_total_amount ? $invoice.invoice_total_amount : 0;
 
-            $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "NOT_EQUAL_INVOICE_TOTAL_AMOUNT", "place": $index ? $index : 1, "args": [$invoiceTotalAmount, $itemTotalAmount]}
+            $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "NOT_EQUAL_INVOICE_TOTAL_AMOUNT", "path": ["invoice", $index, "invoice_total_amount"], "args": [$invoiceTotalAmount, $itemTotalAmount]}
         )};
         $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "object" ? 
             $filter([
@@ -403,8 +409,8 @@
                 $max($.invoice.invoice_currency, 3, "INVALID_INVOICE_CURRENCY"),
                 $map($.invoice.items, function($v, $i) {
                     [
-                        $max($v.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "place": $i + 1, "args": [$v.invoice_item_no]}), /**/
-                        $max($v.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "place": $i + 1, "args" : [$v.invoice_item_no]}) /**/
+                        $max($v.invoice_item_commodity_code, 11, {"code": "INVALID_INVOICE_COMMODITY_CODE", "path": ["invoice", "items", $i, "invoice_item_commodity_code"], "args": [$v.invoice_item_no]}), /**/
+                        $max($v.invoice_item_country_of_origin, 2, {"code": "INVALID_INVOICE_ITEM_COUNTRY_ORIGIN", "path": ["invoice", "items", $i, "invoice_item_country_of_origin"], "args" : [$v.invoice_item_no]}) /**/
                     ]
                 }) ~> $customAppend()
             ], function($v) { $v != null }) : 
@@ -412,7 +418,7 @@
             $filter([
                 $map(invoice, function($v, $i) {
                     [
-                        $isInvoiceTotalAmountEqual($v, $i + 1),
+                        $isInvoiceTotalAmountEqual($v, $i),
                         $max($v.invoice_currency, 3, {"code": "INVALID_INVOICE_CURRENCY", "place": $i + 1}),
                         $map($v.items, function($vv, $ii) {
                             [
