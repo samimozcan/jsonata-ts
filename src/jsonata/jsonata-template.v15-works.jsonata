@@ -1,4 +1,4 @@
-/* VorpapierArtCode can be  24.07.2025 */
+/* add getUnterlage function  11.08.2025 */
 
 (
 
@@ -37,7 +37,7 @@ $getInvoiceArrayIndex := function() {(
   $response := $invoiceArrayIndex
 )};
 
-$getUnterlage := function($unterlage) {(
+$getUnterlage := function($procedureCodeRequested) {(
   $invoiceUnterlage := $isInvoiceExist and $type($.invoice) = "object" ? {
     "Bereich": "4", /* default */
     "Art":  "N380", /* default */
@@ -52,19 +52,7 @@ $getUnterlage := function($unterlage) {(
     }
   )}) : undefined;
 
-  $cmrUnterlage := $isCmrExist ? {
-    "Bereich": "4", /* default */
-    "Art":  "7HHF", /* default */
-    "Nummer": "CMR", /* AI den alinacak @alican burayi cmr varsa oradan al seklinde yazdim */
-    "DatumAusstellung": cmr.date /* AI den alinacak @alican burayi cmr varsa oradan al seklinde yazdim */
-  } : undefined;
-
-  $atrUnderlage := $isAtrExist ? {
-    "Bereich": "4", /* default */
-    "Art":  "N380", /* @alican default */
-    "Nummer": atr.atr_id, /* AI den alinacak @alican burayi atr varsa oradan al seklinde yazdim */
-    "DatumAusstellung": atr.atr_date /* AI den alinacak @alican burayi atr varsa oradan al seklinde yazdim */
-  } : undefined;
+  $return := $procedureCodeRequested = "42" ? [$invoiceUnterlage] ~> $filter(function($v) { $exists($v) }) : undefined;
 )};
 
 $getWarenPosition := function($index) {(
@@ -216,12 +204,7 @@ $rechnungswaehrung := $isDeclarationExist ? tr_export_declaration.total_value_cu
             "Minimalbetrag": 0.01,
             "ProzentualerAnteil": 123 /* TODO: @Emre @Tolga sorulacak */
           },
-          "Unterlage": $v.headerData.procedureCodeRequested = "42" ? { /* Burasi array olacak, gelen dokumanlarin maplemesi yapilacak @alican burasi tam nasil olacak */ 
-            "Bereich": "4", /* default */
-            "Art":  "N380", /* default */
-            "Nummer": $isInvoiceExist ? invoice.invoice_id : undefined, /* AI den alinacak @alican burayi invoice varsa oradan al seklinde yazdim */
-            "DatumAusstellung": $isInvoiceExist ? invoice.invoice_date : undefined  /* @alican ayni sekilde invoice varsa oradan al diye yazdim Should date format or not create declaration */ /* AI den gelecek, kontrol icin validasyona format check eklenecek */
-          } : null,
+          "Unterlage": $getUnterlage($v.headerData.procedureCodeRequested),
           "Zahlungsart": $v.headerData.procedureCodeRequested = "42" ? "D" : "E", /* A2060 dan kontrol.  */
           "Adressen": $map($v.addresses, function($a) { /* Eger EORI varsa digerlerine ihtiyac yok, lakin yoksa gelmeleri gerekiyor, validasyona yazilacak. */
             {
