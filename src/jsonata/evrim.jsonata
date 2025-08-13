@@ -1,0 +1,140 @@
+( /*Test Data 123 123 123 123*/
+
+$customAppend := function($data) {(
+    $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
+
+    $response := $reduce($data, $append)
+)};
+
+$isInvoiceExist := $exists($.invoice) and $type($.invoice) = "array" and $count($.invoice) > 0;
+$isDeclarationExist := $exists($.tr_export_declaration) and $type($.tr_export_declaration) = "object";
+$isCombineItemsExist := $exists($.combine_items) and $type($.combine_items) = "object" and $count($.combine_items.items) > 0;
+
+$headers := [{
+    "A": "MAL KODU",
+    "B": "ADET",
+    "C": "Miktar Cinsi",
+    "D": "",
+    "E": "Kıymet",
+    "F": "Gtip",
+    "G": "Menşe",
+    "H": "Brüt",
+    "I": "Net",
+    "J": "Ticari Tanim",
+    "K": "Antrepo Kodu",
+    "L": "Antrepo Sira",
+    "M": "Kullanilmis",
+    "N": "Atr-Diger",
+    "O": "Kap Adedi",
+    "P": "Kap Cinsi",
+    "Q": "Malin Cinsi",
+    "R": "Marka",
+    "S": "No",
+    "T": "Cif Diger Tutar",
+    "U": "KDV",
+    "V": "Fatura No",
+    "W": "Ithalat sekli",
+    "X": "Olcu Miktari",
+    "Y": "Olcu Birimi"
+}];
+
+$declarationResultItems := $map(tr_export_declaration.items, function($v, $i) {
+    {
+        "A": "MAL KODU - Default",
+        "B": $v.quantity,
+        "C": $v.unit_of_measure,
+        "D": $v.sender ? $v.sender : $.tr_export_declaration.sender,
+        "E": $v.item_value,
+        "F": $v.commodity_code,
+        "G": $v.origin,
+        "H": $v.gross_weight,
+        "I": $v.net_weight,
+        "J": $v.commodity_description,
+        "K": "ANTREPO KODU - Default",
+        "L": "ANTREPO SIRA - Default",
+        "M": "KULLANILMIS - Default",
+        "N": "ATR-DIGER - Default",
+        "O": null,
+        "P": $v.package_quantity,
+        "Q": "MALIN CINSI - Default",
+        "R": "MARKA - Default",
+        "S": $v.index,
+        "T": "CIF DIGER - Default",
+        "U": "KDV - Default",
+        "V": $.tr_export_declaration.id,
+        "W": $.tr_export_declaration.delivery_term,
+        "X": "OLCU MIKTARI - Default",
+        "Y": "",
+        "Z": "OLCU BIRIMI - Default"
+    }
+});
+    
+$invoiceResultItems := $map($.invoice, function($v, $i) {
+    $map($v.items, function($vv, $ii) {
+        {
+        "A": "MAL KODU - Default",
+        "B": $vv.invoice_item_quantity,
+        "C": $vv.invoice_item_unit_type,
+        "D": "",
+        "E": $vv.invoice_item_unit_price,
+        "F": $vv.invoice_item_commodity_code,
+        "G": $vv.invoice_item_country_of_origin,
+        "H": "BRUT - Default",
+        "I": "NET - Default",
+        "J": $vv.invoice_item_description,
+        "K": "ANTREPO KODU - Default",
+        "L": "ANTREPO SIRA - Default",
+        "M": "KULLANILMIS - Default",
+        "N": "ATR-DIGER - Default",
+        "O": $vv.invoice_item_package_quantity,
+        "P": "KAP CINSI - Default",
+        "Q": "MALIN CINSI - Default",
+        "R": "MARKA - Default",
+        "S": $vv.invoice_item_no,
+        "T": "CIF DIGER - Default",
+        "U": "KDV - Default",
+        "V": $v.invoice_id,
+        "W": $v.invoice_delivery_term,
+        "X": "OLCU MIKTARI - Default",
+        "Y": "OLCU BIRIMI - Default"
+    }
+    })
+})[] ~> $customAppend();
+
+$combineResultItems := $map($.combine_items.items, function($v, $i) {
+    {
+        "A": "MAL KODU - Default",
+        "B": $v.combined_item_quantity,
+        "C": $v.combined_item_unit_type,
+        "D": "",
+        "E": $v.combined_item_total_amount,
+        "F": $v.combined_item_commodity_code,
+        "G": $v.combined_item_country_of_origin,
+        "H": $v.combined_item_gross_weight,
+        "I": $v.combined_item_net_weight,
+        "J": $v.combined_item_description,
+        "K": "ANTREPO KODU - Default",
+        "L": "ANTREPO SIRA - Default",
+        "M": "KULLANILMIS - Default",
+        "N": "ATR-DIGER - Default",
+        "O": $v.combined_item_package_quantity,
+        "P": "KAP CINSI - Default",
+        "Q": "MALIN CINSI - Default",
+        "R": "MARKA - Default",
+        "S": $v.combined_item_no,
+        "T": "CIF DIGER - Default",
+        "U": "KDV - Default",
+        "V": $v.reference_item_details[0].document_no,
+        "W": "FCA",
+        "X": "OLCU MIKTARI - Default",
+        "Y": "",
+        "Z": "OLCU BIRIMI - Default"
+    }
+});
+
+$result := $isCombineItemsExist ? 
+    $append($headers, $combineResultItems) : 
+    $isDeclarationExist ? 
+        $append($headers, $declarationResultItems) : 
+        $append($headers, $invoiceResultItems)
+)

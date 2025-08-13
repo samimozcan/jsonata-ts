@@ -1,4 +1,4 @@
-/* add getUnterlage function  11.08.2025 */
+/* add additional_data getUnterlage function  11.08.2025 */
 
 (
 
@@ -26,10 +26,12 @@ $customAppend := function($data) {(
   $response := $reduce($data, $append)
 )};
 
-$isDeclarationExist := $exists(tr_export_declaration);
-$isInvoiceExist := $exists(invoice);
-$isCmrExist := $exists(cmr);
-$isAtrExist := $exists(atr);
+$isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declaration) = "object";
+$isInvoiceExist := $exists(invoice) and $type(invoice) = "array" and $count(invoice) > 0;
+$isCmrExist := $exists(cmr) and $type(cmr) = "object";
+$isAtrExist := $exists(atr) and $type(atr) = "object";
+$isCombineItemsExist := $exists(combine_items) and $type(combine_items) = "object" and $count(combine_items.items) > 0;
+
 
 $invoiceArrayIndex := 0; /* This variable is used to track the index of the invoice items when invoice is an array. */
 $getInvoiceArrayIndex := function() {(
@@ -56,7 +58,31 @@ $getUnterlage := function($procedureCodeRequested) {(
 )};
 
 $getWarenPosition := function($index) {(
-    $response := $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
+    $response := $isCombineItemsExist ? $map(combine_items.items, function($v, $i) {
+      {
+            "Positionsnummer": $v.combined_item_no,
+            "WarenNummerEZT": $v.combined_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
+            "WarenBezeichnung": $v.combined_item_description,
+            "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
+            "Eigenmasse": $getFirstElement([$round($v.combined_item_net_weight, 1), 1]), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
+            "AHStatMengeMasseinheit": "NAR", /*default for now*/
+            "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "PackstueckAnzahl": $v.combined_item_package_quantity,
+            "PackstueckArt": "PK", /* default */
+            "PackstueckZeichen": "OHNE", /* default */
+            "BeguenstigungBeantragtCode": 100, /* eur varsa 400 gibisinden bir kosul olacak onun donusu burasi setlenecek */
+            "Artikelpreis": $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2),
+            "Zollwert": $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2),
+            "AbzugHinzurechnung": {
+              "ArtCode": "R",
+              "Betrag": $v.combined_item_total_amount,
+              "Waehrung": tr_export_declaration.total_value_curr, /* TODO: Burasi hallediverilecek. @samimozcan*/
+              "KursVereinbartKz": "1"
+            }
+          }
+    }) :
+    $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
      $map(tr_export_declaration.items, function($v) {
           {
             "Positionsnummer": $v.index,
