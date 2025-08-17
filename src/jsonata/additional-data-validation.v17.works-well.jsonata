@@ -219,6 +219,10 @@
             "ERROR_0005": {
                 "en": "Declaration total value is not equal to the invoice total value. Declaration total value: {{1}}, Invoice total value: {{2}}",
                 "tr": "Beyanname toplam değeri, fatura toplam değerine eşit değil. Beyanname toplam değeri: {{1}}, Fatura toplam değeri: {{2}}"
+            },
+            "ERROR_0006": {
+                "en": "Invoice total quantity is not equal to the sum of invoice items. Total quantity: {{1}}, Invoice items total quantity: {{2}}",
+                "tr": "Fatura toplam miktarı, fatura kalemlerinin toplamına eşit değil. Toplam miktar: {{1}}, Fatura kalemlerinin toplam miktarı: {{2}}"
             }
         };
 
@@ -407,11 +411,20 @@
 
             $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "ERROR_0001", "path": ["invoice", $index, "invoice_total_amount"], "args": [$invoiceTotalAmount, $itemTotalAmount]}
         )};
+        $isInvoiceTotalQuantityEqual := function($invoice, $index) {(
+            $itemTotalQuantity := $reduce($invoice.items, function($acc, $v) {
+                $acc + ($v.invoice_item_quantity ? $v.invoice_item_quantity : 0)
+            }, 0) ~> $round(2);
+            $invoiceTotalQuantity := $invoice.invoice_total_quantity ? $invoice.invoice_total_quantity ~> $round(2) : 0;
+
+            $itemTotalQuantity = $invoiceTotalQuantity ? null : {"code": "ERROR_0006", "path": ["invoice", $index, "invoice_total_quantity"], "args": [$invoiceTotalQuantity, $itemTotalQuantity]}
+        )};
         $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "array" ?
             $filter([
                 $map(invoice, function($v, $i) {
                     [
                         $isInvoiceTotalAmountEqual($v, $i),
+                        $isInvoiceTotalQuantityEqual($v, $i),
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
@@ -421,6 +434,7 @@
                                 /* Commodity Code Validations*/
                                 $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]}),
                                 $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0038", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
+
                             ]
                         }) ~> $customAppend()
                     ]
