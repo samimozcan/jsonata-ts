@@ -1,4 +1,4 @@
-    ( /*  update error_0004 bugs   11-08-2025 */
+( /*  update error_0004 bugs   11-08-2025 */
         $IO3000 := [];
         $A1140 := [];
         $A1460 := ["1", "0"];
@@ -369,13 +369,11 @@
             }) ~> $customAppend()
         ], function($v) { $v != null });
         $additionalErrorsFirst := $filter([
-            $isExist($.additional_data.transaction, {"code": "MISSING_0001", "path": ["additional_data", "transaction"], "args": []}), /*Transaktion*/
             $isExist($.additional_data.transaction.ioPartner, {"code": "MISSING_0002", "path": ["additional_data", "transaction", "ioPartner"], "args": []}), /*IOPartner*/
             $isExist($.additional_data.transaction.ioReference, {"code": "MISSING_0003", "path": ["additional_data", "transaction", "ioReference"], "args": []}), /*IOReferenz*/
 
             $map($.additional_data.declaration, function($v, $i) {
                 [
-                    $isExist($v.objectIdentification, {"code": "MISSING_0004", "path": ["additional_data", "declaration", $i, "objectIdentification"], "args": [$i]}), /*ObjektIdentifizierung*/
                     $isExist($v.objectIdentification.objectName, {"code": "MISSING_0005", "path": ["additional_data", "declaration", $i, "objectIdentification", "objectName"], "args": [$i]}), /*ObjektName*/
                     $isExist($v.objectIdentification.username, {"code": "MISSING_0006", "path": ["additional_data", "declaration", $i, "objectIdentification", "username"], "args": [$i]}), /*Bearbeiter*/
 
@@ -426,7 +424,7 @@
                             ]
                         }) ~> $customAppend()
                     ]
-                }) ~> $customAppend()
+                }) ~> $customAppend() 
             ], function($v) { $v != null })
         : [];
         $invoiceErrors := $count($invoiceErrorsFirst) ? $map($invoiceErrorsFirst, function($error) {
