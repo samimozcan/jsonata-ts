@@ -4,115 +4,121 @@
       "items": [
         {
           "invoice_item_no": 1,
-          "invoice_item_quantity": 15,
+          "invoice_item_quantity": 20000,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY0397",
-          "invoice_item_unit_price": 22.9,
-          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-          "invoice_item_total_amount": 343.5,
-          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.0587,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1174,
+          "invoice_item_commodity_code": "4819100000",
           "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "123qwe"
+          "invoice_item_country_of_origin": "TR"
         },
         {
           "invoice_item_no": 2,
-          "invoice_item_quantity": 15,
+          "invoice_item_quantity": 8450,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY0397",
-          "invoice_item_unit_price": 19.5,
-          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-          "invoice_item_total_amount": 292.5,
-          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.155,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1309.75,
+          "invoice_item_commodity_code": "4819100000",
           "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
+          "invoice_item_country_of_origin": "TR"
         },
         {
           "invoice_item_no": 3,
-          "invoice_item_quantity": 13,
+          "invoice_item_quantity": 14960,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY1791",
-          "invoice_item_unit_price": 24.5,
-          "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
-          "invoice_item_total_amount": 318.5,
-          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.082,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1226.72,
+          "invoice_item_commodity_code": "4819100000",
           "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        }
-      ],
-      "invoice_id": "BAY2025000000424",
-      "invoice_date": "2025-03-28",
-      "invoice_currency": "EUR",
-      "invoice_po_number": null,
-      "invoice_payment_term": "Mal Mukabili",
-      "invoice_total_amount": 954.5,
-      "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
-      "invoice_delivery_term": "FCA",
-      "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
-      "invoice_customer_country": "DE",
-      "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
-      "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": 3,
-      "invoice_shipment_country_of_origin": null
-    },
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 15,
-          "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY0397",
-          "invoice_item_unit_price": 22.9,
-          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-          "invoice_item_total_amount": 343.5,
-          "invoice_item_commodity_code": "6204623190",
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "123qwe"
+          "invoice_item_country_of_origin": "TR"
         },
         {
-          "invoice_item_no": 2,
-          "invoice_item_quantity": 15,
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 10400,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY0397",
-          "invoice_item_unit_price": 19.5,
-          "invoice_item_description": "%80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-          "invoice_item_total_amount": 292.5,
-          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.167,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1736.8,
+          "invoice_item_commodity_code": "4819100000",
           "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
+          "invoice_item_country_of_origin": "TR"
         },
         {
-          "invoice_item_no": 3,
-          "invoice_item_quantity": 13,
+          "invoice_item_no": 5,
+          "invoice_item_quantity": 800,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "PNDNBY1791",
-          "invoice_item_unit_price": 24.5,
-          "invoice_item_description": "%80 PAMUK %20PRE CONSUMER RECYCLE PAM.DEN.BYN PNT.",
-          "invoice_item_total_amount": 318.5,
-          "invoice_item_commodity_code": "6204623190",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.0587,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 46.96,
+          "invoice_item_commodity_code": "4819100000",
           "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
+          "invoice_item_country_of_origin": "TR"
         }
       ],
-      "invoice_id": "BAY2025000000424",
-      "invoice_date": "2025-03-28",
+      "invoice_id": "DSH2025000000060",
+      "invoice_date": "2025-04-11",
       "invoice_currency": "EUR",
-      "invoice_po_number": null,
-      "invoice_payment_term": "Mal Mukabili",
-      "invoice_total_amount": 954.4,
-      "invoice_customer_name": "S.OLIVER BERND FREIER GMBH&CO.KG",
-      "invoice_delivery_term": "FCA",
-      "invoice_supplier_name": "BAYKAN DENİM KONFEKSİYON A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "S.OLIVER STRASSE 1 97228 ROT",
+      "invoice_po_number": "29563",
+      "invoice_payment_term": "ÖDEME: MAL",
+      "invoice_total_amount": 5494.23,
+      "invoice_customer_name": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
+      "invoice_delivery_term": "EXW",
+      "invoice_supplier_name": "DS SMITH AMBALAJ ANONİM ŞİRKETİ",
+      "invoice_total_quantity": 54610,
+      "invoice_customer_address": "Kapı No:8E 10999 BERLIN/ GE",
       "invoice_customer_country": "DE",
-      "invoice_supplier_address": "OSMANİYE MAH. OSMANİYE E-5 Y",
+      "invoice_supplier_address": "Araptepe Mevkii Selimpaşa ",
       "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": 3,
-      "invoice_shipment_country_of_origin": null
+      "invoice_total_package_quantity": 7,
+      "invoice_shipment_country_of_origin": "TR"
     }
   ],
+  "combine_items": {
+    "meta": {
+      "total_items": 1,
+      "total_merged_items": 1,
+      "combination_filters": ["commodity_code"]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 54610,
+        "reference_item_details": [
+          {
+            "regime": "1000",
+            "item_no": 1,
+            "unit_type": "ADET(UNIT)",
+            "net_amount": 5494.23,
+            "net_weight": 1270,
+            "document_no": "TR-25341300EX00292776-ITEM1",
+            "gross_amount": 6067.19,
+            "gross_weight": 1590,
+            "item_quantity": 54610,
+            "commodity_code": "4819100000",
+            "item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+            "package_quantity": "Ticari Tanım : OLUKLU KARTON KUTULAR",
+            "country_of_origin": "TR"
+          }
+        ],
+        "combined_item_unit_type": "ADET(UNIT)",
+        "combined_item_net_weight": 1270,
+        "combined_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+        "combined_item_gross_weight": 1590,
+        "combined_item_total_amount": 5494.23,
+        "combined_item_commodity_code": "4819100000",
+        "combined_item_package_quantity": 0,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
   "additional_data": {
     "declaration": [
       {
@@ -146,7 +152,7 @@
           "destinationCountry": "AT",
           "declarantIsConsignee": true,
           "addressedCustomsOffice": "7701",
-          "procedureCodeRequested": "42",
+          "procedureCodeRequested": "40",
           "destinationFederalState": "25",
           "transportMeansArrivalIdentity": "TEST22042025",
           "transportMeansNationalityCode": "TR",
@@ -156,7 +162,7 @@
         },
         "objectIdentification": {
           "username": "ANDREAS",
-          "objectName": "4803/2602203_TEST_0244",
+          "objectName": "4803/2602202_TEST_0020",
           "objectAlias": "4803/260220122042025_160905",
           "declarationType": "EZA-D",
           "referenceNumberOverlay": "AA_EZA_DE_IM4000"
@@ -169,253 +175,44 @@
       "ioReference": "4803/260220122042025_160905"
     }
   },
+  "additional_setting": {
+    "combineOptions": ["commodity_code"],
+    "disableOutbound": false,
+    "disableDocumentConverter": false
+  },
   "tr_export_declaration": {
-    "id": "25341453EX00086925",
-    "date": "28.03.2025",
-    "buyer": "S.OLIVER BERND FREIER GMBH&CO.KG",
+    "id": "25341300EX00292776",
+    "date": "11.04.2025",
+    "buyer": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
     "items": [
       {
-        "id": "TR-25341453EX00086925-ITEM1",
+        "id": "TR-25341300EX00292776-ITEM1",
         "index": "1",
         "origin": "TR",
         "regime": "1000",
-        "quantity": 30,
-        "item_value": 636,
-        "net_weight": 20,
-        "gross_weight": 20,
-        "commodity_code": "6204623190",
+        "quantity": 54610,
+        "item_value": 5494.23,
+        "net_weight": 1270,
+        "gross_weight": 1590,
+        "commodity_code": "4819100000",
         "unit_of_measure": "ADET(UNIT)",
-        "package_quantity": "Ticari Tanım : %80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON",
-        "statistical_value": 685.32,
-        "commodity_description": "Ticari Tanım : %80 PAMUK %17 PES %3 EA DENIM BAYAN PANTOLON"
+        "package_quantity": "Ticari Tanım : OLUKLU KARTON KUTULAR",
+        "statistical_value": 6067.19,
+        "commodity_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe"
       }
     ],
-    "sender": "BAYKAN DENİM KONFEKSİYON ANONİM ŞİRKETİ",
-    "tax_id": "1540413450",
-    "invoice_no": "EX6938(BAY2025000000424) Tasima Belgesi- Konismento V 235 2955 9552 28.03.2025\nA.TR Dolasim Belgesi B N0080191 28.03.2025\nTPS E-Fatura V 25243160110886041401451/1 28.03.2025\nTPS E-Fatura V 25243160110886041401451/2 28.03.2025\nKantar Fisi V 235 2955 9552 28.03.2025\nTPS-Kripto V 25153097211086068683943/1 28.03.2025\nVEKALET:BAKIRKÖY 13. NOTERLİĞİ, 23935;30.11.2023 OKSB:22/34/OKS/0771;27.08.2024*TÜM\nKALEMLERDE\nİMALATÇI: KENDİSİDİR.T.C ZİRAAT BANKASI A.Ş ISTANBUL TRAKYA KURUMSAL ŞUBE",
-    "total_value": "954.50",
+    "sender": "DS SMİTH AMBALAJ A.Ş.",
+    "tax_id": "6210511678",
+    "invoice_no": "EX7702(DSH2025000000060) A.TR Dolasim Belgesi B N0080011 11.04.2025\nTPS E-Fatura V 25243160110886041598025/2 11.04.2025\nTPS E-Fatura V 25243160110886041598025/4 11.04.2025\nTPS E-Fatura V 25243160110886041598025/1 11.04.2025\nTPS E-Fatura V 25243160110886041598025/5 11.04.2025\nTPS E-Fatura V 25243160110886041598025/3 11.04.2025\nTPS-Kripto V 25153097211086069092884/1 11.04.2025\nVEKALET:BEYOĞLU 60. NOTERLİĞİ, 01223;13.01.2021 OKSB:25/34/OKS/0008;03.01.2025**TÜM\nKALEMLERDE İMALATÇI KENDİSİDİR. YAPI VE KREDİ BANKASI SEFAKÖY-İSTANBUL",
+    "total_value": "5494.23",
     "total_weight": null,
-    "delivery_term": "FCA",
-    "total_package": "3",
+    "delivery_term": "EXW",
+    "total_package": "7",
     "delivery_place": "İSTANBUL",
-    "total_line_item": "2",
+    "total_line_item": "1",
     "dispatch_country": "TR",
     "total_value_curr": "EUR",
-    "mode_of_transport": "4",
+    "mode_of_transport": "3",
     "destination_country": "DE"
-  },
-  "combine_items": {
-    "meta": {
-      "total_items": 7,
-      "total_merged_items": 7,
-      "combination_filters": [
-        "commodity_code"
-      ]
-    },
-    "items": [
-      {
-        "combined_item_no": 1,
-        "combined_item_quantity": 12,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 1,
-            "unit_type": "METRE KARE",
-            "net_amount": 8.5,
-            "net_weight": 4.08,
-            "document_no": "TR-25341453EX00165750-ITEM1",
-            "gross_amount": 9.79,
-            "gross_weight": 4.08,
-            "item_quantity": 12,
-            "commodity_code": "5209420000",
-            "item_description": "Denim",
-            "package_quantity": "Ticari Tanım:%98 PAMUK %2 EA DENİM KUMAŞ (34 METRE = 12\nMETRE KARE)",
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "METRE KARE",
-        "combined_item_net_weight": 4.08,
-        "combined_item_description": "Denim",
-        "combined_item_gross_weight": 4.08,
-        "combined_item_total_amount": 8.5,
-        "combined_item_commodity_code": "5209420000",
-        "combined_item_package_quantity": 0,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 2,
-        "combined_item_quantity": 8,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 2,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 575.2,
-            "net_weight": 1.6,
-            "document_no": "TR-25341453EX00165750-ITEM2",
-            "gross_amount": 662.68,
-            "gross_weight": 3.6,
-            "item_quantity": 8,
-            "commodity_code": "6203329000",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA ERKEK DENİM CEKET Marka Adı: - Tescilsiz, Kıymet: 26203.12 TL - BEDELLİ",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 1.6,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA ERKEK DENİM CEKET Marka Adı: - Tescilsiz, Kıymet: 26203.12 TL - BEDELLİ",
-        "combined_item_gross_weight": 3.6,
-        "combined_item_total_amount": 575.2,
-        "combined_item_commodity_code": "6203329000",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 3,
-        "combined_item_quantity": 8,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 3,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 399.2,
-            "net_weight": 2.8,
-            "document_no": "TR-25341453EX00165750-ITEM3",
-            "gross_amount": 459.91,
-            "gross_weight": 2.8,
-            "item_quantity": 8,
-            "commodity_code": "6203429000",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA ERKEK DENİM ŞORT - Marka Adı: - Tescilsiz, Kıymet: 18185.48 TL - BEDELLİ",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 2.8,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA ERKEK DENİM ŞORT - Marka Adı: - Tescilsiz, Kıymet: 18185.48 TL - BEDELLİ",
-        "combined_item_gross_weight": 2.8,
-        "combined_item_total_amount": 399.2,
-        "combined_item_commodity_code": "6203429000",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 4,
-        "combined_item_quantity": 4,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 4,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 279.6,
-            "net_weight": 1.6,
-            "document_no": "TR-25341453EX00165750-ITEM4",
-            "gross_amount": 322.12,
-            "gross_weight": 1.6,
-            "item_quantity": 4,
-            "commodity_code": "6204329090",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM CEKET - Marka Adı: , Tescilsiz, Kıymet: 12737.12 TL - BEDELLİ",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 1.6,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM CEKET - Marka Adı: , Tescilsiz, Kıymet: 12737.12 TL - BEDELLİ",
-        "combined_item_gross_weight": 1.6,
-        "combined_item_total_amount": 279.6,
-        "combined_item_commodity_code": "6204329090",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 5,
-        "combined_item_quantity": 8,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 5,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 383.2,
-            "net_weight": 2.81,
-            "document_no": "TR-25341453EX00165750-ITEM5",
-            "gross_amount": 441.48,
-            "gross_weight": 2.81,
-            "item_quantity": 8,
-            "commodity_code": "6204520090",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM ŞORT Marka Adı: Tescilsiz, Kıymet: 17456.6 TL - BEDELLİ -",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 2.81,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM ŞORT Marka Adı: Tescilsiz, Kıymet: 17456.6 TL - BEDELLİ -",
-        "combined_item_gross_weight": 2.81,
-        "combined_item_total_amount": 383.2,
-        "combined_item_commodity_code": "6204520090",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 6,
-        "combined_item_quantity": 7,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 6,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 262.6,
-            "net_weight": 4.5,
-            "document_no": "TR-25341453EX00165750-ITEM6",
-            "gross_amount": 302.54,
-            "gross_weight": 4.5,
-            "item_quantity": 7,
-            "commodity_code": "6204623190",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM PANTOLON - %98 PAMUK %2 EA BAYAN DENİM CEKET - Marka Adı:, Tescilsiz, Kıymet: 11962.69 TL - BEDELLİ -",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 4.5,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM PANTOLON - %98 PAMUK %2 EA BAYAN DENİM CEKET - Marka Adı:, Tescilsiz, Kıymet: 11962.69 TL - BEDELLİ -",
-        "combined_item_gross_weight": 4.5,
-        "combined_item_total_amount": 262.6,
-        "combined_item_commodity_code": "6204623190",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      },
-      {
-        "combined_item_no": 7,
-        "combined_item_quantity": 8,
-        "reference_item_details": [
-          {
-            "regime": "1000",
-            "item_no": 7,
-            "unit_type": "ADET(UNI)",
-            "net_amount": 367.2,
-            "net_weight": 6.01,
-            "document_no": "TR-25341453EX00165750-ITEM7",
-            "gross_amount": 423.05,
-            "gross_weight": 6.01,
-            "item_quantity": 8,
-            "commodity_code": "6204629090",
-            "item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM ŞORT - Marka Adı: Tescilsiz, Kıymet: 16727.72 TL - BEDELLİ",
-            "package_quantity": 2,
-            "country_of_origin": "TR"
-          }
-        ],
-        "combined_item_unit_type": "ADET(UNI)",
-        "combined_item_net_weight": 6.01,
-        "combined_item_description": "Ticari Tanımı:%98 PAMUK %2 EA BAYAN DENİM ŞORT - Marka Adı: Tescilsiz, Kıymet: 16727.72 TL - BEDELLİ",
-        "combined_item_gross_weight": 6.01,
-        "combined_item_total_amount": 367.2,
-        "combined_item_commodity_code": "6204629090",
-        "combined_item_package_quantity": 2,
-        "combined_item_country_of_origin": "TR"
-      }
-    ]
   }
 }

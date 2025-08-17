@@ -64,7 +64,7 @@ $getWarenPosition := function($index) {(
             "WarenNummerEZT": $v.combined_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
             "WarenBezeichnung": $v.combined_item_description,
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
-            "Eigenmasse": $getFirstElement([$round($v.combined_item_net_weight, 1), 1]), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "Eigenmasse": $getFirstElement([$v.combined_item_net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": "NAR", /*default for now*/
             "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
@@ -89,7 +89,7 @@ $getWarenPosition := function($index) {(
             "WarenNummerEZT": $v.commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
             "WarenBezeichnung": $v.commodity_description,
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
-            "Eigenmasse": $getFirstElement([$round($v.net_weight, 1), 1]), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "Eigenmasse": $getFirstElement([$v.net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": "NAR", /*default for now*/
             "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/

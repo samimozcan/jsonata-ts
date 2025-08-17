@@ -160,6 +160,10 @@
                 "en": "Username is missing",
                 "tr": "Kullanıcı adı eksik"
             },
+            "MISSING_0007": {
+                "en": "Invoice item commodity code is missing",
+                "tr": "Fatura kalemi eşya kodu eksik"
+            },
             "INVALID_0034": {
                 "en": "Declarant is consignee flag is not valid",
                 "tr": "Beyan eden alıcıdır işareti geçerli değil"
@@ -400,8 +404,8 @@
         $isInvoiceTotalAmountEqual := function($invoice, $index) {(
             $itemTotalAmount := $reduce($invoice.items, function($acc, $v) {
                 $acc + ($v.invoice_item_total_amount ? $v.invoice_item_total_amount : 0)
-            }, 0);
-            $invoiceTotalAmount := $invoice.invoice_total_amount ? $invoice.invoice_total_amount : 0;
+            }, 0) ~> $round(2);
+            $invoiceTotalAmount := $invoice.invoice_total_amount ? $invoice.invoice_total_amount ~> $round(2) : 0;
 
             $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "ERROR_0001", "path": ["invoice", $index, "invoice_total_amount"], "args": [$invoiceTotalAmount, $itemTotalAmount]}
         )};
@@ -413,12 +417,16 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
+                                /* Country of Origin Validations*/
                                 $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]}),
+
+                                /* Commodity Code Validations*/
+                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]}),
                                 $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0038", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
                             ]
                         }) ~> $customAppend()
                     ]
-                }) ~> $customAppend() 
+                }) ~> $customAppend()
             ], function($v) { $v != null })
         : [];
         $invoiceErrors := $count($invoiceErrorsFirst) ? $map($invoiceErrorsFirst, function($error) {
