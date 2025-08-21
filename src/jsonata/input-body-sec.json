@@ -1,0 +1,269 @@
+{
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 20000,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.0587,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1174,
+          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 8450,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.155,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1309.75,
+          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 14960,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.082,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1226.72,
+          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 10400,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.167,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 1736.8,
+          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 5,
+          "invoice_item_quantity": 800,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 0.0587,
+          "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+          "invoice_item_total_amount": 46.96,
+          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "DSH2025000000060",
+      "invoice_date": "2025-04-11",
+      "invoice_currency": "EUR",
+      "invoice_po_number": "29563",
+      "invoice_payment_term": "ÖDEME: MAL",
+      "invoice_total_amount": 5494.23,
+      "invoice_customer_name": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
+      "invoice_delivery_term": "EXW",
+      "invoice_supplier_name": "DS SMITH AMBALAJ ANONİM ŞİRKETİ",
+      "invoice_total_quantity": 54610,
+      "invoice_customer_address": "Kapı No:8E 10999 BERLIN/ GE",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "Araptepe Mevkii Selimpaşa ",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 7,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "combine_items": {
+    "meta": {
+      "total_items": 1,
+      "total_merged_items": 1,
+      "combination_filters": ["commodity_code"]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 54610,
+        "reference_item_details": [
+          {
+            "regime": "1000",
+            "item_no": 1,
+            "unit_type": "ADET(UNIT)",
+            "net_amount": 5494.23,
+            "net_weight": 1270,
+            "document_no": "TR-25341300EX00292776-ITEM1",
+            "gross_amount": 6067.19,
+            "gross_weight": 1590,
+            "item_quantity": 54610,
+            "commodity_code": "4819100000",
+            "item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+            "package_quantity": "Ticari Tanım : OLUKLU KARTON KUTULAR",
+            "country_of_origin": "TR"
+          }
+        ],
+        "combined_item_unit_type": "ADET(UNIT)",
+        "combined_item_net_weight": 1270,
+        "combined_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
+        "combined_item_gross_weight": 1590,
+        "combined_item_total_amount": 5494.23,
+        "combined_item_commodity_code": "4819100000",
+        "combined_item_package_quantity": 0,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
+  "additional_data": {
+    "declaration_metadata": {
+      "declaration_type": "IMPORT",
+      "procedure_code": "4000",
+      "customs_office": "TR001000",
+      "declarant_reference": "SEC-2025-00001",
+      "total_packages": 7,
+      "transport_mode": "3",
+      "transport_means": "TRUCK-TR-34-ABC-123",
+      "arrival_date": "2025-04-15",
+      "presentation_date": "2025-04-15"
+    },
+    "parties": {
+      "declarant": {
+        "name": "SEC CUSTOMS AGENT",
+        "tax_id": "1234567890",
+        "eori": "TR123456789000001",
+        "address": {
+          "street": "Atatürk Cad. No:123",
+          "city": "Istanbul",
+          "postal_code": "34000",
+          "country": "TR"
+        },
+        "contact": {
+          "person": "Ahmet Yılmaz",
+          "phone": "+90 212 123 4567",
+          "email": "ahmet@seccustoms.com"
+        }
+      },
+      "importer": {
+        "name": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
+        "tax_id": "DE123456789",
+        "eori": "DE123456789000001",
+        "address": {
+          "street": "Kapı No:8E",
+          "city": "BERLIN",
+          "postal_code": "10999",
+          "country": "DE"
+        }
+      },
+      "exporter": {
+        "name": "DS SMITH AMBALAJ ANONİM ŞİRKETİ",
+        "tax_id": "6210511678",
+        "eori": "TR621051167800001",
+        "address": {
+          "street": "Araptepe Mevkii Selimpaşa",
+          "city": "Istanbul",
+          "postal_code": "34000",
+          "country": "TR"
+        }
+      }
+    },
+    "transport_information": {
+      "departure_country": "TR",
+      "destination_country": "DE",
+      "loading_place": "Istanbul Port",
+      "unloading_place": "Hamburg Port",
+      "transport_document": {
+        "type": "CMR",
+        "number": "CMR-2025-001234",
+        "date": "2025-04-12"
+      },
+      "container_numbers": ["TCLU1234567"],
+      "seal_numbers": ["SEAL001", "SEAL002"]
+    },
+    "financial_information": {
+      "invoice_currency": "EUR",
+      "exchange_rate": 1.0,
+      "total_invoice_amount": 5494.23,
+      "freight_cost": 450.0,
+      "insurance_cost": 100.0,
+      "other_costs": 50.0,
+      "payment_method": "BANK_TRANSFER",
+      "payment_terms": "30_DAYS"
+    },
+    "previous_documents": [
+      {
+        "type": "EXPORT_DECLARATION",
+        "number": "25341300EX00292776",
+        "date": "2025-04-11",
+        "country": "TR"
+      },
+      {
+        "type": "T1_TRANSIT",
+        "number": "25TR060500001220M5",
+        "date": "2025-04-12",
+        "country": "TR"
+      }
+    ],
+    "special_mentions": [
+      "GOODS_FOR_COMMERCIAL_USE",
+      "PREFERENTIAL_ORIGIN_EU_TURKEY"
+    ],
+    "risk_indicators": {
+      "security_level": "LOW",
+      "customs_control": "DOCUMENTARY_ONLY",
+      "physical_examination": false,
+      "laboratory_analysis": false
+    }
+  },
+  "additional_setting": {
+    "combineOptions": ["commodity_code"],
+    "disableOutbound": false,
+    "disableDocumentConverter": false,
+    "secCustomsSettings": {
+      "enableAutomaticValidation": true,
+      "requirePhysicalExamination": false,
+      "preferentialOriginProcessing": true,
+      "electronicDocumentSubmission": true,
+      "customsWarehouse": false
+    }
+  },
+  "tr_export_declaration": {
+    "id": "25341300EX00292776",
+    "date": "11.04.2025",
+    "buyer": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
+    "items": [
+      {
+        "id": "TR-25341300EX00292776-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 54610,
+        "item_value": 5494.23,
+        "net_weight": 1270,
+        "gross_weight": 1590,
+        "commodity_code": "4819100000",
+        "unit_of_measure": "ADET(UNIT)",
+        "package_quantity": "Ticari Tanım : OLUKLU KARTON KUTULAR",
+        "statistical_value": 6067.19,
+        "commodity_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe"
+      }
+    ],
+    "sender": "DS SMİTH AMBALAJ A.Ş.",
+    "tax_id": "6210511678",
+    "invoice_no": "EX7702(DSH2025000000060) A.TR Dolasim Belgesi B N0080011 11.04.2025\nTPS E-Fatura V 25243160110886041598025/2 11.04.2025\nTPS E-Fatura V 25243160110886041598025/4 11.04.2025\nTPS E-Fatura V 25243160110886041598025/1 11.04.2025\nTPS E-Fatura V 25243160110886041598025/5 11.04.2025\nTPS E-Fatura V 25243160110886041598025/3 11.04.2025\nTPS-Kripto V 25153097211086069092884/1 11.04.2025\nVEKALET:BEYOĞLU 60. NOTERLİĞİ, 01223;13.01.2021 OKSB:25/34/OKS/0008;03.01.2025**TÜM\nKALEMLERDE İMALATÇI KENDİSİDİR. YAPI VE KREDİ BANKASI SEFAKÖY-İSTANBUL",
+    "total_value": "5494.23",
+    "total_weight": null,
+    "delivery_term": "EXW",
+    "total_package": "7",
+    "delivery_place": "İSTANBUL",
+    "total_line_item": "1",
+    "dispatch_country": "TR",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "3",
+    "destination_country": "DE"
+  }
+}

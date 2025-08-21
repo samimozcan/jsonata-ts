@@ -1,0 +1,225 @@
+/* SEC Mapping JSONata Template - Transform input-body to ImportIntegrationRequest */
+/* Based on TypeScript interfaces and input-body.json structure */
+/* Created: August 21, 2025 */
+
+(
+/* Country code mappings from jsonata-template.v15-works */
+$A1314 := ["AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR","HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK","XI"];
+$A1300 := ["CH","GB","GE","IS","LI","MK","NO","TR","UA","XS"];
+$1990 := ["1", "2", "3", "4", "5", "7", "8", "9"];
+
+/* Helper functions */
+$formatDate := function($dateStr) {
+  $dateStr ? $replace($dateStr, /(\d{2})\.(\d{2})\.(\d{4})/, "$3-$2-$1") : $now()
+};
+
+$mapTransportMode := function($mode) {
+  $mode = "3" ? "3" : 
+  $mode = "4" ? "4" : 
+  $mode = "1" ? "1" : 
+  $mode = "2" ? "2" : 
+  $mode = "5" ? "5" : "1"
+};
+
+$mapIncoterms := function($term) {
+  $term = "EXW" ? "EXW" :
+  $term = "FCA" ? "FCA" :
+  $term = "FOB" ? "FOB" :
+  $term = "CIF" ? "CIF" :
+  $term = "DAP" ? "DAP" :
+  $term = "DDP" ? "DDP" : "EXW"
+};
+
+/* Main transformation */
+{
+  "declarationId": tr_export_declaration.id ? tr_export_declaration.id : "AUTO_GENERATED_" & $now(),
+  "jobOrderId": additional_data.transaction.ioReference,
+  "customerReference1": tr_export_declaration.invoice_no ? $substring(tr_export_declaration.invoice_no, 0, 50) : null,
+  "customerReference2": null,
+  "customerReference3": null,
+  "declarationType": "EX", /* Export declaration */
+  "customsCode": "TR034000", /* Default Turkish customs code */
+  "procedure": "1000", /* Standard export procedure */
+  "incoterms": $mapIncoterms(tr_export_declaration.delivery_term),
+  "portCode": null,
+  "destinationCustomsCode": tr_export_declaration.destination_country & "000000",
+  "instructionDate": $formatDate(tr_export_declaration.date),
+  "cutOffDate": null,
+  "deliveryPlace": tr_export_declaration.delivery_place,
+  "locateOfItems": tr_export_declaration.delivery_place,
+  "contractType": null,
+  "tradeCountry": tr_export_declaration.destination_country,
+  "bankCode": null,
+  "additional": null,
+
+  /* Consignee (Buyer/Customer) */
+  "consignee": {
+    "id": null,
+    "name": tr_export_declaration.buyer ? tr_export_declaration.buyer : invoice[0].invoice_customer_name,
+    "taxNo": null,
+    "address": invoice[0].invoice_customer_address,
+    "cityId": null,
+    "countryId": tr_export_declaration.destination_country ? tr_export_declaration.destination_country : invoice[0].invoice_customer_country,
+    "email": null,
+    "phone": null
+  },
+
+  /* Consignor (Sender/Supplier) */
+  "consignor": {
+    "id": null,
+    "name": tr_export_declaration.sender ? tr_export_declaration.sender : invoice[0].invoice_supplier_name,
+    "taxNo": tr_export_declaration.tax_id,
+    "address": invoice[0].invoice_supplier_address,
+    "cityId": null,
+    "countryId": tr_export_declaration.dispatch_country ? tr_export_declaration.dispatch_country : invoice[0].invoice_supplier_country,
+    "email": null,
+    "phone": null
+  },
+
+  /* Declarant (same as consignor for exports) */
+  "declarant": {
+    "id": null,
+    "name": tr_export_declaration.sender ? tr_export_declaration.sender : invoice[0].invoice_supplier_name,
+    "taxNo": tr_export_declaration.tax_id,
+    "address": invoice[0].invoice_supplier_address,
+    "cityId": null,
+    "countryId": tr_export_declaration.dispatch_country ? tr_export_declaration.dispatch_country : invoice[0].invoice_supplier_country,
+    "email": null,
+    "phone": null
+  },
+
+  /* Carrier (optional) */
+  "carrier": null,
+
+  /* Responsible Firm (optional) */
+  "responsibleFirm": null,
+
+  /* Department */
+  "department": {
+    "id": "DEFAULT_DEPT",
+    "name": "Export Department",
+    "branchId": null
+  },
+
+  /* Main Transport */
+  "mainTransport": {
+    "transportMode": $mapTransportMode(tr_export_declaration.mode_of_transport),
+    "meansCode": null,
+    "meansIdentification": null,
+    "countryCode": tr_export_declaration.dispatch_country
+  },
+
+  /* Border Transport (optional) */
+  "borderTransport": null,
+
+  /* FOB Value */
+  "fobValue": {
+    "amount": $number(tr_export_declaration.total_value),
+    "currencyCode": tr_export_declaration.total_value_curr ? tr_export_declaration.total_value_curr : invoice[0].invoice_currency
+  },
+
+  /* Freight Value (optional) */
+  "freightValue": null,
+
+  /* Insurance Value (optional) */
+  "insuranceValue": null,
+
+  /* Payable Value (same as FOB for exports) */
+  "payableValue": {
+    "amount": $number(tr_export_declaration.total_value),
+    "currencyCode": tr_export_declaration.total_value_curr ? tr_export_declaration.total_value_curr : invoice[0].invoice_currency
+  },
+
+  /* Total Gross Weight */
+  "totalGrossWeight": tr_export_declaration.items[0].gross_weight ? {
+    "amount": $sum(tr_export_declaration.items.gross_weight),
+    "unit": "KGM"
+  } : null,
+
+  /* Total Packages */
+  "totalPackages": tr_export_declaration.total_package ? {
+    "amount": $number(tr_export_declaration.total_package),
+    "unit": "PCE"
+  } : null,
+
+  /* Payments (optional) */
+  "payments": null,
+
+  /* Invoices */
+  "invoices": $map(invoice, function($inv, $idx) {
+    {
+      "invoiceNo": $inv.invoice_id,
+      "invoiceDate": $formatDate($inv.invoice_date),
+      "currencyCode": $inv.invoice_currency,
+      "amount": $inv.invoice_total_amount,
+      "consignorId": null,
+      "consigneeId": null,
+      
+      /* Items - use combine_items if available, otherwise use invoice items */
+      "items": $exists(combine_items.items) and $count(combine_items.items) > 0 ? 
+        $map(combine_items.items, function($item, $itemIdx) {
+          {
+            "commodityCode": $item.combined_item_commodity_code,
+            "description": $item.combined_item_description,
+            "grossWeight": $item.combined_item_gross_weight,
+            "invoiceAmount": $item.combined_item_total_amount,
+            "invoiceCurrencyCode": $inv.invoice_currency,
+            "itemOrderNo": $item.combined_item_no,
+            "netWeight": $item.combined_item_net_weight,
+            "originCountryCode": $item.combined_item_country_of_origin,
+            "packageQuantity": $item.combined_item_package_quantity > 0 ? $item.combined_item_package_quantity : null,
+            "packageUnit": $item.combined_item_package_quantity > 0 ? "PCE" : null,
+            "quantity": $item.combined_item_quantity,
+            "statisticalQuantity": $item.combined_item_quantity,
+            "statisticalUnit": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
+            "statisticalValue": $item.combined_item_total_amount,
+            "unit": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
+            "unitOfMeasure": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
+            "usedGoods": "N",
+            
+            "additionalDocuments": null,
+            "itemDetails": $exists($item.reference_item_details) and $count($item.reference_item_details) > 0 ? 
+              $map($item.reference_item_details, function($detail, $detailIdx) {
+                {
+                  "index": $detailIdx + 1,
+                  "documentNo": $detail.document_no,
+                  "description": $detail.item_description,
+                  "quantity": $detail.item_quantity,
+                  "unit": $replace($detail.unit_type, /ADET\(UNI\)/, "PCE"),
+                  "value": $detail.net_amount,
+                  "currencyCode": $inv.invoice_currency
+                }
+              }) : null,
+            "paymentMethods": null
+          }
+        }) : 
+        /* Fallback to invoice items if combine_items not available */
+        $map($inv.items, function($item, $itemIdx) {
+          {
+            "commodityCode": $item.invoice_item_commodity_code,
+            "description": $item.invoice_item_description,
+            "grossWeight": 0, /* Default as not available in invoice items */
+            "invoiceAmount": $item.invoice_item_total_amount ? $item.invoice_item_total_amount : ($item.invoice_item_quantity * $item.invoice_item_unit_price),
+            "invoiceCurrencyCode": $inv.invoice_currency,
+            "itemOrderNo": $item.invoice_item_no,
+            "netWeight": 0, /* Default as not available in invoice items */
+            "originCountryCode": $item.invoice_item_country_of_origin,
+            "packageQuantity": $item.invoice_item_package_quantity,
+            "packageUnit": $item.invoice_item_package_quantity ? "PCE" : null,
+            "quantity": $item.invoice_item_quantity,
+            "statisticalQuantity": $item.invoice_item_quantity,
+            "statisticalUnit": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "statisticalValue": $item.invoice_item_total_amount ? $item.invoice_item_total_amount : ($item.invoice_item_quantity * $item.invoice_item_unit_price),
+            "unit": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "unitOfMeasure": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "usedGoods": "N",
+            
+            "additionalDocuments": null,
+            "itemDetails": null,
+            "paymentMethods": null
+          }
+        })
+    }
+  })
+}
+)
