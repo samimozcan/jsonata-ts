@@ -30,20 +30,24 @@ $mapIncoterms := function($term) {
   $term = "DDP" ? "DDP" : "EXW"
 };
 
+$returnArray := function ($v) {
+  $type($v) != "array" ? [$v] : $v
+};
+
 /* Main transformation */
 {
-  "declarationId": tr_export_declaration.id ? tr_export_declaration.id : "AUTO_GENERATED_" & $now(),
-  "jobOrderId": additional_data.transaction.ioReference,
-  "customerReference1": tr_export_declaration.invoice_no ? $substring(tr_export_declaration.invoice_no, 0, 50) : null,
-  "customerReference2": null,
+  "declarationId": "7e41bdba-a17b-4b7f-8428-01c434567004",
+  "jobOrderId": "7e41bdba-a17b-4b7f-8428-01c434567004",
+  "customerReference1": tr_export_declaration.invoice_no ? $substring(tr_export_declaration.invoice_no, 0, 20) : null,
+  "customerReference2": tr_export_declaration.invoice_no ? $substring(tr_export_declaration.invoice_no, 20) : null,
   "customerReference3": null,
   "declarationType": "EX", /* Export declaration */
-  "customsCode": "TR034000", /* Default Turkish customs code */
+  "customsCode": "034000", /* Default Turkish customs code */
   "procedure": "1000", /* Standard export procedure */
   "incoterms": $mapIncoterms(tr_export_declaration.delivery_term),
   "portCode": null,
-  "destinationCustomsCode": tr_export_declaration.destination_country & "000000",
-  "instructionDate": $formatDate(tr_export_declaration.date),
+  "destinationCustomsCode": "000000",
+  "createdAt": tr_export_declaration.date ? $formatDate(tr_export_declaration.date) : $not(),
   "cutOffDate": null,
   "deliveryPlace": tr_export_declaration.delivery_place,
   "locateOfItems": tr_export_declaration.delivery_place,
@@ -58,8 +62,8 @@ $mapIncoterms := function($term) {
     "name": tr_export_declaration.buyer ? tr_export_declaration.buyer : invoice[0].invoice_customer_name,
     "taxNo": null,
     "address": invoice[0].invoice_customer_address,
-    "cityId": null,
-    "countryId": tr_export_declaration.destination_country ? tr_export_declaration.destination_country : invoice[0].invoice_customer_country,
+    "city": null,
+    "country": tr_export_declaration.destination_country ? tr_export_declaration.destination_country : invoice[0].invoice_customer_country,
     "email": null,
     "phone": null
   },
@@ -70,22 +74,16 @@ $mapIncoterms := function($term) {
     "name": tr_export_declaration.sender ? tr_export_declaration.sender : invoice[0].invoice_supplier_name,
     "taxNo": tr_export_declaration.tax_id,
     "address": invoice[0].invoice_supplier_address,
-    "cityId": null,
-    "countryId": tr_export_declaration.dispatch_country ? tr_export_declaration.dispatch_country : invoice[0].invoice_supplier_country,
+    "city": null,
+    "country": tr_export_declaration.dispatch_country ? tr_export_declaration.dispatch_country : invoice[0].invoice_supplier_country,
     "email": null,
     "phone": null
   },
 
   /* Declarant (same as consignor for exports) */
   "declarant": {
-    "id": null,
-    "name": tr_export_declaration.sender ? tr_export_declaration.sender : invoice[0].invoice_supplier_name,
-    "taxNo": tr_export_declaration.tax_id,
-    "address": invoice[0].invoice_supplier_address,
-    "cityId": null,
-    "countryId": tr_export_declaration.dispatch_country ? tr_export_declaration.dispatch_country : invoice[0].invoice_supplier_country,
-    "email": null,
-    "phone": null
+    "name": "DCS",
+    "taxNo": "4190497584"
   },
 
   /* Carrier (optional) */
@@ -189,10 +187,10 @@ $mapIncoterms := function($term) {
                   "value": $detail.net_amount,
                   "currencyCode": $inv.invoice_currency
                 }
-              }) : null,
+              }) ~> $returnArray() : null,
             "paymentMethods": null
           }
-        }) : 
+        }) ~> $returnArray() : 
         /* Fallback to invoice items if combine_items not available */
         $map($inv.items, function($item, $itemIdx) {
           {
@@ -218,8 +216,8 @@ $mapIncoterms := function($term) {
             "itemDetails": null,
             "paymentMethods": null
           }
-        })
+        }) ~> $returnArray()
     }
-  })
+  }) ~> $returnArray()
 }
 )

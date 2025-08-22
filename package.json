@@ -9,6 +9,7 @@
     "watch:ts": "tsc --watch --project tsconfig.json",
     "start": "tsc && node dist/main.js",
     "watch": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main.js",
+    "watch:sec": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main-sec.js",
     "watch:validation": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main-validation.js",
     "jsonata": "tsc && node dist/run-jsonata.js",
     "jsonata:watch": "./scripts/watch-jsonata.sh",

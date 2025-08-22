@@ -120,8 +120,8 @@
     ]
   },
   "additional_data": {
-    "declaration_metadata": {
-      "declaration_type": "IMPORT",
+    "declaration": {
+      "type": "IMPORT",
       "procedure_code": "4000",
       "customs_office": "TR001000",
       "declarant_reference": "SEC-2025-00001",
@@ -171,20 +171,20 @@
         }
       }
     },
-    "transport_information": {
+    "transport": {
       "departure_country": "TR",
       "destination_country": "DE",
       "loading_place": "Istanbul Port",
       "unloading_place": "Hamburg Port",
-      "transport_document": {
+      "document": {
         "type": "CMR",
         "number": "CMR-2025-001234",
         "date": "2025-04-12"
       },
-      "container_numbers": ["TCLU1234567"],
-      "seal_numbers": ["SEAL001", "SEAL002"]
+      "containers": ["TCLU1234567"],
+      "seals": ["SEAL001", "SEAL002"]
     },
-    "financial_information": {
+    "financials": {
       "invoice_currency": "EUR",
       "exchange_rate": 1.0,
       "total_invoice_amount": 5494.23,
@@ -211,25 +211,12 @@
     "special_mentions": [
       "GOODS_FOR_COMMERCIAL_USE",
       "PREFERENTIAL_ORIGIN_EU_TURKEY"
-    ],
-    "risk_indicators": {
-      "security_level": "LOW",
-      "customs_control": "DOCUMENTARY_ONLY",
-      "physical_examination": false,
-      "laboratory_analysis": false
-    }
+    ]
   },
   "additional_setting": {
     "combineOptions": ["commodity_code"],
     "disableOutbound": false,
-    "disableDocumentConverter": false,
-    "secCustomsSettings": {
-      "enableAutomaticValidation": true,
-      "requirePhysicalExamination": false,
-      "preferentialOriginProcessing": true,
-      "electronicDocumentSubmission": true,
-      "customsWarehouse": false
-    }
+    "disableDocumentConverter": false
   },
   "tr_export_declaration": {
     "id": "25341300EX00292776",
