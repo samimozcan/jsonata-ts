@@ -43,6 +43,7 @@ $returnArray := function ($v) {
   "customerReference3": null,
   "declarationType": "EX", /* Export declaration */
   "customsCode": "034000", /* Default Turkish customs code */
+  "container": 0, /*Default*/
   "procedure": "1000", /* Standard export procedure */
   "incoterms": $mapIncoterms(tr_export_declaration.delivery_term),
   "portCode": null,
@@ -52,9 +53,11 @@ $returnArray := function ($v) {
   "deliveryPlace": tr_export_declaration.delivery_place,
   "locateOfItems": tr_export_declaration.delivery_place,
   "contractType": null,
+  "destinationCountry": tr_export_declaration.destination_country,
+  "dispatchCountry": tr_export_declaration.dispatch_country,
   "tradeCountry": tr_export_declaration.destination_country,
   "bankCode": null,
-  "additional": null,
+  "remarks": null, /*44 nolu alan*/
 
   /* Consignee (Buyer/Customer) */
   "consignee": {
@@ -87,16 +90,27 @@ $returnArray := function ($v) {
   },
 
   /* Carrier (optional) */
-  "carrier": null,
+  "carrier": {
+    "id": null,
+    "name": "CARRIER SEC-MAPPING",
+    "taxNo": "",
+    "address": "",
+    "city": null,
+    "country": "",
+    "email": null,
+    "phone": null
+  },
 
   /* Responsible Firm (optional) */
-  "responsibleFirm": null,
-
-  /* Department */
-  "department": {
-    "id": "DEFAULT_DEPT",
-    "name": "Export Department",
-    "branchId": null
+  "responsibleFirm": {
+    "id": null,
+    "name": "RESPONSIBLE FIRM SEC-MAPPING",
+    "taxNo": "",
+    "address": "",
+    "city": null,
+    "country": "",
+    "email": null,
+    "phone": null
   },
 
   /* Main Transport */
@@ -108,7 +122,12 @@ $returnArray := function ($v) {
   },
 
   /* Border Transport (optional) */
-  "borderTransport": null,
+  "borderTransport": {
+    "transportMode": "",
+    "meansCode": "",
+    "meansIdentification": "",
+    "countryCode": ""
+  },
 
   /* FOB Value */
   "fobValue": {
@@ -117,10 +136,16 @@ $returnArray := function ($v) {
   },
 
   /* Freight Value (optional) */
-  "freightValue": null,
+  "freightValue": {
+    "amount": 0 /*@Default for now*/,
+    "currencyCode": tr_export_declaration.freight_value_curr ? tr_export_declaration.freight_value_curr : invoice[0].invoice_currency
+  },
 
   /* Insurance Value (optional) */
-  "insuranceValue": null,
+  "insuranceValue": {
+    "amount": 0 /*@Default for now*/,
+    "currencyCode": tr_export_declaration.insurance_value_curr ? tr_export_declaration.insurance_value_curr : invoice[0].invoice_currency
+  },
 
   /* Payable Value (same as FOB for exports) */
   "payableValue": {
@@ -141,7 +166,13 @@ $returnArray := function ($v) {
   } : null,
 
   /* Payments (optional) */
-  "payments": null,
+  "payments": [
+    {
+      "paymentMeansCode": "",
+      "amount": 0, /*@Default for now*/
+      "currencyCode": ""
+    }
+  ],
 
   /* Invoices */
   "invoices": $map(invoice, function($inv, $idx) {
