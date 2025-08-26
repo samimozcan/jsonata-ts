@@ -471,7 +471,7 @@
         )};
         $isEqualDeclarationTotalItemLine := function($declaration) {(
             $totalLineItem := $declaration.total_line_item ~> $type() = "string" ? $atoi($declaration.total_line_item) : $declaration.total_line_item;
-            $itemCount := $count($declaration.items);
+            $itemCount := $count($declaration.items) ?? 0;
 
             $totalLineItem = $itemCount ? null : {"code": "ERROR_0003", "path": ["tr_export_declaration", "total_line_item"], "args": [$totalLineItem, $itemCount] }
         )};

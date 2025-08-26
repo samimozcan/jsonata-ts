@@ -18,7 +18,7 @@
     "test:validation": "tsc && node dist/validation-test.js"
   },
   "dependencies": {
-    "jsonata": "^2.0.6",
+    "jsonata": "^2.1.0",
     "nodemon": "^3.1.10"
   },
   "devDependencies": {

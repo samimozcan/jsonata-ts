@@ -184,46 +184,7 @@ $returnArray := function ($v) {
       "consignorId": null,
       "consigneeId": null,
       
-      /* Items - use combine_items if available, otherwise use invoice items */
-      "items": $exists(combine_items.items) and $count(combine_items.items) > 0 ? 
-        $map(combine_items.items, function($item, $itemIdx) {
-          {
-            "commodityCode": $item.combined_item_commodity_code,
-            "description": $item.combined_item_description,
-            "grossWeight": $item.combined_item_gross_weight,
-            "invoiceAmount": $item.combined_item_total_amount,
-            "invoiceCurrencyCode": $inv.invoice_currency,
-            "itemOrderNo": $item.combined_item_no,
-            "netWeight": $item.combined_item_net_weight,
-            "originCountryCode": $item.combined_item_country_of_origin,
-            "packageQuantity": $item.combined_item_package_quantity > 0 ? $item.combined_item_package_quantity : null,
-            "packageUnit": $item.combined_item_package_quantity > 0 ? "PCE" : null,
-            "quantity": $item.combined_item_quantity,
-            "statisticalQuantity": $item.combined_item_quantity,
-            "statisticalUnit": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
-            "statisticalValue": $item.combined_item_total_amount,
-            "unit": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
-            "unitOfMeasure": $replace($item.combined_item_unit_type, /ADET\(UNIT\)/, "PCE"),
-            "usedGoods": "N",
-            
-            "additionalDocuments": null,
-            "itemDetails": $exists($item.reference_item_details) and $count($item.reference_item_details) > 0 ? 
-              $map($item.reference_item_details, function($detail, $detailIdx) {
-                {
-                  "index": $detailIdx + 1,
-                  "documentNo": $detail.document_no,
-                  "description": $detail.item_description,
-                  "quantity": $detail.item_quantity,
-                  "unit": $replace($detail.unit_type, /ADET\(UNI\)/, "PCE"),
-                  "value": $detail.net_amount,
-                  "currencyCode": $inv.invoice_currency
-                }
-              }) ~> $returnArray() : null,
-            "paymentMethods": null
-          }
-        }) ~> $returnArray() : 
-        /* Fallback to invoice items if combine_items not available */
-        $map($inv.items, function($item, $itemIdx) {
+      "items": $map($inv.items, function($item, $itemIdx) {
           {
             "commodityCode": $item.invoice_item_commodity_code,
             "description": $item.invoice_item_description,
