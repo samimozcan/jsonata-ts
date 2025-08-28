@@ -9,11 +9,11 @@ const __dirname = path.dirname(__filename);
 
 const jsonataFilePath = path.join(
   __dirname,
-  "../src/jsonata/sec-mapping.jsonata"
+  "../src/jsonata/sec-mapping-alican.jsonata"
 );
 const jsonataInputBodyPath = path.join(
   __dirname,
-  "../src/jsonata/input-body-sec.json"
+  "../src/jsonata/input-body-sec-alican.json"
 );
 
 async function main() {

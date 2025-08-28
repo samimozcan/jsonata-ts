@@ -1,0 +1,216 @@
+{
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 5084,
+          "invoice_item_unit_type": "KG",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 3.9,
+          "invoice_item_description": "Mit einem Titer von weniger als 192,31|dtex, jedoch nicht weniger als 125|dtex (mehr als Nm|52|bis Nm|80)",
+          "invoice_item_total_amount": 19827.6,
+          "invoice_item_commodity_code": "52052400000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "invoice_id": "IHR2025000000119",
+      "invoice_date": "2025-04-24",
+      "invoice_currency": "USD",
+      "invoice_po_number": "000IHR2025-0118",
+      "invoice_payment_term": "MAL MUKABİLİ",
+      "invoice_total_amount": 19827.6,
+      "invoice_customer_name": "TVU GARNVERTRIEB GMBH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "TOPKAPI İPLİK SAN. VE TİC. A. Ş.",
+      "invoice_total_quantity": 5084,
+      "invoice_customer_address": "RAMMERSDORFER STR. 8 D-91578",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "HADIMKÖY MAH. ELVAN SOK. NO:6-8",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 14,
+      "invoice_shipment_country_of_origin": null
+    }
+  ],
+  "declarationData": {
+    "declaration": {
+      "department": "IthalatBirimi",
+      "typeCode": "IM",
+      "procedureCode": "7100",
+      "customsOffice": {
+        "mainEntryOfficeCode": "34100",
+        "mainEntryOfficeName": "Erenköy Customs Office"
+      },
+      "declarant_reference": "SEC-2025-00001",
+      "total_packages": 7,
+      "arrival_date": "2025-04-15",
+      "presentation_date": "2025-04-15"
+    },
+    "parties": {
+      "declarant": {
+        "name": "null",
+        "taxId": "4190497584",
+        "eori": "null",
+        "address": {
+          "street": "Atatürk Cad. No:123",
+          "city": "Istanbul",
+          "postalCode": "34000",
+          "country": "TR"
+        },
+        "representative": {
+          "personName": "Ahmet Can Kara"
+        }
+      },
+      "consignee": {
+        "name": "DS SMITH AMBALAJ ANONİM ŞİRKETİ",
+        "taxId": null,
+        "eori": null,
+        "address": {
+          "street": "Kapı No:8E",
+          "city": "Berlin",
+          "postalCode": "10999",
+          "country": "TR"
+        }
+      },
+      "consignor": {
+        "name": "EAC EUROPEAN ADVERTISING CORPORATION GMBH",
+        "taxId": "6210511678",
+        "eori": "TR621051167800001",
+        "address": {
+          "street": "Araptepe Mevkii Selimpaşa",
+          "city": "Istanbul",
+          "postalCode": "34000",
+          "country": "DE"
+        }
+      }
+    },
+    "transport": {
+      "25modeAtBorderCode": "4",
+      "activeMeansAtBorder": {
+        "21_vehicleType": "Aircraft",
+        "21_identificationNumber": "E683539",
+        "21_nationalityCode": "052",
+        "21_nationality": "TURKIYE"
+      },
+      "18arrivalMeans": {
+        "18_vehicleType": "Truck",
+        "18_identificationNumber": "34DJ4887",
+        "18_identificationTypeCode": "31",
+        "18_nationalityCode": "052",
+        "18_nationality": "TURKIYE"
+      }
+    },
+    "references": {
+      "buyerReference": "HF-13010154",
+      "buyerReference2": "HF-13010154",
+      "integrationNumber": null
+    },
+    "locations": {
+      "departureCountry": "DE",
+      "destinationCountry": "TR",
+      "loadingPlace": "Hamburg Port",
+      "unloadingPlace": "Istanbul Customs Office",
+      "countryOfDestination": {
+        "code": "HK",
+        "name": "Hong Kong"
+      },
+      "countryOfTrade": {
+        "code": "DE",
+        "name": "Germany"
+      },
+      "countryOfDispatch": {
+        "code": "DE",
+        "name": "Germany"
+      },
+      "locationOfGoods": {
+        "name": "DGF TEPEÖREN"
+      }
+    },
+    "customs": {
+      "borderOffice": {
+        "code": "341453",
+        "name": "İstanbul Havalimanı"
+      },
+      "loadingUnloadingOffice": {
+        "code": "341200",
+        "name": "Erenköy Gümrük Müdürlüğü"
+      },
+      "warehouse": {
+        "code": "A34000387",
+        "name": "DHL TEPEÖREN"
+      }
+    },
+    "document": {
+      "type": "CMR",
+      "number": "CMR-2025-001234",
+      "date": "2025-04-12"
+    },
+    "transportDetails": {
+      "isContainerized": true,
+      "seals": ["SEAL001", "SEAL002"]
+    },
+    "commercial": {
+      "incoterm": {
+        "code": "FCA",
+        "place": "Hong Kong"
+      },
+      "contract": {
+        "number": "11 default"
+      },
+      "buyerSellerRelationship": {
+        "code": "6",
+        "description": "iliski var"
+      },
+      "simplifiedProcedure": {
+        "code": "1",
+        "description": "normalleştirilmiş basit usül"
+      }
+    },
+    "financial": {
+      "invoiceCurrency": "EUR",
+      "exchangeRate": 1,
+      "invoiceAmountHeader": 120494.21,
+      "invoiceAmountTotal": 4403605.5,
+      "cifValue": 4722328.07,
+      "vatBase": 5041934.89,
+      "freightCost": 450,
+      "insuranceCost": 100,
+      "otherCosts": 50,
+      "paymentTerms": {
+        "label": "peşin"
+      },
+      "paymentInstrument": {
+        "code": "d",
+        "name": "gümrük idaresinin banka hesabına yapılacak"
+      }
+    },
+    "previousDocuments": [
+      {
+        "type": "EXPORT_DECLARATION",
+        "number": "25341300EX00292776",
+        "date": "2025-04-11",
+        "country": "TR"
+      },
+      {
+        "type": "T1_TRANSIT",
+        "number": "25TR060500001220M5",
+        "date": "2025-04-12",
+        "country": "TR"
+      },
+      {
+        "type": "ATR",
+        "number": "ATR-2025-778899",
+        "date": "2025-04-11",
+        "country": "TR"
+      }
+    ],
+    "additionalInformation": {
+      "notes": ["vekalet:beyoğlu 49.noterliği,13043,12.01.2023"]
+    },
+    "specialMentions": [
+      "GOODS_FOR_COMMERCIAL_USE",
+      "PREFERENTIAL_ORIGIN_EU_TURKEY"
+    ]
+  }
+}
