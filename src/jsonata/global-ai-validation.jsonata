@@ -174,9 +174,8 @@
                                 $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]}),
 
                                 /* Commodity Code Validations*/
-                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]}),
-                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0038", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
-
+                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
+                                
                             ]
                         }) ~> $customAppend()
                     ]
@@ -263,10 +262,6 @@
 
 
         {
-            "additional_data": {
-                "errors": $count($additionalErrors) = 1 ? [$additionalErrors] : $additionalErrors,
-                "warnings": $count($additionalWarnings) = 1 ? [$additionalWarnings] : $additionalWarnings
-            },
             "invoice": {
                 "errors": $count($invoiceErrors) = 1 ? [$invoiceErrors] : $invoiceErrors,
                 "warnings": $count($invoiceWarnings) = 1 ? [$invoiceWarnings] : $invoiceWarnings

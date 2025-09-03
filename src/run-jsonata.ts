@@ -19,6 +19,7 @@ if (args.length === 0) {
 }
 
 const jsonataFileName = args[0];
+const inputBodyFileName = args[1] || "input-body.json";
 const jsonataFilePath = path.join(
   __dirname,
   "../src/jsonata/",
@@ -26,7 +27,8 @@ const jsonataFilePath = path.join(
 );
 const jsonataInputBodyPath = path.join(
   __dirname,
-  "../src/jsonata/input-body.json"
+  "../src/jsonata/",
+  inputBodyFileName
 );
 
 async function main() {

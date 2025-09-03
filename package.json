@@ -12,7 +12,8 @@
     "watch:sec": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main-sec.js",
     "watch:validation": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/main-validation.js",
     "jsonata": "tsc && node dist/run-jsonata.js",
-    "jsonata:watch": "./scripts/watch-jsonata.sh",
+    "jsonata:watch": "tsc && nodemon --watch . --ext js,ts,json,jsonata --exec node dist/run-jsonata.js",
+    "jsonata:watch:sh": "./scripts/watch-jsonata.sh",
     "demo": "tsc && node dist/demo.js",
     "demo:watch": "tsc && nodemon --watch . --ext js,ts --exec node dist/demo.js",
     "test:validation": "tsc && node dist/validation-test.js"

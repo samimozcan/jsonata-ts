@@ -1,0 +1,223 @@
+(
+  /* yardımcılar */
+  $formatDate := function($d){ $d ? $replace($d, /(\d{2})\.(\d{2})\.(\d{4})/, "$3-$2-$1") : $now() };
+  $mapTransportMode := function($m){ $m="1"?"10":$m="2"?"20":$m="3"?"30":$m="4"?"40":$m="5"?"50":$m };
+  $mapIncoterms := function($t){ $t="EXW"?"EXW":$t="FCA"?"FCA":$t="FOB"?"FOB":$t="CIF"?"CIF":$t="DAP"?"DAP":$t="DDP"?"DDP":$t };
+
+  /* Utils */
+  $returnArray := function ($v) {
+    $type($v) != "array" ? [$v] : $v
+  };
+
+  $isInvoiceExist := $exists(invoice) and $type(invoice) = "array";
+
+  $dec := additional_data;
+  
+  /* Invoice Fields */
+  $invoiceIds := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_id
+  }) ~> $join(', ') : null;
+  $invoiceDeliveryTerm := $isInvoiceExist ? invoice[0].invoice_delivery_term : null;
+  $invoiceCustomerName := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_customer_name ? $v.invoice_customer_name : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceCustomerAddress := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_customer_address ? $v.invoice_customer_address : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceCustomerCountry := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_customer_country ? $v.invoice_customer_country : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceSupplierName := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_supplier_name ? $v.invoice_supplier_name : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceSupplierAddress := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_supplier_address ? $v.invoice_supplier_address : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceSupplierCountry := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_supplier_country ? $v.invoice_supplier_country : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceCurrency := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_currency ? $v.invoice_currency : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+  $invoiceTotalPackageQuantity := $isInvoiceExist ? $map(invoice, function($v, $i) {
+    $v.invoice_total_package_quantity ? $v.invoice_total_package_quantity : null
+  }) ~> $sort() ~> function($v){$v[0]} : null;
+
+
+  {
+    /* --- ana alanlar --- */
+    "customerReference1": $invoiceIds ? $substring($invoiceIds,0,20) : null,
+    "customerReference2": $invoiceIds ? $substring($invoiceIds,20) : null,
+    "customerReference3": null,
+
+    "declarationType": "IM",
+    "customsCode": $dec.customs.borderOffice.code ? $dec.customs.borderOffice.code : $dec.declaration.customsOffice.mainEntryOfficeCode,
+    "customsBorderOfficeName": $dec.customs.borderOffice.name,                            /* ai ile eklendi */
+    "destinationCustomsCode": $dec.customs.loadingUnloadingOffice.code ? $dec.customs.loadingUnloadingOffice.code : "000000",
+    "destinationCustomsName": $dec.customs.loadingUnloadingOffice.name,                  /* ai ile eklendi */
+    "warehouse": $dec.customs.warehouse,                                                 /* ai ile eklendi */
+
+    "container": $dec.transportDetails.isContainerized ? 1 : 0,
+    "procedure": $dec.declaration.procedureCode,
+    "incoterms": $mapIncoterms($dec.commercial.incoterm.code ? $dec.commercial.incoterm.code : $invoiceDeliveryTerm),
+
+    "createdAt":
+      $dec.document.date ? $formatDate($dec.document.date) :
+        ($dec.declaration.presentation_date ? $formatDate($dec.declaration.presentation_date) :
+          ($dec.declaration.arrival_date ? $formatDate($dec.declaration.arrival_date) :
+            $not())),
+
+    "cutOffDate": null,
+    "deliveryPlace": $dec.commercial.incoterm.place ? $dec.commercial.incoterm.place : $dec.locations.unloadingPlace,
+    "locateOfItems": $dec.locations.locationOfGoods.name ? $dec.locations.locationOfGoods.name : $dec.locations.unloadingPlace,
+
+    /* lokasyon ekleri */
+    "loadingPlace": $dec.locations.loadingPlace,                                         /* ai ile eklendi */
+    "unloadingPlace": $dec.locations.unloadingPlace,                                     /* ai ile eklendi */
+    "destinationCountry": $dec.locations.destinationCountry,
+    "dispatchCountry": $dec.locations.departureCountry,
+    "tradeCountry": $dec.locations.countryOfTrade.code ? $dec.locations.countryOfTrade.code : $dec.locations.countryOfTrade,
+
+    "bankCode": null,
+    "remarks": $dec.additionalInformation.notes[0],
+
+    /* taraflar */
+    "consignee": {
+      "id": null,
+      "name": $dec.parties.consignee.name ? $dec.parties.consignee.name : $invoiceCustomerName,
+      "taxNo": $dec.parties.consignee.taxId,
+      "address": $invoiceCustomerAddress ? $invoiceCustomerAddress : ($dec.parties.consignee.address.street ? $dec.parties.consignee.address.street : ""),
+      "city": $dec.parties.consignee.address.city,
+      "country": $dec.parties.consignee.address.country ? $dec.parties.consignee.address.country : $invoiceCustomerCountry,
+      "email": null,
+      "phone": null
+    },
+    "consignor": {
+      "id": null,
+      "name": $dec.parties.consignor.name ? $dec.parties.consignor.name : $invoiceSupplierName,
+      "taxNo": $dec.parties.consignor.taxId,
+      "address": $invoiceSupplierAddress ? $invoiceSupplierAddress : ($dec.parties.consignor.address.street ? $dec.parties.consignor.address.street : ""),
+      "city": $dec.parties.consignor.address.city,
+      "country": $dec.parties.consignor.address.country ? $dec.parties.consignor.address.country : $invoiceSupplierCountry,
+      "email": null,
+      "phone": null
+    },
+    "declarant": {
+      "name": $dec.parties.declarant.name,
+      "taxNo": $dec.parties.declarant.taxId ?? "4190497584",
+      "eori": $dec.parties.declarant.eori,                                               /* ai ile eklendi */
+      "representative": { "personName": $dec.parties.declarant.representative.personName }/* ai ile eklendi */
+    },
+
+    /* taşıma */
+    "mainTransport": {
+      "transportMode": $mapTransportMode($dec.transport.modeAtBorderCode25),/*TODO: samim additional, t1 den alınacak */
+      "meansCode": $dec.transport.arrivalMeans18.vehicleType18,/*TODO: samim additional, t1 den alınacak */
+      "meansIdentification": $dec.transport.arrivalMeans18.identificationNumber18,/*TODO: samim additional,beyanname, t1 den alınacak */
+      "countryCode": $dec.locations.departureCountry/*TODO: samim additional,beyanname, t1 den alınacak */
+    },
+    "borderTransport": {
+      "transportMode": $mapTransportMode($dec.transport.modeAtBorderCode25),/*TODO: samim additional,beyanname, t1 den alınacak */
+      "meansCode": $dec.transport.activeMeansAtBorder.vehicleType21,/*TODO: samim additional, t1 den alınacak */
+      "meansIdentification": $dec.transport.activeMeansAtBorder.identificationNumber21,/*TODO: samim additional, t1 den alınacak */
+      "countryCode": $dec.transport.activeMeansAtBorder.nationalityCode21/*TODO: samim additional,beyanname, t1 den alınacak */
+    },
+    "seals": $dec.transportDetails.seals,                                                /* ai ile eklendi */
+
+    /* değerler & finans */
+    "fobValue": {
+      "amount": $number($dec.financial.invoiceAmountTotal),
+      "currencyCode": $dec.financial.invoiceCurrency ? $dec.financial.invoiceCurrency : $invoiceCurrency
+    },
+    "freightValue": {
+      "amount": $number($dec.financial.freightCost),
+      "currencyCode": $dec.financial.invoiceCurrency ? $dec.financial.invoiceCurrency : $invoiceCurrency
+    },
+    "insuranceValue": {
+      "amount": $number($dec.financial.insuranceCost),
+      "currencyCode": $dec.financial.invoiceCurrency ? $dec.financial.invoiceCurrency : $invoiceCurrency
+    },
+    "payableValue": {
+      "amount": $number($dec.financial.invoiceAmountTotal),
+      "currencyCode": $dec.financial.invoiceCurrency ? $dec.financial.invoiceCurrency : $invoiceCurrency
+    },
+
+    "financial": {                                                                      /* ai ile eklendi */
+      "invoiceAmountHeader": $dec.financial.invoiceAmountHeader,                        /* ai ile eklendi */
+      "exchangeRate": $dec.financial.exchangeRate,                                      /* ai ile eklendi */
+      "vatBase": $dec.financial.vatBase,                                                /* ai ile eklendi */
+      "cifValue": $dec.financial.cifValue,                                              /* ai ile eklendi */
+      "otherCosts": $dec.financial.otherCosts,                                          /* ai ile eklendi */
+      "paymentTerms": $dec.financial.paymentTerms,                                      /* ai ile eklendi */
+      "paymentInstrument": $dec.financial.paymentInstrument                              /* ai ile eklendi */
+    },
+
+    "totalGrossWeight": null,
+    "totalPackages":
+      $dec.declaration.total_packages ?
+        { "amount": $number($dec.declaration.total_packages), "unit": "PCE" } :
+      ($invoiceTotalPackageQuantity ?
+        { "amount": $number($invoiceTotalPackageQuantity), "unit": "PCE" } :
+        null),
+
+    "payments": [
+      {
+        "paymentMeansCode": $dec.financial.paymentInstrument.code,
+        "amount": 0,
+        "currencyCode": $dec.financial.invoiceCurrency ? $dec.financial.invoiceCurrency : $invoiceCurrency
+      }
+    ],
+
+    /* belgeler */
+    "documentHeader": $dec.document,                                                     /* ai ile eklendi */
+    "previousDocuments": $dec.previousDocuments,                                         /* ai ile eklendi */
+    "additionalInformation": $dec.additionalInformation,                                 /* ai ile eklendi */
+    "specialMentions": $dec.specialMentions,                                             /* ai ile eklendi */
+
+    /* faturalar */
+    "invoices": $map(invoice, function($inv, $idx) {
+      {
+        "invoiceNo": $inv.invoice_id,
+        "invoiceDate": $formatDate($inv.invoice_date),
+        "currencyCode": $inv.invoice_currency,
+        "amount": $inv.invoice_total_amount,
+
+        /* fatura ek alanları */
+        "poNumber": $inv.invoice_po_number,                                              /* ai ile eklendi */
+        "paymentTermRaw": $inv.invoice_payment_term,                                     /* ai ile eklendi */
+        "totalQuantity": $inv.invoice_total_quantity,                                    /* ai ile eklendi */
+        "totalPackageQuantity": $inv.invoice_total_package_quantity,                     /* ai ile eklendi */
+        "shipmentCountryOfOrigin": $inv.invoice_shipment_country_of_origin,              /* ai ile eklendi */
+        "customerName": $inv.invoice_customer_name,                                      /* ai ile eklendi */
+        "customerCountry": $inv.invoice_customer_country,                                /* ai ile eklendi */
+        "supplierName": $inv.invoice_supplier_name,                                      /* ai ile eklendi */
+        "supplierCountry": $inv.invoice_supplier_country,                                /* ai ile eklendi */
+
+        "items": $map($inv.items, function($item, $itemIdx) {
+          {
+            "commodityCode": $item.invoice_item_commodity_code,
+            "description": $item.invoice_item_description,
+            "grossWeight": 0,
+            "invoiceAmount": $item.invoice_item_total_amount ? $item.invoice_item_total_amount : ($item.invoice_item_quantity * $item.invoice_item_unit_price),
+            "invoiceCurrencyCode": $inv.invoice_currency,
+            "itemOrderNo": $item.invoice_item_no,
+            "netWeight": 0,
+            "originCountryCode": $item.invoice_item_country_of_origin,
+            "packageQuantity": $item.invoice_item_package_quantity,
+            "packageUnit": $item.invoice_item_package_quantity ? "PCE" : null, /*TODO:@alican*/
+            "quantity": $item.invoice_item_quantity,
+            "statisticalQuantity": $item.invoice_item_quantity,
+            "statisticalUnit": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "statisticalValue": $item.invoice_item_total_amount ? $item.invoice_item_total_amount : ($item.invoice_item_quantity * $item.invoice_item_unit_price),
+            "unit": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "unitOfMeasure": $replace($item.invoice_item_unit_type, /Adet/, "PCE"),
+            "usedGoods": "N",
+            "additionalDocuments": null,
+            "itemDetails": null,
+            "paymentMethods": null
+          }
+        }) ~> $returnArray()
+      }
+    }) ~> $returnArray()
+  }
+)

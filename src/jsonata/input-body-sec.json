@@ -10,7 +10,7 @@
           "invoice_item_unit_price": 0.0587,
           "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
           "invoice_item_total_amount": 1174,
-          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_commodity_code": "481910000000",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
@@ -22,7 +22,7 @@
           "invoice_item_unit_price": 0.155,
           "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
           "invoice_item_total_amount": 1309.75,
-          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_commodity_code": "481910000000",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
@@ -34,7 +34,7 @@
           "invoice_item_unit_price": 0.082,
           "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
           "invoice_item_total_amount": 1226.72,
-          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_commodity_code": "481910000000",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
@@ -46,7 +46,7 @@
           "invoice_item_unit_price": 0.167,
           "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
           "invoice_item_total_amount": 1736.8,
-          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_commodity_code": "481910000000",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
@@ -58,7 +58,7 @@
           "invoice_item_unit_price": 0.0587,
           "invoice_item_description": "Schachteln und Kartons aus Wellpapier oder Wellpappe",
           "invoice_item_total_amount": 46.96,
-          "invoice_item_commodity_code": "4819100000",
+          "invoice_item_commodity_code": "481910000000",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         }
@@ -120,98 +120,183 @@
     ]
   },
   "additional_data": {
-    "declaration": {
-      "type": "IMPORT",
-      "procedure_code": "4000",
-      "customs_office": "TR001000",
-      "declarant_reference": "SEC-2025-00001",
-      "total_packages": 7,
-      "transport_mode": "3",
-      "transport_means": "TRUCK-TR-34-ABC-123",
-      "arrival_date": "2025-04-15",
-      "presentation_date": "2025-04-15"
+    "customs": {
+      "warehouse": {
+        "code": "A34000387",
+        "name": "DHL TEPEÖREN"
+      },
+      "borderOffice": {
+        "code": "341453",
+        "name": "İstanbul Havalimanı"
+      },
+      "loadingUnloadingOffice": {
+        "code": "341200",
+        "name": "Erenköy Gümrük Müdürlüğü"
+      }
     },
     "parties": {
-      "declarant": {
-        "name": "SEC CUSTOMS AGENT",
-        "tax_id": "1234567890",
-        "eori": "TR123456789000001",
-        "address": {
-          "street": "Atatürk Cad. No:123",
-          "city": "Istanbul",
-          "postal_code": "34000",
-          "country": "TR"
-        },
-        "contact": {
-          "person": "Ahmet Yılmaz",
-          "phone": "+90 212 123 4567",
-          "email": "ahmet@seccustoms.com"
-        }
-      },
-      "importer": {
-        "name": "EAC EUROPEAN ADVERSTISING CORPORATION GMBH",
-        "tax_id": "DE123456789",
-        "eori": "DE123456789000001",
-        "address": {
-          "street": "Kapı No:8E",
-          "city": "BERLIN",
-          "postal_code": "10999",
-          "country": "DE"
-        }
-      },
-      "exporter": {
+      "consignee": {
+        "eori": null,
         "name": "DS SMITH AMBALAJ ANONİM ŞİRKETİ",
-        "tax_id": "6210511678",
-        "eori": "TR621051167800001",
+        "taxId": null,
         "address": {
-          "street": "Araptepe Mevkii Selimpaşa",
-          "city": "Istanbul",
-          "postal_code": "34000",
-          "country": "TR"
+          "city": "Berlin",
+          "street": "Kapı No:8E",
+          "country": "TR",
+          "postalCode": "10999"
         }
+      },
+      "consignor": {
+        "eori": "TR621051167800001",
+        "name": "EAC EUROPEAN ADVERTISING CORPORATION GMBH",
+        "taxId": "6210511678",
+        "address": {
+          "city": "Istanbul",
+          "street": "Araptepe Mevkii Selimpaşa",
+          "country": "DE",
+          "postalCode": "34000"
+        }
+      },
+      "declarant": {
+        "eori": "null",
+        "name": "null",
+        "taxId": "4190497584",
+        "address": {
+          "city": "Istanbul",
+          "street": "Atatürk Cad. No:123",
+          "country": "TR",
+          "postalCode": "34000"
+        },
+        "representative": {
+          "personName": "Ahmet Can Kara"
+        }
+      }
+    },
+    "document": {
+      "date": "2025-04-12",
+      "type": "CMR",
+      "number": "CMR-2025-001234"
+    },
+    "financial": {
+      "vatBase": 5041934.89,
+      "cifValue": 4722328.07,
+      "otherCosts": 50,
+      "freightCost": 450,
+      "exchangeRate": 1,
+      "paymentTerms": {
+        "label": "peşin"
+      },
+      "insuranceCost": 100,
+      "invoiceCurrency": "EUR",
+      "paymentInstrument": {
+        "code": "d",
+        "name": "gümrük idaresinin banka hesabına yapılacak"
+      },
+      "invoiceAmountTotal": 4403605.5,
+      "invoiceAmountHeader": 120494.21
+    },
+    "locations": {
+      "loadingPlace": "Hamburg Port",
+      "countryOfTrade": {
+        "code": "DE",
+        "name": "Germany"
+      },
+      "unloadingPlace": "Istanbul Customs Office",
+      "locationOfGoods": {
+        "name": "DGF TEPEÖREN"
+      },
+      "departureCountry": "DE",
+      "countryOfDispatch": {
+        "code": "DE",
+        "name": "Germany"
+      },
+      "destinationCountry": "TR",
+      "countryOfDestination": {
+        "code": "HK",
+        "name": "Hong Kong"
       }
     },
     "transport": {
-      "departure_country": "TR",
-      "destination_country": "DE",
-      "loading_place": "Istanbul Port",
-      "unloading_place": "Hamburg Port",
-      "document": {
-        "type": "CMR",
-        "number": "CMR-2025-001234",
-        "date": "2025-04-12"
+      "arrivalMeans18": {
+        "nationality18": "TURKIYE",
+        "vehicleType18": "4",
+        "nationalityCode18": "TR",
+        "identificationNumber18": "34DJ4887"
       },
-      "containers": ["TCLU1234567"],
-      "seals": ["SEAL001", "SEAL002"]
+      "modeAtBorderCode25": "4",
+      "activeMeansAtBorder": {
+        "nationality21": "TURKIYE",
+        "vehicleType21": "4",
+        "nationalityCode21": "TR",
+        "identificationNumber21": "E683539"
+      }
     },
-    "financials": {
-      "invoice_currency": "EUR",
-      "exchange_rate": 1.0,
-      "total_invoice_amount": 5494.23,
-      "freight_cost": 450.0,
-      "insurance_cost": 100.0,
-      "other_costs": 50.0,
-      "payment_method": "BANK_TRANSFER",
-      "payment_terms": "30_DAYS"
+    "commercial": {
+      "contract": {
+        "number": "11 default"
+      },
+      "incoterm": {
+        "code": "FCA",
+        "place": "Hong Kong"
+      },
+      "simplifiedProcedure": {
+        "code": "1",
+        "description": "normalleştirilmiş basit usül"
+      },
+      "buyerSellerRelationship": {
+        "code": "6",
+        "description": "iliski var"
+      }
     },
-    "previous_documents": [
+    "references": {
+      "buyerReference": "HF-13010154",
+      "buyerReference2": "HF-13010154",
+      "integrationNumber": null
+    },
+    "declaration": {
+      "typeCode": "IM",
+      "department": "IthalatBirimi",
+      "arrival_date": "2025-04-15",
+      "customsOffice": {
+        "mainEntryOfficeCode": "34100",
+        "mainEntryOfficeName": "Erenköy Customs Office"
+      },
+      "procedureCode": "7100",
+      "total_packages": 7,
+      "presentation_date": "2025-04-15",
+      "declarant_reference": "SEC-2025-00001"
+    },
+    "specialMentions": [
+      "GOODS_FOR_COMMERCIAL_USE",
+      "PREFERENTIAL_ORIGIN_EU_TURKEY"
+    ],
+    "transportDetails": {
+      "seals": ["SEAL001", "SEAL002"],
+      "isContainerized": true
+    },
+    "previousDocuments": [
       {
+        "date": "2025-04-11",
         "type": "EXPORT_DECLARATION",
         "number": "25341300EX00292776",
-        "date": "2025-04-11",
         "country": "TR"
       },
       {
+        "date": "2025-04-12",
         "type": "T1_TRANSIT",
         "number": "25TR060500001220M5",
-        "date": "2025-04-12",
+        "country": "TR"
+      },
+      {
+        "date": "2025-04-11",
+        "type": "ATR",
+        "number": "ATR-2025-778899",
         "country": "TR"
       }
     ],
-    "special_mentions": [
-      "GOODS_FOR_COMMERCIAL_USE",
-      "PREFERENTIAL_ORIGIN_EU_TURKEY"
-    ]
+    "additionalInformation": {
+      "notes": ["vekalet:beyoğlu 49.noterliği,13043,12.01.2023"]
+    }
   },
   "additional_setting": {
     "combineOptions": ["commodity_code"],
