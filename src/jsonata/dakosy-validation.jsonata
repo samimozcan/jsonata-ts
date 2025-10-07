@@ -421,6 +421,30 @@
         }) : [];
         $invoiceWarnings := [];
 
+          /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        /*Declaration ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $declarationErrorsFirst := $isDeclarationExist and $type(tr_export_declaration) = "object" ?
+            $filter([
+                $map(tr_export_declaration.items, function($v, $i) {
+                    [
+                            /* Commodity Code Validations*/
+                            $max($v.commodity_code, 10, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "declaration_item_commodity_code"], "args": [$i]})
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $invoiceErrors := $count($declarationErrorsFirst) ? $map($declarationErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $invoiceWarnings := [];
+
 
         {
             "additional_data": {
