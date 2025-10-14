@@ -1,0 +1,256 @@
+{
+  "atr": {
+    "id": "N 0570458",
+    "date": "2025-09-19",
+    "sender": "ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "receiver": "JORN GMBH",
+    "export_mrn": "25160100EX00111223",
+    "total_weight": 14275,
+    "total_package": 18
+  },
+  "cmr": {
+    "date": "2025-09-19",
+    "sender": "ANGST PFISTER GELISIM TEKNIK\nCOZUMLER A. S.",
+    "plate_no": "/14 DS 380",
+    "receiver": "JORN GMBH",
+    "total_weight": 14275,
+    "loading_place": "BURSA TURKIYE",
+    "total_package": 18,
+    "delivery_place": "WAIBLINGEN GERMANY"
+  },
+  "cache": {
+    "commodity_codes": ["40169952900"]
+  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 4.86,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7000 ",
+          "invoice_item_unit_price": 3.22,
+          "invoice_item_description": "MUHTELIF BURC (Antivibration Bush)",
+          "invoice_item_total_amount": 15649.2,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 3.51,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7004 ",
+          "invoice_item_unit_price": 2.99,
+          "invoice_item_description": "MUHTELIF BURC (Antivibration Bush)",
+          "invoice_item_total_amount": 10494.9,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 11.22,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 77 6031 ",
+          "invoice_item_unit_price": 3.38,
+          "invoice_item_description": "MUHTELIF BURC (Antivibration Bush)",
+          "invoice_item_total_amount": 37923.6,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "AP12025000001046",
+      "invoice_date": "2025-09-18",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "Mal Mukabi",
+      "invoice_total_amount": 64067.7,
+      "invoice_customer_name": "Jörn GmbH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "ANGST PFISTER GELİŞMIŞ TEKNIK ÇÖZÜMLER A.Ş.",
+      "invoice_total_quantity": 19590,
+      "invoice_customer_address": "Kriegsbergstr. 17 Ortsteil Ho",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 18,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "combine_items": {
+    "meta": {
+      "total_items": 3,
+      "total_merged_items": 1,
+      "combination_filters": ["commodity_code"]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 19.59,
+        "reference_item_details": [
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 1,
+            "unit_type": "Adet",
+            "net_amount": 15649.2,
+            "net_weight": null,
+            "document_no": "AP12025000001046",
+            "gross_amount": 15649.2,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 4.86,
+            "commodity_code": "40169952900",
+            "item_description": "MUHTELIF BURC (Antivibration Bush)",
+            "package_quantity": null,
+            "country_of_origin": "TR"
+          },
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 2,
+            "unit_type": "Adet",
+            "net_amount": 10494.9,
+            "net_weight": null,
+            "document_no": "AP12025000001046",
+            "gross_amount": 10494.9,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 3.51,
+            "commodity_code": "40169952900",
+            "item_description": "MUHTELIF BURC (Antivibration Bush)",
+            "package_quantity": null,
+            "country_of_origin": "TR"
+          },
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 3,
+            "unit_type": "Adet",
+            "net_amount": 37923.6,
+            "net_weight": null,
+            "document_no": "AP12025000001046",
+            "gross_amount": 37923.6,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 11.22,
+            "commodity_code": "40169952900",
+            "item_description": "MUHTELIF BURC (Antivibration Bush)",
+            "package_quantity": null,
+            "country_of_origin": "TR"
+          }
+        ],
+        "combined_item_unit_type": "Adet",
+        "combined_item_net_weight": null,
+        "combined_item_description": "MUHTELIF BURC (Antivibration Bush)",
+        "combined_item_gross_weight": null,
+        "combined_item_total_amount": 64067.7,
+        "combined_item_commodity_code": "40169952900",
+        "combined_item_package_quantity": 0,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "district": "Suben",
+            "postalCode": "4975",
+            "addressType": "CN",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 555
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonEmail": "test@test.com",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": "555 55 55"
+          },
+          "departureCountry": "AT",
+          "dv1CostAllocation": {
+            "costs": 10,
+            "costType": "test",
+            "currencyCode": "EUR"
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "addressedCustomsOffice": "7701",
+          "procedureCodeRequested": "42",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TEST22042025",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": 1,
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/2602203_TEST_1036",
+          "objectAlias": "4803/260220122042025_160905",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUBBB",
+      "ioReference": "4803/260220122042025_160905"
+    }
+  },
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "combineOptions": ["commodity_code"],
+    "disableOutbound": false,
+    "outputApplicationId": "dakosy/sftp/vera",
+    "disableDocumentConverter": false
+  },
+  "transit_declaration": null,
+  "tr_export_declaration": {
+    "id": "25160100EX00111223",
+    "date": "2025-09-19",
+    "buyer": "JORN GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00111223-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 19590,
+        "item_value": 64067.7,
+        "net_weight": 13777,
+        "gross_weight": 14275,
+        "commodity_code": "40169952900",
+        "unit_of_measure": "AD",
+        "package_quantity": "Ticari tanımı:MUHTELİF BURC",
+        "statistical_value": 73398.92,
+        "commodity_description": "Ticari tanımı:MUHTELİF BURC"
+      }
+    ],
+    "sender": "ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "tax_id": "6080551890",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024 ** FATURA NO: API2025000001046/18 .09.2025 IML ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 A.TR Dolaşım Belgesi Basit 19.09.2025/N0570458 TPS-E-Fatura Var 18.09.2025/2524\n3160110886044330177/1-2-3 TPS-Kripto Numarası Var 19.09.2025/25153097211086\n074538903/1",
+    "total_value": "64067.70",
+    "total_weight": null,
+    "delivery_term": "DAP",
+    "total_package": "18",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "1",
+    "dispatch_country": "TÜRKİYE",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "B0",
+    "destination_country": "DE"
+  }
+}

@@ -435,7 +435,7 @@
                 $map(tr_export_declaration.items, function($v, $i) {
                     [
                             /* Commodity Code Validations*/
-                            $max($v.commodity_code, 10, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "declaration_item_commodity_code"], "args": [$i]})
+                            $max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "declaration_item_commodity_code"], "args": [$i]})
                     ]
                 }) ~> $customAppend() 
             ], function($v) { $v != null })
