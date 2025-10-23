@@ -72,10 +72,8 @@ async function main() {
         console.error("Could not list available files");
       }
     } else {
-      console.error(
-        "❌ Error:",
-        error instanceof Error ? error.message : String(error)
-      );
+      console.error("❌ Error:");
+      console.dir(error, { depth: null, colors: true });
     }
     process.exit(1);
   }

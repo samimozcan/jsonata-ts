@@ -1,0 +1,122 @@
+{
+  "cache": { "commodity_codes": [] },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": null,
+          "invoice_item_product_id": "3473418250",
+          "invoice_item_unit_price": 8.4,
+          "invoice_item_description": "Lotta entdeckt die Welt: Im Frühling",
+          "invoice_item_total_amount": 9.24,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": null,
+          "invoice_item_product_id": "3649644886",
+          "invoice_item_unit_price": 7.55,
+          "invoice_item_description": "Stups, der kleine Osterhase",
+          "invoice_item_total_amount": 8.3,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": null,
+          "invoice_item_unit_type": null,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": null,
+          "invoice_item_description": "Versandkosten",
+          "invoice_item_total_amount": 0,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "invoice_id": "LU5176QIBAEUI",
+      "invoice_date": "2025-03-13",
+      "invoice_currency": "EUR",
+      "invoice_po_number": "305-2005378-3780351",
+      "invoice_payment_term": null,
+      "invoice_total_amount": 17.54,
+      "invoice_customer_name": "Andreas Luxbauer",
+      "invoice_delivery_term": null,
+      "invoice_supplier_name": "Amazon EU S.à r.l.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "VERAG Spedition AG, Suben 100",
+      "invoice_customer_country": "AT",
+      "invoice_supplier_address": "38 avenue John F. Kennedy",
+      "invoice_supplier_country": "Luxembourg",
+      "invoice_total_package_quantity": null,
+      "invoice_shipment_country_of_origin": null
+    }
+  ],
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "postalCode": "4975",
+            "addressType": "CN",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 0
+          },
+          {
+            "city": "SUBEN",
+            "postalCode": "4975",
+            "addressType": "CZ",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 0
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "departureCountry": "AT",
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TESTLKW",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": -1
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/25061573_TEST",
+          "objectAlias": "4803/2506157317102025_085541",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUB",
+      "ioReference": "4803/2506157317102025_085541"
+    }
+  },
+  "additional_setting": {
+    "userId": 3,
+    "companyId": 1,
+    "outputApplicationId": "dakosy/sftp/vera"
+  }
+}

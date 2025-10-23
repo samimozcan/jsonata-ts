@@ -153,20 +153,10 @@
 
             $itemTotalAmount = $invoiceTotalAmount ? null : {"code": "ERROR_0001", "path": ["invoice", $index, "invoice_total_amount"], "args": [$invoiceTotalAmount, $itemTotalAmount]}
         )};
-        $isInvoiceTotalQuantityEqual := function($invoice, $index) {(
-            $itemTotalQuantity := $reduce($invoice.items, function($acc, $v) {
-                $acc + ($v.invoice_item_quantity ? $v.invoice_item_quantity : 0)
-            }, 0) ~> $round(2);
-            $invoiceTotalQuantity := $invoice.invoice_total_quantity ? $invoice.invoice_total_quantity ~> $round(2) : 0;
-
-            $itemTotalQuantity = $invoiceTotalQuantity ? null : {"code": "ERROR_0006", "path": ["invoice", $index, "invoice_total_quantity"], "args": [$invoiceTotalQuantity, $itemTotalQuantity]}
-        )};
         $invoiceErrorsFirst := $isInvoiceExist and $type(invoice) = "array" ?
             $filter([
                 $map(invoice, function($v, $i) {
                     [
-                        $isInvoiceTotalAmountEqual($v, $i),
-                        $isInvoiceTotalQuantityEqual($v, $i),
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
@@ -175,7 +165,21 @@
 
                                 /* Commodity Code Validations*/
                                 $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
-                                
+
+                            ]
+                        }) ~> $customAppend()
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $invoiceWarningsFirst := $isInvoiceExist and $type(invoice) = "array" ?
+            $filter([
+                $map(invoice, function($v, $i) {
+                    [
+                        $isInvoiceTotalAmountEqual($v, $i),
+                        $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
+                        $map($v.items, function($vv, $ii) {
+                            [
                             ]
                         }) ~> $customAppend()
                     ]
@@ -185,7 +189,9 @@
         $invoiceErrors := $count($invoiceErrorsFirst) ? $map($invoiceErrorsFirst, function($error) {
             $formatErrorMessage($error)
         }) : [];
-        $invoiceWarnings := [];
+        $invoiceWarnings := $count($invoiceWarningsFirst) ? $map($invoiceWarningsFirst, function($warning) {
+            $formatErrorMessage($warning)
+        }) : [];
 
         /* --- */
         /* --- */
@@ -225,15 +231,10 @@
             $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"ERROR_0002", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $itemTotalValue] }
         )};
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
-            $isEqualDeclarationTotalGrossWeight(tr_export_declaration),
-            $isDeclarationTotalValueEqual(tr_export_declaration),
-            $isEqualDeclarationTotalItemLine(tr_export_declaration),
-            $isEqualTotalValueDeclarationInvoice(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                     /* Commodity Code */
                     $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]}),
-                    $max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]}),
 
                     /* Country of Origin */
                     $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]}),
@@ -241,10 +242,22 @@
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];
+        $declarationWarningsFirst := $isDeclarationExist ? $filter([
+            $isEqualDeclarationTotalGrossWeight(tr_export_declaration),
+            $isDeclarationTotalValueEqual(tr_export_declaration),
+            $isEqualDeclarationTotalItemLine(tr_export_declaration),
+            $isEqualTotalValueDeclarationInvoice(tr_export_declaration),
+            $map($.tr_export_declaration.items, function($v, $i) {
+                [
+                ]
+            }) ~> $customAppend()
+        ], function($v) { $v != null }) : [];
         $declarationErrors := $count($declarationErrorsFirst) ? $map($declarationErrorsFirst, function($error) {
             $formatErrorMessage($error)
         }) : [];
-        $declarationWarnings := [];
+        $declarationWarnings := $count($declarationWarningsFirst) ? $map($declarationWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
 
 
         /* --- */
@@ -262,6 +275,10 @@
 
 
         {
+            "additional_data": {
+                "errors": $count($additionalErrors) = 1 ? [$additionalErrors] : $additionalErrors,
+                "warnings": $count($additionalWarnings) = 1 ? [$additionalWarnings] : $additionalWarnings
+            },
             "invoice": {
                 "errors": $count($invoiceErrors) = 1 ? [$invoiceErrors] : $invoiceErrors,
                 "warnings": $count($invoiceWarnings) = 1 ? [$invoiceWarnings] : $invoiceWarnings

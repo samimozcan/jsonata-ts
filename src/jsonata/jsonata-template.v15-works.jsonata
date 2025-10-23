@@ -111,25 +111,41 @@ $beguenstigungBeantragtCode := function() {(
   $response := $isAtrExist ? 400 : 100 /* eur varsa 400 gibisinden bir kosul olacak onun donusu burasi setlenecek */
 )};
 
+/* If not exist return 1 or floor arg value */
+$aHStatWert := function($value) {(
+  $response := $value != null and $value != undefined ? $value ~> $floor() : 1
+)};
+
+/* Delivery place */
+$lieferbedingungOrt := function() {(
+  $deliveryTerm := tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term;
+
+  $deliveryTermFirstChar := $substring($deliveryTerm, 0, 1);
+
+  $conditionCD := $deliveryTermFirstChar in ["C", "D"] ? true : false;
+  $conditionFE := $deliveryTermFirstChar in ["F", "E"] ? true : false;
+
+  $response := $conditionFE ? "Turkiye" : $conditionCD ? "Germany" : undefined
+)};
 
 $getWarenPosition := function($index) {(
     $response := $isCombineItemsExist ? $map(combine_items.items, function($v, $i) {
       {
             "Positionsnummer": $v.combined_item_no,
-            "WarenNummerEZT": $v.combined_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
-            "WarenBezeichnung": $v.combined_item_description,
-            "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
+            "WarenNummerEZT": $v.combined_item_commodity_code, 
+            "WarenBezeichnung": $v.combined_item_description ~> $substring(0, 240),
+            "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getFirstElement([$v.combined_item_net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": "NAR", /*default for now*/
-            "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $v.combined_item_package_quantity ~> $round(0),
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), /* eur varsa 400 gibisinden bir kosul olacak onun donusu burasi setlenecek */
-            "Artikelpreis": $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2),
+            "Artikelpreis": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2) : undefined,
             "Unterlage": $itemUnterlage($v),
-            "Zollwert": $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2),
+            "Zollwert": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2) : undefined,
             "AbzugHinzurechnung": {
               "ArtCode": "R",
               "Betrag": $v.combined_item_total_amount,
@@ -143,14 +159,14 @@ $getWarenPosition := function($index) {(
             $invoiceArrayIndex = $invoiceArrayIndex + 1;
             {
               "Positionsnummer": "default", /* will be set later because of many invoices */
-              "WarenNummerEZT": $vv.invoice_item_commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
-              "WarenBezeichnung": $vv.invoice_item_description,
-              "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), /*TODO: Burasi daima kisa kod olacak, bunun icin fonksiyon yazilmasi gerekebilir. */
+              "WarenNummerEZT": $vv.invoice_item_commodity_code, 
+              "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
+              "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
               "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
               "AHStatMengeMasseinheit": "NAR", /*default for now*/
-              "AHStatWert": $floor($vv.invoice_item_quantity < 1 ? 1 : $vv.invoice_item_quantity), /*default for now*/
-              "PackstueckAnzahl": $vv.invoice_item_quantity ~> $round(0), /*default for now*/
+              "AHStatWert": $aHStatWert($vv.invoice_item_quantity), /*default for now*/
+              "PackstueckAnzahl": $vv.invoice_item_quantity ? $vv.invoice_item_quantity ~> $round(0) : undefined, /*default for now*/
               "PackstueckArt": "PK", /*default*/
               "PackstueckZeichen": "OHNE", /*default for now*/
               "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), /*default for now*/
@@ -170,14 +186,14 @@ $getWarenPosition := function($index) {(
      $map(tr_export_declaration.items, function($v) {
           {
             "Positionsnummer": $v.index,
-            "WarenNummerEZT": $v.commodity_code, /*TODO: Turkiye Almanya gtip farkli, bunun icin fonksiyon yazilmasi gerekebilir. */
-            "WarenBezeichnung": $v.commodity_description,
-            "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), /*bir fonksiyon olacak, ulke kodu 2 karakter mi geldi yoksa ona gore mapper islemi gerekecek*/
+            "WarenNummerEZT": $v.commodity_code, 
+            "WarenBezeichnung": $v.commodity_description ~> $substring(0, 240),
+            "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getFirstElement([$v.net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": "NAR", /*default for now*/
-            "AHStatWert": $floor($v.statistical_value < 1 ? 1 : $v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
-            "PackstueckAnzahl": $v.quantity ~> $round(0),
+            "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "PackstueckAnzahl": $v.quantity ? $v.quantity ~> $round(0) : undefined,
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), /* eur varsa 400 gibisinden bir kosul olacak onun donusu burasi setlenecek */
@@ -195,9 +211,23 @@ $getWarenPosition := function($index) {(
     }) : undefined
 )};
 
-$gesamtRohMasse := $isDeclarationExist ? $round($sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})), 1) : $isCmrExist ? $round(cmr.total_weight ? cmr.total_weight : 0, 1) : undefined; 
-$rechnungspreis := $isDeclarationExist ? tr_export_declaration.total_value : $isInvoiceExist and $type(invoice) = "object" ? invoice.invoice_total_amount : $isInvoiceExist and $type(invoice) = "array" ? invoice.invoice_total_amount ~> $sum() : undefined;
-$rechnungswaehrung := $isDeclarationExist ? tr_export_declaration.total_value_curr : $isInvoiceExist and $type(invoice) = "object" ? invoice.invoice_currency : $isInvoiceExist and $type(invoice) = "array" ? invoice[0].invoice_currency : undefined;
+$gesamtRohMasse := $isDeclarationExist 
+  ? $round($sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})), 1) 
+    : $isCmrExist 
+    ? $round(cmr.total_weight ? cmr.total_weight : 0, 1) : undefined; 
+
+$rechnungspreis := $isDeclarationExist 
+  ? tr_export_declaration.total_value 
+    : $isInvoiceExist and $type(invoice) = "object" 
+    ? invoice.invoice_total_amount 
+      : $isInvoiceExist and $type(invoice) = "array" 
+      ? invoice.invoice_total_amount ~> $sum() : undefined;
+      
+$rechnungswaehrung := $isDeclarationExist 
+  ? tr_export_declaration.total_value_curr 
+    : $isInvoiceExist and $type(invoice) = "object" 
+    ? invoice.invoice_currency 
+      : $isInvoiceExist and $type(invoice) = "array" ? invoice[0].invoice_currency : undefined;
 
 {
   "FreierVerkehrAktVeredelUmwandlung": {
@@ -244,9 +274,9 @@ $rechnungswaehrung := $isDeclarationExist ? tr_export_declaration.total_value_cu
           "BefoerderungsmittelGrenzeArt": "01", /* (Tasima araci tipi) AI den alinacak. Transit beyannamesinden alinabilinir. */
           "LieferbedingungCode": tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term, /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
           "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
-          "LieferbedingungOrt": tr_export_declaration.delivery_place, /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
+          "LieferbedingungOrt": $lieferbedingungOrt(), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
           "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ? $v.headerData.previousAdministrativeReferenceType : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
-          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceN : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
+          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceNumber : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
           "Rechnungspreis": $rechnungspreis, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
