@@ -1,0 +1,217 @@
+{
+  "atr": null,
+  "cmr": null,
+  "cache": {
+    "commodity_codes": [
+      {
+        "code": "40169952900",
+        "oldCode": "401699520000",
+        "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk"
+      }
+    ]
+  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 4860,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7000 0",
+          "invoice_item_unit_price": 3.22,
+          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+          "invoice_item_total_amount": 15649.2,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 3510,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7004 0",
+          "invoice_item_unit_price": 2.99,
+          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+          "invoice_item_total_amount": 10494.9,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 11220,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 77 6031 0",
+          "invoice_item_unit_price": 3.38,
+          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+          "invoice_item_total_amount": 37923.6,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "AP1202500000104",
+      "invoice_date": "2025-09-18",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "Mal Mukabi",
+      "invoice_total_amount": 64067.7,
+      "invoice_customer_name": "Jörn GmbH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "ANGST PFISTER GELİŞMİŞ TEKNIK ÇÖZÜMLER A.Ş.",
+      "invoice_total_quantity": 19590,
+      "invoice_customer_address": "Kriegsbergstr. 17 Ortstell",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 18,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "combine_items": {
+    "meta": {
+      "total_items": 3,
+      "total_merged_items": 1,
+      "combination_filters": ["commodity_code"]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 19590,
+        "reference_item_details": [
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 1,
+            "currency": "EUR",
+            "unit_type": "Adet",
+            "net_amount": 15649.2,
+            "net_weight": null,
+            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+            "document_no": "AP1202500000104",
+            "gross_amount": null,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 4860,
+            "commodity_code": "40169952900",
+            "package_quantity": null,
+            "country_of_origin": "TR",
+            "statistical_value": null
+          },
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 2,
+            "currency": "EUR",
+            "unit_type": "Adet",
+            "net_amount": 10494.9,
+            "net_weight": null,
+            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+            "document_no": "AP1202500000104",
+            "gross_amount": null,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 3510,
+            "commodity_code": "40169952900",
+            "package_quantity": null,
+            "country_of_origin": "TR",
+            "statistical_value": null
+          },
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 3,
+            "currency": "EUR",
+            "unit_type": "Adet",
+            "net_amount": 37923.6,
+            "net_weight": null,
+            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+            "document_no": "AP1202500000104",
+            "gross_amount": null,
+            "gross_weight": null,
+            "document_date": "2025-09-18",
+            "item_quantity": 11220,
+            "commodity_code": "40169952900",
+            "package_quantity": null,
+            "country_of_origin": "TR",
+            "statistical_value": null
+          }
+        ],
+        "combined_item_unit_type": "Adet",
+        "combined_item_net_weight": null,
+        "combined_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
+        "combined_item_gross_weight": null,
+        "combined_item_total_amount": 64067.7,
+        "combined_item_commodity_code": "40169952900",
+        "combined_item_package_quantity": 0,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "district": "Suben",
+            "postalCode": "4975",
+            "addressType": "CN",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 555
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonEmail": "test@test.com",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": "555 55 55"
+          },
+          "departureCountry": "AT",
+          "dv1CostAllocation": {
+            "costs": 10,
+            "costType": "test",
+            "currencyCode": "EUR"
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "addressedCustomsOffice": "7701",
+          "procedureCodeRequested": "42",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TEST22042025",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": 1,
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/2602203_TEST_0602",
+          "objectAlias": "4803/260220122042025_160905",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUBBB",
+      "ioReference": "4803/260220122042025_160905"
+    }
+  },
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "combineOptions": ["commodity_code"],
+    "disableOutbound": false,
+    "outputApplicationId": "dakosy/sftp/vera",
+    "disableDocumentConverter": false
+  },
+  "transit_declaration": null,
+  "tr_export_declaration": null
+}

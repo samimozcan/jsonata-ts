@@ -49,9 +49,9 @@ async function main() {
     console.dir(jsonataResponse, { depth: null, colors: true });
 
     // Copy result to clipboard
-    execSync("pbcopy", {
-      input: JSON.stringify(jsonataResponse, null, 2),
-    });
+    // execSync("pbcopy", {
+    //   input: JSON.stringify(jsonataResponse, null, 2),
+    // });
 
     console.log("----------------------------------------------");
     console.log("✅ Result copied to clipboard!");
