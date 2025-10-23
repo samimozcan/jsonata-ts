@@ -1,6 +1,23 @@
 {
-  "atr": null,
-  "cmr": null,
+  "atr": {
+    "id": "N 0570458",
+    "date": "2025-09-19",
+    "sender": "ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "receiver": "'JORN GMBH",
+    "export_mrn": "25160100EX00111223",
+    "total_weight": 14275,
+    "total_package": 18
+  },
+  "cmr": {
+    "date": "2025-09-19",
+    "sender": "ANGST PFISTER GELISIM TEKNIK\nCOZUMLER A. S.",
+    "plate_no": "14 DS 380",
+    "receiver": "JORN GMBH",
+    "total_weight": 14275,
+    "loading_place": "BURSA TURKEY",
+    "total_package": 18,
+    "delivery_place": "WAIBLINGEN GERMANY"
+  },
   "cache": {
     "commodity_codes": [
       {
@@ -212,6 +229,62 @@
     "outputApplicationId": "dakosy/sftp/vera",
     "disableDocumentConverter": false
   },
-  "transit_declaration": null,
-  "tr_export_declaration": null
+  "transit_declaration": {
+    "date": "2025-05-06",
+    "destination_country": "NO",
+    "destination_customs_authority": "NO371001 Svinesund GDØ",
+    "dispatch_country": "TR",
+    "dispatch_place": "NO",
+    "items": [
+      {
+        "export_id": "25341300EX00361149",
+        "invoice_no": "IHR2025000000043",
+        "item_index": "1",
+        "sender": "MAXXMORA İNŞAAT PROJE DANIŞMANLIK SAN VE TİC.AŞ",
+        "total_package": 9,
+        "total_weight": 13611.0
+      }
+    ],
+    "loading_place": "TR",
+    "mode_of_transport": "30",
+    "transit_id": "25TR341300132739M9",
+    "truck_id_border": "1/34CJL770 - HAMZABEYLİ GÜMRÜK MÜDÜRLÜĞÜ, TR221300, TÜRKİYE, 30",
+    "truck_id_transit": "34CJL770",
+    "type_of_transport": null
+  },
+  "tr_export_declaration": {
+    "id": "25160100EX00111223",
+    "date": "2025-09-19",
+    "buyer": "JORN GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00111223-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 19590,
+        "item_value": 64067.7,
+        "net_weight": null,
+        "gross_weight": 14275,
+        "commodity_code": "40169952900",
+        "unit_of_measure": "AD",
+        "package_quantity": "Ticari tanımı:MUHTELİF BURC",
+        "statistical_value": 73398.92,
+        "commodity_description": "Handelsbezeichnung: VERSCHIEDENE SCHILDER / Andere Waren aus Weichkautschuk"
+      }
+    ],
+    "sender": "ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "tax_id": "6080551890",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024 ** FATURA NO: API2025000001046/18 .09.2025 IML ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 A.TR Dolaşım Belgesi Basit 19.09.2025/N0570458 TPS-E-Fatura Var 18.09.2025/2524\n3160110886044330177/1-2-3 TPS-Kripto Numarası Var 19.09.2025/25153097211086\n074538903/1",
+    "total_value": "64067.70",
+    "total_weight": null,
+    "delivery_term": "DAP",
+    "total_package": "18",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "1",
+    "dispatch_country": "TR",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "B0",
+    "destination_country": "DE"
+  }
 }

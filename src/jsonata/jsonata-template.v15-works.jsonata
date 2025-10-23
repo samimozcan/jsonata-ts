@@ -47,6 +47,7 @@ $isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declar
 $isInvoiceExist := $exists(invoice) and $type(invoice) = "array" and $count(invoice) > 0;
 $isCmrExist := $exists(cmr) and $type(cmr) = "object";
 $isAtrExist := $exists(atr) and $type(atr) = "object";
+$isTransitDeclarationExist := $exists(transit_declaration) and $type(transit_declaration) = "object";
 $isCombineItemsExist := $exists(combine_items) and $type(combine_items) = "object" and $count(combine_items.items) > 0;
 $isCombineItemsCreatedFromInvoice := $isCombineItemsExist and combine_items.items[0].reference_item_details[0].source = 'invoice';
 
@@ -129,7 +130,7 @@ $lieferbedingungOrt := function() {(
             For delivery terms EXW, FCA, FAS, or FOB it should be the name of the city of dispatch.
             For example EXW Istanbul , FOB Izmir..
             If the AI cannot read it, you can use either the Importers place or Exporters place (use data from exporter / importer field)*/
-  $response := $conditionFE ? "Turkiye" : $conditionCD ? "Germany" : undefined
+  $response := $conditionFE ? tr_export_declaration.delivery_place : $conditionCD ? tr_export_declaration.delivery_place : tr_export_declaration.delivery_place
 )};
 
 $getWarenPosition := function($index) {(
@@ -143,7 +144,7 @@ $getWarenPosition := function($index) {(
             "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
-            "PackstueckAnzahl": $v.combined_item_package_quantity ~> $round(0),
+            "PackstueckAnzahl": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity) : undefined,
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
@@ -267,8 +268,8 @@ $rechnungswaehrung := $isDeclarationExist
           "ZollrechtlicherStatus": $getZollrechtlicherStatus($v.headerData.departureCountry, $v.headerData.base.documentDivision, $exists(atr)),
           "GesamtRohMasse": $gesamtRohMasse, /* DONE @alican burasi yoksa cmr den alinilicak denilmis ama baska gross goremedim, cmr tarafindaki gross weight ai service den total_weight olarak donuyor @alican @samim Ayni sekilde burasi da integer istiyor*/
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
-          "VerkehrszweigInland": "3", /* TODO: Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
-          "VerkehrszweigGrenze": "3", /* TODO: @Alican tolgalar ile gorusecek bunun icin */
+          "VerkehrszweigInland": transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
+          "VerkehrszweigGrenze": tr_export_declaration.mode_of_transport ?? transit_declaration.mode_of_transport ?? null, /* : @Alican tolgalar ile gorusecek bunun icin */
           "VersendungslandCode": $v.headerData.departureCountry,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
           "Bestimmungsland": $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
@@ -278,8 +279,8 @@ $rechnungswaehrung := $isDeclarationExist
           "LieferbedingungCode": tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term, /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
           "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
           "LieferbedingungOrt": $lieferbedingungOrt(), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
-          "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ? $v.headerData.previousAdministrativeReferenceType : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
-          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceNumber : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
+          "VorpapierArtCode": $isTransitDeclarationExist ? "T1" : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
+          "VorpapierNr": $isTransitDeclarationExist ? transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
           "Rechnungspreis": $rechnungspreis, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
