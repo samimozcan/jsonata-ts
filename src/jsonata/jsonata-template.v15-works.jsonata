@@ -2,6 +2,33 @@
 
 (
 
+/* ------------------------------------ */
+/* --- UTILS  --- */
+/* ------------------------------------ */
+/* Compact function to remove null/undefined/false/""/NaN values from array --- @utils */
+$_compact := function($arr) { $arr ~> $filter(function($v) { $v }) };
+
+/* Remove duplicates from array of objects by field  --- @utils */
+$uniqueByField := function($arr, $field) {(
+    $uniqueArray := $reduce($arr, function ($acc, $item) {(
+        $alreadyExistsInAcc := $acc[$lookup($item, $field)];
+        $alreadyExistsInAcc ? $acc : $append($acc, $item)
+    )}, []);
+
+    $return := $uniqueArray
+)};
+
+/* Custom append function to handle null/undefined values in array --- @utils*/
+$customAppend := function($data) {(
+      $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
+
+      $response := $reduce($data, $append)
+)};
+
+/* ------------------------------------ */
+/* ------------------------------------ */
+/* ------------------------------------ */
+
 $A1314 := ["AT","BE","BG","CY","CZ","DE","DK","EE","ES","FI","FR","GR","HR","HU","IE","IT","LT","LU","LV","MT","NL","PL","PT","RO","SE","SI","SK","XI"];
 $A1300 := ["CH","GB","GE","IS","LI","MK","NO","TR","UA","XS"];
 $1990 := ["1", "2", "3", "4", "5", "7", "8", "9"];
@@ -19,28 +46,6 @@ $getZollrechtlicherStatus := function($departureCountry, $documentDivision, $isA
   $IMStatus := "IM"; /* working like else */
 
   $response := $COStatus ? $COStatus : $EUStatus ? $EUStatus : $IMStatus
-)};
-
-$customAppend := function($data) {(
-  $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
-  $response := $reduce($data, $append)
-)};
-
-/* Remove duplicates from array of objects by field  --- @utils */
-$uniqueByField := function($arr, $field) {(
-    $uniqueArray := $reduce($arr, function ($acc, $item) {(
-        $alreadyExistsInAcc := $acc[$lookup($item, $field)];
-        $alreadyExistsInAcc ? $acc : $append($acc, $item)
-    )}, []);
-
-    $return := $uniqueArray
-)};
-
-/* Custom append function to handle null/undefined values in array --- @utils*/
-$customAppend := function($data) {(
-      $data = $type($data) = "array" ? $data : $type($data) = "object" ? [$data] : [];
-
-      $response := $reduce($data, $append)
 )};
 
 $isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declaration) = "object";
@@ -148,9 +153,9 @@ $getWarenPosition := function($index) {(
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
-            "Artikelpreis": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2) : undefined,
+            "Artikelpreis": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
             "Unterlage": $itemUnterlage($v),
-            "Zollwert": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $sum() ~> $round(2) : undefined,
+            "Zollwert": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
             "AbzugHinzurechnung": {
               "ArtCode": "R",
               "Betrag": $v.combined_item_total_amount,
@@ -158,35 +163,7 @@ $getWarenPosition := function($index) {(
               "KursVereinbartKz": "1"
             }
           }
-    }) : $isInvoiceExist ?
-        $map(invoice, function($v, $i) {(
-          $map($v.items, function($vv, $ii) {(
-            {
-              "Positionsnummer": "default", /* will be set later because of many invoices */
-              "WarenNummerEZT": $vv.invoice_item_commodity_code, 
-              "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
-              "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
-              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
-              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
-              "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
-              "AHStatWert": null, /* statistical value */
-              "PackstueckAnzahl": $vv.invoice_item_quantity ? $vv.invoice_item_quantity ~> $round(0) : undefined, /*default for now*/
-              "PackstueckArt": "PK", /*default*/
-              "PackstueckZeichen": "OHNE", /*default for now*/
-              "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
-              "Artikelpreis": invoice.invoice_total_amount ~> $sum(),
-              "Unterlage": $itemUnterlage($v),
-              "Zollwert": invoice.invoice_total_amount ~> $sum(), /*default for now*/
-              "AbzugHinzurechnung": {
-                "ArtCode": "R", /*default*/
-                "Betrag": $vv.invoice_item_total_amount,
-                "Waehrung": $v.invoice_currency,
-                "KursVereinbartKz": "1" /* default */
-              }
-            }
-          )})
-        )}) ~> $customAppend() ~> function($data) {$map($data, function($v, $i) {($merge([$v, {"Positionsnummer": $i + 1}]))})}
-    : $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
+    }) : $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
      $map(tr_export_declaration.items, function($v) {
           {
             "Positionsnummer": $v.index,
@@ -212,11 +189,40 @@ $getWarenPosition := function($index) {(
             }
           }
         })
-    }) : undefined
+    })
+    : $isInvoiceExist and invoice[0].items[0].commodity_code ?
+        $map(invoice, function($v, $i) {(
+          $map($v.items, function($vv, $ii) {(
+            {
+              "Positionsnummer": "default", /* will be set later because of many invoices */
+              "WarenNummerEZT": $vv.invoice_item_commodity_code, 
+              "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
+              "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
+              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
+              "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
+              "AHStatWert": null, /* statistical value */
+              "PackstueckAnzahl": $vv.invoice_item_quantity ? $vv.invoice_item_quantity ~> $round(0) : undefined, /*default for now*/
+              "PackstueckArt": "PK", /*default*/
+              "PackstueckZeichen": "OHNE", /*default for now*/
+              "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
+              "Artikelpreis": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, /*default for now*/
+              "Unterlage": $itemUnterlage($v),
+              "Zollwert": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, /*default for now*/
+              "AbzugHinzurechnung": {
+                "ArtCode": "R", /*default*/
+                "Betrag": $vv.invoice_item_total_amount,
+                "Waehrung": $v.invoice_currency,
+                "KursVereinbartKz": "1" /* default */
+              }
+            }
+          )})
+        )}) ~> $customAppend() ~> function($data) {$map($data, function($v, $i) {($merge([$v, {"Positionsnummer": $i + 1}]))})}
+     : undefined
 )};
 
 $gesamtRohMasse := $isDeclarationExist 
-  ? $round($sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})), 1) 
+  ? $sum($map(tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})) ~> $_compact() ~> $round(1)
     : $isCmrExist 
     ? $round(cmr.total_weight ? cmr.total_weight : 0, 1) : undefined; 
 
@@ -225,7 +231,7 @@ $rechnungspreis := $isDeclarationExist
     : $isInvoiceExist and $type(invoice) = "object" 
     ? invoice.invoice_total_amount 
       : $isInvoiceExist and $type(invoice) = "array" 
-      ? invoice.invoice_total_amount ~> $sum() : undefined;
+      ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined;
       
 $rechnungswaehrung := $isDeclarationExist 
   ? tr_export_declaration.total_value_curr 
@@ -255,7 +261,7 @@ $rechnungswaehrung := $isDeclarationExist
         "KopfDaten": {
           "AdressierteZollstelle": $v.headerData.addressedCustomsOffice,
           "AnmelderIstEmpfaenger": $v.headerData.declarantIsConsignee ? "J" : "N",
-          "VertretungsverhaeltnisCode": $getFirstElement([$v.headerData.representationRelationshipCode, 1]), /* TODO: Burasi simdilik default atildi bakilacak */
+          "VertretungsverhaeltnisCode": "" /*$getFirstElement([$v.headerData.representationRelationshipCode, 1])*/, /* TODO: Burasi simdilik default atildi bakilacak */
           "Vorsteuerabzug": $v.headerData.inputTaxDeduction ? "J" : "N",
           "NameAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonName,
           "TelefonnummerAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonPhoneNumber,
@@ -279,8 +285,8 @@ $rechnungswaehrung := $isDeclarationExist
           "LieferbedingungCode": tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term, /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
           "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
           "LieferbedingungOrt": $lieferbedingungOrt(), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
-          "VorpapierArtCode": $isTransitDeclarationExist ? "T1" : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
-          "VorpapierNr": $isTransitDeclarationExist ? transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
+          "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ?? $isTransitDeclarationExist ? "T1" : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
+          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ?? $isTransitDeclarationExist ? transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
           "Rechnungspreis": $rechnungspreis, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
