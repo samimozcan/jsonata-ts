@@ -122,46 +122,49 @@ $aHStatWert := function($value) {(
   $response := $value != null and $value != undefined ? $value ~> $floor() : 1
 )};
 
-/* Delivery place */
-$lieferbedingungOrt := function() {(
-  $deliveryTerm := tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term;
-
-  $deliveryTermFirstChar := $substring($deliveryTerm, 0, 1);
-
-  $conditionCD := $deliveryTermFirstChar in ["C", "D"] ? true : false;
-  $conditionFE := $deliveryTermFirstChar in ["F", "E"] ? true : false;
-
-  /*TODO: actually for CFR, CIF, CIP, CPT, DAP, DPU, or DDP it should be the name of the Delivery place. Most times this would be importers place. For example CFR Berlin or DAP Passau.
-            For delivery terms EXW, FCA, FAS, or FOB it should be the name of the city of dispatch.
-            For example EXW Istanbul , FOB Izmir..
-            If the AI cannot read it, you can use either the Importers place or Exporters place (use data from exporter / importer field)*/
-  $response := $conditionFE ? tr_export_declaration.delivery_place : $conditionCD ? tr_export_declaration.delivery_place : tr_export_declaration.delivery_place
+/* AbzugHinzurechnung */
+$abzugHinzurechnung := function($args) {(
+  $response := {
+    "ArtCode": "R", /* default */
+    "Betrag": $args.amount ~> $round(2), /*$args.amount, */
+    "Waehrung": $args.currency,
+    "KursVereinbartKz": "0" /* default */
+  }
 )};
 
-$getWarenPosition := function($index) {(
+/* PackstueckAnzahl *** Total package quantity */
+$packstueckAnzahl := function() {(
+  $response := $isDeclarationExist 
+    ? tr_export_declaration.total_package ? tr_export_declaration.total_package : undefined
+      : $isInvoiceExist and $type(invoice) = "object" 
+      ? invoice.invoice_total_package_quantity ? invoice.invoice_total_package_quantity ~> $round(0) : undefined
+        : $isInvoiceExist and $type(invoice) = "array" 
+        ? invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) : undefined;
+)};
+
+$getWarenPosition := function($procedureCodeRequested) {(
     $response := $isCombineItemsExist ? $map(combine_items.items, function($v, $i) {
       {
             "Positionsnummer": $v.combined_item_no,
             "WarenNummerEZT": $v.combined_item_commodity_code, 
             "WarenBezeichnung": $v.combined_item_description ~> $substring(0, 240),
+            "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getFirstElement([$v.combined_item_net_weight, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
-            "PackstueckAnzahl": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity) : undefined,
+            "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined,
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
             "Artikelpreis": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
             "Unterlage": $itemUnterlage($v),
             "Zollwert": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
-            "AbzugHinzurechnung": {
-              "ArtCode": "R",
-              "Betrag": $v.combined_item_total_amount,
-              "Waehrung": $v.reference_item_details[0].currency, /* TODO: Burasi hallediverilecek. @samimozcan*/
-              "KursVereinbartKz": "1"
-            }
+            "AbzugHinzurechnung": $abzugHinzurechnung({
+              "amount": $v.combined_item_total_amount,
+              "currency": $v.reference_item_details[0].currency /* TODO: Burasi hallediverilecek. @samimozcan*/
+            })
           }
     }) : $isDeclarationExist ? $map(tr_export_declaration, function($v, $i) {
      $map(tr_export_declaration.items, function($v) {
@@ -169,52 +172,50 @@ $getWarenPosition := function($index) {(
             "Positionsnummer": $v.index,
             "WarenNummerEZT": $v.commodity_code, 
             "WarenBezeichnung": $v.commodity_description ~> $substring(0, 240),
+            "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getFirstElement([$v.net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
-            "PackstueckAnzahl": $v.quantity ? $v.quantity ~> $round(0) : undefined,
+            "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined,
             "PackstueckArt": "PK", /* default */
             "PackstueckZeichen": "OHNE", /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
             "Artikelpreis": tr_export_declaration.total_value,
             "Unterlage": $itemUnterlage($v),
             "Zollwert": tr_export_declaration.total_value,
-            "AbzugHinzurechnung": {
-              "ArtCode": "R",
-              "Betrag": $v.item_value,
-              "Waehrung": tr_export_declaration.total_value_curr,
-              "KursVereinbartKz": "1"
-            }
+            "AbzugHinzurechnung": $abzugHinzurechnung({
+              "amount": $v.item_value,
+              "currency": tr_export_declaration.total_value_curr
+            })
           }
         })
     })
-    : $isInvoiceExist and invoice[0].items[0].commodity_code ?
+    : $isInvoiceExist ?
         $map(invoice, function($v, $i) {(
           $map($v.items, function($vv, $ii) {(
             {
               "Positionsnummer": "default", /* will be set later because of many invoices */
               "WarenNummerEZT": $vv.invoice_item_commodity_code, 
               "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
+              "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
               "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
               "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
               "AHStatWert": null, /* statistical value */
-              "PackstueckAnzahl": $vv.invoice_item_quantity ? $vv.invoice_item_quantity ~> $round(0) : undefined, /*default for now*/
+              "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined, 
               "PackstueckArt": "PK", /*default*/
               "PackstueckZeichen": "OHNE", /*default for now*/
               "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
-              "Artikelpreis": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, /*default for now*/
+              "Artikelpreis": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, 
               "Unterlage": $itemUnterlage($v),
-              "Zollwert": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, /*default for now*/
-              "AbzugHinzurechnung": {
-                "ArtCode": "R", /*default*/
-                "Betrag": $vv.invoice_item_total_amount,
-                "Waehrung": $v.invoice_currency,
-                "KursVereinbartKz": "1" /* default */
-              }
+              "Zollwert": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, 
+              "AbzugHinzurechnung": $abzugHinzurechnung({
+                "amount": $vv.invoice_item_total_amount,
+                "currency": $v.invoice_currency
+              })
             }
           )})
         )}) ~> $customAppend() ~> function($data) {$map($data, function($v, $i) {($merge([$v, {"Positionsnummer": $i + 1}]))})}
@@ -239,6 +240,33 @@ $rechnungswaehrung := $isDeclarationExist
     ? invoice.invoice_currency 
       : $isInvoiceExist and $type(invoice) = "array" ? invoice[0].invoice_currency : undefined;
 
+/* Delivery place */
+$lieferbedingungOrt := function($city) {(
+  $deliveryTerm := tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term;
+
+  $deliveryTermFirstChar := $substring($deliveryTerm, 0, 1);
+
+  $conditionCD := $deliveryTermFirstChar in ["C", "D"] ? true : false;
+  $conditionFE := $deliveryTermFirstChar in ["F", "E"] ? true : false;
+
+  /*TODO: actually for CFR, CIF, CIP, CPT, DAP, DPU, or DDP it should be the name of the Delivery place. Most times this would be importers place. For example CFR Berlin or DAP Passau.
+            For delivery terms EXW, FCA, FAS, or FOB it should be the name of the city of dispatch.
+            For example EXW Istanbul , FOB Izmir..
+            If the AI cannot read it, you can use either the Importers place or Exporters place (use data from exporter / importer field)*/
+  $response := $conditionFE ? tr_export_declaration.delivery_place : $conditionCD ? $city ?? tr_export_declaration.delivery_place : tr_export_declaration.delivery_place
+)};
+
+$lieferbedingungSchluessel := function() {(
+  $deliveryTerm := tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term;
+
+  $deliveryTermFirstChar := $substring($deliveryTerm, 0, 1);
+
+  $conditionCD := $deliveryTermFirstChar in ["C", "D"] ? true : false;
+  $conditionFE := $deliveryTermFirstChar in ["F", "E"] ? true : false;
+
+  $response := $conditionFE ? "1" : $conditionCD ? "3" : ""
+)};
+
 {
   "FreierVerkehrAktVeredelUmwandlung": {
     "Transaktion": {
@@ -261,7 +289,7 @@ $rechnungswaehrung := $isDeclarationExist
         "KopfDaten": {
           "AdressierteZollstelle": $v.headerData.addressedCustomsOffice,
           "AnmelderIstEmpfaenger": $v.headerData.declarantIsConsignee ? "J" : "N",
-          "VertretungsverhaeltnisCode": "" /*$getFirstElement([$v.headerData.representationRelationshipCode, 1])*/, /* TODO: Burasi simdilik default atildi bakilacak */
+          "VertretungsverhaeltnisCode": $v.headerData.representationRelationshipCode ?? "" /*$getFirstElement([$v.headerData.representationRelationshipCode, ""])*/, /* TODO: Burasi simdilik default atildi bakilacak */
           "Vorsteuerabzug": $v.headerData.inputTaxDeduction ? "J" : "N",
           "NameAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonName,
           "TelefonnummerAnmeldenderBearbeiter": $v.headerData.agentContact.contactPersonPhoneNumber,
@@ -283,27 +311,14 @@ $rechnungswaehrung := $isDeclarationExist
           "BefoerderungsmittelGrenzeStaatszugehoerigkeitCode": $v.headerData.transportMeansNationalityCode,
           "BefoerderungsmittelGrenzeArt": "01", /* (Tasima araci tipi) AI den alinacak. Transit beyannamesinden alinabilinir. */
           "LieferbedingungCode": tr_export_declaration.delivery_term ?? invoice[0].invoice_delivery_term, /* (Ek beyan icin kullaniliyor) AI den alinacak. Beyannameden veya invoice den alinacak, oncelikli. */
-          "LieferbedingungSchluessel": "1", /* (Ek beyan icin kullaniliyor) AI den alinacak. `LieferbedingungCode` buradaki alanlara bakilarak kosul yazilacak. Excelde mevcut kosullari */
-          "LieferbedingungOrt": $lieferbedingungOrt(), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
+          "LieferbedingungSchluessel": $lieferbedingungSchluessel(), 
+          "LieferbedingungOrt": $lieferbedingungOrt($v.addresses[0].city), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
           "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType ?? $isTransitDeclarationExist ? "T1" : null, /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
           "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ?? $isTransitDeclarationExist ? transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
           "Rechnungspreis": $rechnungspreis, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
           "Rechnungswaehrung": $rechnungswaehrung, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. Buranin validasyonu icin IO400 alani kullanilacak. */
-          "DV1Angaben": {
-            "DV1Kz": "0" /* default hep 0 */
-          },
-          "DV1Kostenverteilung": { /*LieferbedingungSchluessel eger 1 ise bu alan dolacak yoksa bos*/
-            "Kostenart": $v.headerData.dv1CostAllocation.costType,
-            "Kosten": $v.headerData.dv1CostAllocation.costs,
-            "KostenWaehrung": $v.headerData.dv1CostAllocation.currencyCode,
-            "WechselkursArt": "01", /* default */
-            "Wechselkurs": "1", /* default */
-            "Verteilungsart": "NETWEIGHT",
-            "Minimalbetrag": 0.01,
-            "ProzentualerAnteil": 123 /* TODO: @Emre @Tolga sorulacak */
-          },
           "Unterlage": $getUnterlage($v.headerData.procedureCodeRequested),
           "Zahlungsart": $v.headerData.procedureCodeRequested = "42" ? "D" : "E", /* A2060 dan kontrol.  */
           "Adressen": $map($v.addresses, function($a) { /* Eger EORI varsa digerlerine ihtiyac yok, lakin yoksa gelmeleri gerekiyor, validasyona yazilacak. */
@@ -321,7 +336,7 @@ $rechnungswaehrung := $isDeclarationExist
             }
           })
         },
-        "WarenPosition": $getWarenPosition()
+        "WarenPosition": $getWarenPosition($v.headerData.procedureCodeRequested)
       }
     })
   }
