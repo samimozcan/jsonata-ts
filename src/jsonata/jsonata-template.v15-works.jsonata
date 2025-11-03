@@ -142,11 +142,16 @@ $packstueckAnzahl := function() {(
         ? invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) : undefined;
 )};
 
+/* WarenNummerEZT *** */
+$warenNummerEZT := function($commodityCode) {(
+  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? $substring($commodityCode, 0, 8) : $commodityCode;
+)};
+
 $getWarenPosition := function($procedureCodeRequested) {(
     $response := $isCombineItemsExist ? $map(combine_items.items, function($v, $i) {
       {
             "Positionsnummer": $v.combined_item_no,
-            "WarenNummerEZT": $v.combined_item_commodity_code, 
+            "WarenNummerEZT": $warenNummerEZT($v.combined_item_commodity_code), 
             "WarenBezeichnung": $v.combined_item_description ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
@@ -155,8 +160,8 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined,
-            "PackstueckArt": "PK", /* default */
-            "PackstueckZeichen": "OHNE", /* default */
+            "PackstueckArt": $i = 0 ? "PK" : undefined, /* default */
+            "PackstueckZeichen": $i = 0 ? "OHNE" : undefined, /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
             "Artikelpreis": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
             "Unterlage": $itemUnterlage($v),
@@ -170,7 +175,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
      $map(tr_export_declaration.items, function($v) {
           {
             "Positionsnummer": $v.index,
-            "WarenNummerEZT": $v.commodity_code, 
+            "WarenNummerEZT": $warenNummerEZT($v.commodity_code), 
             "WarenBezeichnung": $v.commodity_description ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
@@ -179,8 +184,8 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined,
-            "PackstueckArt": "PK", /* default */
-            "PackstueckZeichen": "OHNE", /* default */
+            "PackstueckArt": $i = 0 ? "PK" : undefined, /* default */
+            "PackstueckZeichen": $i = 0 ? "OHNE" : undefined, /* default */
             "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
             "Artikelpreis": tr_export_declaration.total_value,
             "Unterlage": $itemUnterlage($v),
@@ -197,7 +202,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
           $map($v.items, function($vv, $ii) {(
             {
               "Positionsnummer": "default", /* will be set later because of many invoices */
-              "WarenNummerEZT": $vv.invoice_item_commodity_code, 
+              "WarenNummerEZT": $warenNummerEZT($vv.invoice_item_commodity_code), 
               "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
@@ -206,8 +211,8 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
               "AHStatWert": null, /* statistical value */
               "PackstueckAnzahl": $i = 0 ? $packstueckAnzahl() : undefined, 
-              "PackstueckArt": "PK", /*default*/
-              "PackstueckZeichen": "OHNE", /*default for now*/
+              "PackstueckArt": $i = 0 ? "PK" : undefined, /*default*/
+              "PackstueckZeichen": $i = 0 ? "OHNE" : undefined, /*default for now*/
               "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
               "Artikelpreis": invoice.invoice_total_amount ? invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, 
               "Unterlage": $itemUnterlage($v),
