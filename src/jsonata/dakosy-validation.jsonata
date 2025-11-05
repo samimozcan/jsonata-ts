@@ -223,6 +223,10 @@
             "ERROR_0006": {
                 "en": "Invoice total quantity is not equal to the sum of invoice items. Total quantity: {{1}}, Invoice items total quantity: {{2}}",
                 "tr": "Fatura toplam miktarı, fatura kalemlerinin toplamına eşit değil. Toplam miktar: {{1}}, Fatura kalemlerinin toplam miktarı: {{2}}"
+            },
+            "ERROR_0007": {
+                "en": "Dispatch country and destination country cannot be the same",
+                "tr": "Gönderim ülkesi ve varış ülkesi aynı olamaz"
             }
         };
 
@@ -446,6 +450,37 @@
         $declarationWarnings := [];
 
 
+
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        /*Global ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $dispatchDestinationCountriesSame := function() {(
+            $dispatchCountry := $.dispatch_country ? $uppercase($.dispatch_country) : null;
+            $destinationCountry := $.destination_country ? $uppercase($.destination_country) : null;
+
+            $dispatchCountry and $destinationCountry and $dispatchCountry = $destinationCountry ?
+              {"code": "ERROR_0007"}:  null;
+        )};
+
+        $globalErrorsFirst := $filter([
+        ], function($v) { $v != null });
+        $globalWarningsFirst := $filter([
+            $dispatchDestinationCountriesSame()
+        ], function($v) { $v != null });
+        $globalErrors := $count($globalErrorsFirst) ? $map($globalErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $globalWarnings := $count($globalWarningsFirst) ? $map($globalWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
+
         {
             "additional_data": {
                 "errors": $count($additionalErrors) = 1 ? [$additionalErrors] : $additionalErrors,
@@ -458,6 +493,10 @@
             "tr_export_declaration": {
                 "errors": $count($declarationErrors) = 1 ? [$declarationErrors] : $declarationErrors,
                 "warnings": $count($declarationWarnings) = 1 ? [$declarationWarnings] : $declarationWarnings
+            },
+            "global": {
+                "errors": $count($globalErrors) = 1 ? [$globalErrors] : $globalErrors,
+                "warnings": $count($globalWarnings) = 1 ? [$globalWarnings] : $globalWarnings
             }
         }
     )

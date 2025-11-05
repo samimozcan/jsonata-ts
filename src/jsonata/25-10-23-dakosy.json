@@ -286,5 +286,7 @@
     "total_value_curr": "EUR",
     "mode_of_transport": "B0",
     "destination_country": "DE"
-  }
+  },
+  "destination_country": "DE",
+  "dispatch_country": "TR"
 }

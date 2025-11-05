@@ -309,9 +309,9 @@ $lieferbedingungSchluessel := function() {(
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
           "VerkehrszweigInland": transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
           "VerkehrszweigGrenze": tr_export_declaration.mode_of_transport ?? transit_declaration.mode_of_transport ?? null, /* : @Alican tolgalar ile gorusecek bunun icin */
-          "VersendungslandCode": $v.headerData.departureCountry,
+          "VersendungslandCode": $v.headerData.departureCountry ?? $v.dispatch_country,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
-          "Bestimmungsland": $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
+          "Bestimmungsland": $v.headerData.destinationCountry ?? $v.destination_country, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
           "KennzeichenNameBefoerderungsmittelAnkunft": $v.headerData.transportMeansArrivalIdentity,
           "BefoerderungsmittelGrenzeStaatszugehoerigkeitCode": $v.headerData.transportMeansNationalityCode,
           "BefoerderungsmittelGrenzeArt": "01", /* (Tasima araci tipi) AI den alinacak. Transit beyannamesinden alinabilinir. */
