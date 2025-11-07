@@ -61,6 +61,7 @@
         $isAtrExist := $exists(atr) and $type(atr) = "object";
         $t1Exist := $exists(transit_document) and $type(transit_document) = "object";
         $isCombineItemsExist := $exists(combine_items) and $type(combine_items) = "object";
+        $isCommercialInvoiceExist := $exists(commercial_invoice) and $type(commercial_invoice) = "array";
 
 
         $atoi := function($data) {$type($data) = "string" ? $round($number($replace($data, ",", ".")), 2) : $data};
@@ -289,7 +290,7 @@
         /* --- */
         /* --- */
         $t1_trDeclaration_invoice_mismatch := function() {(
-            $isDeclarationExist or $isInvoiceExist or t1Exist ?
+            $isDeclarationExist or $isInvoiceExist or $t1Exist or $isCommercialInvoiceExist ?
                null : {"code": "ERROR_0007"}
         )};
 

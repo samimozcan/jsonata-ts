@@ -188,14 +188,14 @@
             "contactPersonPosition": "Zolldeklarant/in",
             "contactPersonPhoneNumber": "555 55 55"
           },
-          "departureCountry": "AT",
+          "departureCountry": "TR",
           "dv1CostAllocation": {
             "costs": 10,
             "costType": "test",
             "currencyCode": "EUR"
           },
           "inputTaxDeduction": true,
-          "destinationCountry": "AT",
+          "destinationCountry": "DE",
           "declarantIsConsignee": true,
           "addressedCustomsOffice": "7701",
           "procedureCodeRequested": "42",
@@ -203,7 +203,7 @@
           "transportMeansArrivalIdentity": "TEST22042025",
           "transportMeansNationalityCode": "TR",
           "representationRelationshipCode": 1,
-          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceType": "",
           "previousAdministrativeReferenceNumber": "25TR060500001220M5"
         },
         "objectIdentification": {
@@ -228,29 +228,6 @@
     "disableOutbound": false,
     "outputApplicationId": "dakosy/sftp/vera",
     "disableDocumentConverter": false
-  },
-  "transit_declaration": {
-    "date": "2025-05-06",
-    "destination_country": "NO",
-    "destination_customs_authority": "NO371001 Svinesund GDØ",
-    "dispatch_country": "TR",
-    "dispatch_place": "NO",
-    "items": [
-      {
-        "export_id": "25341300EX00361149",
-        "invoice_no": "IHR2025000000043",
-        "item_index": "1",
-        "sender": "MAXXMORA İNŞAAT PROJE DANIŞMANLIK SAN VE TİC.AŞ",
-        "total_package": 9,
-        "total_weight": 13611.0
-      }
-    ],
-    "loading_place": "TR",
-    "mode_of_transport": "30",
-    "transit_id": "25TR341300132739M9",
-    "truck_id_border": "1/34CJL770 - HAMZABEYLİ GÜMRÜK MÜDÜRLÜĞÜ, TR221300, TÜRKİYE, 30",
-    "truck_id_transit": "34CJL770",
-    "type_of_transport": null
   },
   "tr_export_declaration": {
     "id": "25160100EX00111223",
@@ -288,5 +265,87 @@
     "destination_country": "DE"
   },
   "destination_country": "DE",
-  "dispatch_country": "TR"
+  "dispatch_country": "TR",
+  "commercial_invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": "PIECE",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 60,
+          "invoice_item_description": "DL2 Side Panels",
+          "invoice_item_total_amount": 60,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": "PIECE",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 60,
+          "invoice_item_description": "DL2 Side Panels AR",
+          "invoice_item_total_amount": 60,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "PIECE",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "DL2 - Inner Signage Units",
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "PIECE",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "DL2-Outer Signage Units",
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 5,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "PIECE",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "CUPBOARDS KİCKBOARDS",
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "GR22025000000220",
+      "invoice_date": "2025-10-24",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": null,
+      "invoice_total_amount": 420,
+      "invoice_customer_name": "APS GROUP DEUTSCHLAND GMBH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "Görsel Reklam San.Tic.A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "Graf-Adolf-Platz 12, 40213,",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "Fevzi Çakmak Caddesi No: 7 ",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 1,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ]
 }
