@@ -1,21 +1,21 @@
 {
   "atr": {
-    "id": "N 0570458",
-    "date": "2025-09-19",
+    "id": "N0570487",
+    "date": "2025-10-31",
     "sender": "ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
     "receiver": "'JORN GMBH",
-    "export_mrn": "25160100EX00111223",
-    "total_weight": 14275,
-    "total_package": 18
+    "export_mrn": "25160100έχ00130501",
+    "total_weight": 10861,
+    "total_package": 14
   },
   "cmr": {
-    "date": "2025-09-19",
+    "date": "2025-10-31",
     "sender": "ANGST PFISTER GELISIM TEKNIK\nCOZUMLER A. S.",
-    "plate_no": "14 DS 380",
+    "plate_no": "/Ma xt 210",
     "receiver": "JORN GMBH",
-    "total_weight": 14275,
-    "loading_place": "BURSA TURKEY",
-    "total_package": 18,
+    "total_weight": 10861,
+    "loading_place": "BURSA - TURKIYE",
+    "total_package": 14,
     "delivery_place": "WAIBLINGEN GERMANY"
   },
   "cache": {
@@ -23,7 +23,12 @@
       {
         "code": "40169952900",
         "oldCode": "401699520000",
-        "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk"
+        "description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)"
+      },
+      {
+        "code": "40169991900",
+        "oldCode": "401699910000",
+        "description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)"
       }
     ]
   },
@@ -32,184 +37,108 @@
       "items": [
         {
           "invoice_item_no": 1,
-          "invoice_item_quantity": 4860,
+          "invoice_item_quantity": 1868,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "C 75 7000 0",
+          "invoice_item_product_id": "C 75 7000",
           "invoice_item_unit_price": 3.22,
-          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-          "invoice_item_total_amount": 15649.2,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 6014.96,
           "invoice_item_commodity_code": "40169952900",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
         {
           "invoice_item_no": 2,
-          "invoice_item_quantity": 3510,
+          "invoice_item_quantity": 1170,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "C 75 7004 0",
+          "invoice_item_product_id": "C 75 7004",
           "invoice_item_unit_price": 2.99,
-          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-          "invoice_item_total_amount": 10494.9,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 3498.3,
           "invoice_item_commodity_code": "40169952900",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         },
         {
           "invoice_item_no": 3,
-          "invoice_item_quantity": 11220,
+          "invoice_item_quantity": 8160,
           "invoice_item_unit_type": "Adet",
-          "invoice_item_product_id": "C 77 6031 0",
+          "invoice_item_product_id": "C 77 6031",
           "invoice_item_unit_price": 3.38,
-          "invoice_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-          "invoice_item_total_amount": 37923.6,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 27580.8,
           "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 5270,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7002",
+          "invoice_item_unit_price": 3.25,
+          "invoice_item_description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 17127.5,
+          "invoice_item_commodity_code": "40169991900",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         }
       ],
-      "invoice_id": "AP1202500000104",
-      "invoice_date": "2025-09-18",
+      "invoice_id": "API2025000001229",
+      "invoice_date": "2025-10-31",
       "invoice_currency": "EUR",
       "invoice_po_number": null,
       "invoice_payment_term": "Mal Mukabi",
-      "invoice_total_amount": 64067.7,
-      "invoice_customer_name": "Jörn GmbH",
+      "invoice_total_amount": 54221.56,
+      "invoice_customer_name": "Jöm GmbH",
       "invoice_delivery_term": "DAP",
-      "invoice_supplier_name": "ANGST PFISTER GELİŞMİŞ TEKNIK ÇÖZÜMLER A.Ş.",
-      "invoice_total_quantity": 19590,
-      "invoice_customer_address": "Kriegsbergstr. 17 Ortstell",
+      "invoice_supplier_name": "ANGST PFISTER GELİŞMIŞ TEKNIK ÇÖZÜMLER A.Ş.",
+      "invoice_total_quantity": 16468,
+      "invoice_customer_address": "Kriegsbergstr. 17 Ortsteil",
       "invoice_customer_country": "DE",
       "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE",
       "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": 18,
+      "invoice_total_package_quantity": 14,
       "invoice_shipment_country_of_origin": "TR"
     }
   ],
-  "combine_items": {
-    "meta": {
-      "total_items": 3,
-      "total_merged_items": 1,
-      "combination_filters": ["commodity_code"]
-    },
-    "items": [
-      {
-        "combined_item_no": 1,
-        "combined_item_quantity": 19590,
-        "reference_item_details": [
-          {
-            "regime": null,
-            "source": "invoice",
-            "item_no": 1,
-            "currency": "EUR",
-            "unit_type": "Adet",
-            "net_amount": 15649.2,
-            "net_weight": null,
-            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-            "document_no": "AP1202500000104",
-            "gross_amount": null,
-            "gross_weight": null,
-            "document_date": "2025-09-18",
-            "item_quantity": 4860,
-            "commodity_code": "40169952900",
-            "package_quantity": null,
-            "country_of_origin": "TR",
-            "statistical_value": null
-          },
-          {
-            "regime": null,
-            "source": "invoice",
-            "item_no": 2,
-            "currency": "EUR",
-            "unit_type": "Adet",
-            "net_amount": 10494.9,
-            "net_weight": null,
-            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-            "document_no": "AP1202500000104",
-            "gross_amount": null,
-            "gross_weight": null,
-            "document_date": "2025-09-18",
-            "item_quantity": 3510,
-            "commodity_code": "40169952900",
-            "package_quantity": null,
-            "country_of_origin": "TR",
-            "statistical_value": null
-          },
-          {
-            "regime": null,
-            "source": "invoice",
-            "item_no": 3,
-            "currency": "EUR",
-            "unit_type": "Adet",
-            "net_amount": 37923.6,
-            "net_weight": null,
-            "description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-            "document_no": "AP1202500000104",
-            "gross_amount": null,
-            "gross_weight": null,
-            "document_date": "2025-09-18",
-            "item_quantity": 11220,
-            "commodity_code": "40169952900",
-            "package_quantity": null,
-            "country_of_origin": "TR",
-            "statistical_value": null
-          }
-        ],
-        "combined_item_unit_type": "Adet",
-        "combined_item_net_weight": null,
-        "combined_item_description": "Antivibrationsbuchse / Andere Waren aus Weichkautschuk",
-        "combined_item_gross_weight": null,
-        "combined_item_total_amount": 64067.7,
-        "combined_item_commodity_code": "40169952900000",
-        "combined_item_package_quantity": 0,
-        "combined_item_country_of_origin": "TR"
-      }
-    ]
-  },
+  "regime_type": "IM",
   "additional_data": {
     "declaration": [
       {
         "addresses": [
           {
-            "city": "SUBEN",
-            "district": "Suben",
-            "postalCode": "4975",
+            "city": " Waiblingen",
+            "postalCode": "71336",
             "addressType": "CN",
-            "companyName": "TESTKUNDE",
-            "countryCode": "AT",
-            "participantEORI": "DE123456789",
-            "streetAndNumber": "Suben",
-            "participantSubsidiaryNumber": 555
+            "companyName": "Jörn GmbH",
+            "countryCode": "DE",
+            "participantEORI": "DE4770773",
+            "streetAndNumber": "Kriegsbergstrasse 17",
+            "participantSubsidiaryNumber": ""
           }
         ],
         "headerData": {
           "agentContact": {
             "contactPersonName": "Andreas Luxbauer",
-            "contactPersonEmail": "test@test.com",
             "contactPersonPosition": "Zolldeklarant/in",
-            "contactPersonPhoneNumber": "555 55 55"
-          },
-          "departureCountry": "TR",
-          "dv1CostAllocation": {
-            "costs": 10,
-            "costType": "test",
-            "currencyCode": "EUR"
+            "contactPersonPhoneNumber": ""
           },
           "inputTaxDeduction": true,
           "destinationCountry": "DE",
           "declarantIsConsignee": true,
-          "addressedCustomsOffice": "7701",
-          "procedureCodeRequested": "42",
-          "destinationFederalState": "25",
-          "transportMeansArrivalIdentity": "TEST22042025",
-          "transportMeansNationalityCode": "TR",
-          "representationRelationshipCode": 1,
-          "previousAdministrativeReferenceType": "",
-          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "08",
+          "transportMeansArrivalIdentity": "MAXT210",
+          "transportMeansNationalityCode": "",
+          "representationRelationshipCode": "",
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR160100071343M0"
         },
         "objectIdentification": {
           "username": "ANDREAS",
-          "objectName": "4803/2602203_TEST_0602",
-          "objectAlias": "4803/260220122042025_160905",
+          "objectName": "4803/2602206_TEST_1134",
+          "objectAlias": "4803/25065519/A07112025_095042",
           "declarationType": "EZA-D",
           "referenceNumberOverlay": "AA_EZA_DE_IM4000"
         }
@@ -217,135 +146,67 @@
     ],
     "transaction": {
       "ioPartner": "VERA",
-      "ioDivision3": "SUBBB",
-      "ioReference": "4803/260220122042025_160905"
+      "ioDivision3": "SUB",
+      "ioReference": "4803/25065519/A07112025_095042"
     }
   },
+  "dispatch_country": "TR",
   "additional_setting": {
-    "userId": 2,
+    "userId": 11,
     "companyId": 1,
-    "combineOptions": ["commodity_code"],
-    "disableOutbound": false,
-    "outputApplicationId": "dakosy/sftp/vera",
-    "disableDocumentConverter": false
+    "combineOptions": [],
+    "outputApplicationId": "dakosy/sftp/verg"
   },
+  "destination_country": "DE",
+  "transit_declaration": null,
   "tr_export_declaration": {
-    "id": "25160100EX00111223",
-    "date": "2025-09-19",
+    "id": "25160100EX00130501",
+    "date": "2025-10-31",
     "buyer": "JORN GMBH",
     "items": [
       {
-        "id": "TR-25160100EX00111223-ITEM1",
+        "id": "TR-25160100EX00130501-ITEM1",
         "index": "1",
         "origin": "TR",
-        "regime": "1000",
-        "quantity": 19590,
-        "item_value": 64067.7,
-        "net_weight": null,
-        "gross_weight": 14275,
+        "regime": "1000|",
+        "quantity": 11198,
+        "item_value": 37094.06,
+        "net_weight": 7176.42,
+        "gross_weight": 7430.23,
         "commodity_code": "40169952900",
         "unit_of_measure": "AD",
-        "package_quantity": "Ticari tanımı:MUHTELİF BURC",
-        "statistical_value": 73398.92,
-        "commodity_description": "Handelsbezeichnung: VERSCHIEDENE SCHILDER / Andere Waren aus Weichkautschuk"
+        "package_quantity": "Ticari tanımı: MUHTELİF BURC",
+        "statistical_value": 41487.72,
+        "commodity_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)"
+      },
+      {
+        "id": "TR-25160100EX00130501-ITEM2",
+        "index": "2",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 5270,
+        "item_value": 17127.5,
+        "net_weight": 3313.58,
+        "gross_weight": 3430.77,
+        "commodity_code": "40169991900",
+        "unit_of_measure": "AD",
+        "package_quantity": 14,
+        "statistical_value": 19156.19,
+        "commodity_description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)"
       }
     ],
-    "sender": "ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "sender": "LANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
     "tax_id": "6080551890",
-    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024 ** FATURA NO: API2025000001046/18 .09.2025 IML ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 A.TR Dolaşım Belgesi Basit 19.09.2025/N0570458 TPS-E-Fatura Var 18.09.2025/2524\n3160110886044330177/1-2-3 TPS-Kripto Numarası Var 19.09.2025/25153097211086\n074538903/1",
-    "total_value": "64067.70",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024** *2017/7 SAY. TEB. ISTINADEN E-FA TURA ID SISTEME DÜŞMEDİĞİNDEN E-FATURALI İŞLEM YERİNE NORMAL FATURALI İŞLEM YAPILMIŞTIR IML ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 Fatura Var 31.10.2025/API2025000001229 A.TR Dolaşım Belgesi\nBasit 31.10.20 25/N0570487 TPS-Kripto Numarası Var\n3110.2025/25153097211086075984584/1",
+    "total_value": "54221.56",
     "total_weight": null,
     "delivery_term": "DAP",
-    "total_package": "18",
+    "total_package": "14",
     "delivery_place": "ALMANYA",
-    "total_line_item": "1",
+    "total_line_item": "2",
     "dispatch_country": "TR",
     "total_value_curr": "EUR",
-    "mode_of_transport": "B0",
+    "mode_of_transport": "3",
     "destination_country": "DE"
-  },
-  "destination_country": "DE",
-  "dispatch_country": "TR",
-  "commercial_invoice": [
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": 1,
-          "invoice_item_unit_type": "PIECE",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 60,
-          "invoice_item_description": "DL2 Side Panels",
-          "invoice_item_total_amount": 60,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        },
-        {
-          "invoice_item_no": 2,
-          "invoice_item_quantity": 1,
-          "invoice_item_unit_type": "PIECE",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 60,
-          "invoice_item_description": "DL2 Side Panels AR",
-          "invoice_item_total_amount": 60,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        },
-        {
-          "invoice_item_no": 3,
-          "invoice_item_quantity": 2,
-          "invoice_item_unit_type": "PIECE",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 50,
-          "invoice_item_description": "DL2 - Inner Signage Units",
-          "invoice_item_total_amount": 100,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        },
-        {
-          "invoice_item_no": 4,
-          "invoice_item_quantity": 2,
-          "invoice_item_unit_type": "PIECE",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 50,
-          "invoice_item_description": "DL2-Outer Signage Units",
-          "invoice_item_total_amount": 100,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        },
-        {
-          "invoice_item_no": 5,
-          "invoice_item_quantity": 2,
-          "invoice_item_unit_type": "PIECE",
-          "invoice_item_product_id": null,
-          "invoice_item_unit_price": 50,
-          "invoice_item_description": "CUPBOARDS KİCKBOARDS",
-          "invoice_item_total_amount": 100,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": "TR"
-        }
-      ],
-      "invoice_id": "GR22025000000220",
-      "invoice_date": "2025-10-24",
-      "invoice_currency": "EUR",
-      "invoice_po_number": null,
-      "invoice_payment_term": null,
-      "invoice_total_amount": 420,
-      "invoice_customer_name": "APS GROUP DEUTSCHLAND GMBH",
-      "invoice_delivery_term": "DAP",
-      "invoice_supplier_name": "Görsel Reklam San.Tic.A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "Graf-Adolf-Platz 12, 40213,",
-      "invoice_customer_country": "DE",
-      "invoice_supplier_address": "Fevzi Çakmak Caddesi No: 7 ",
-      "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": 1,
-      "invoice_shipment_country_of_origin": "TR"
-    }
-  ]
+  }
 }
