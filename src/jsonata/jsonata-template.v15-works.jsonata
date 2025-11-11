@@ -138,21 +138,15 @@ $getUnterlage := function($procedureCodeRequested) {(
 
 /* item document response unterlage*/
 $itemUnterlage := function($item) {(
-  $invoiceDocument := $isInvoiceExist and $isCombineItemsCreatedFromInvoice = false ? {
-    "Bereich": "4", /* default */
-    "Art":  "N380", /* default */
-    "Nummer": $item.invoice_id, /*  */
-    "DatumAusstellung": $item.invoice_date, /*  */
-    "VorlageKz": "1" /* default */
-  } : $isCombineItemsCreatedFromInvoice ? $uniqueByField($item.reference_item_details, "document_no") ~> $map(function($v, $i) {(
+  $invoiceDocument := $isInvoiceExist ? $.invoice ~> $map((function($item) {
     {
       "Bereich": "4", /* default */
       "Art":  "N380", /* default */
-      "Nummer": $v.document_no, /*  */
-      "DatumAusstellung": $v.document_date, /*  */
+      "Nummer": $item.invoice_id, /*  */
+      "DatumAusstellung": $item.invoice_date, /*  */
       "VorlageKz": "1" /* default */
     }
-  )}) : undefined;
+  })) : undefined;
 
   $atrDocument := $isAtrExist ? {
     "Bereich": "6", /* default */
@@ -207,7 +201,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getFirstElement([$v.combined_item_net_weight, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
+            "AHStatMenge": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
@@ -365,7 +359,7 @@ $lieferbedingungSchluessel := function() {(
           "ZollrechtlicherStatus": $getZollrechtlicherStatus($v.headerData.departureCountry ?? $.dispatch_country, $v.headerData.base.documentDivision, $exists(atr)),
           "GesamtRohMasse": $totalGrossWeight, /* DONE @alican burasi yoksa cmr den alinilicak denilmis ama baska gross goremedim, cmr tarafindaki gross weight ai service den total_weight olarak donuyor @alican @samim Ayni sekilde burasi da integer istiyor*/
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
-          "VerkehrszweigInland": transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
+          "VerkehrszweigInland": $.transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
           "VerkehrszweigGrenze": $globalModeOfTransport, /* : @Alican tolgalar ile gorusecek bunun icin */
           "VersendungslandCode": $globalDispatchCountry ?? $v.headerData.departureCountry and $length($v.headerData.departureCountry) = 2 ? $v.headerData.departureCountry,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
@@ -377,7 +371,7 @@ $lieferbedingungSchluessel := function() {(
           "LieferbedingungSchluessel": $lieferbedingungSchluessel(), 
           "LieferbedingungOrt": $lieferbedingungOrt($v.addresses[0].city), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
           "VorpapierArtCode": $v.headerData.previousAdministrativeReferenceType or $isTransitDeclarationExist ? "T1" : "OHNE", /*TODO: Burasi sorulacak, default `T1` kalsin mi ? @Alican to @Andreas*/
-          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceNumber : $isTransitDeclarationExist ? transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
+          "VorpapierNr": $v.headerData.previousAdministrativeReferenceNumber ? $v.headerData.previousAdministrativeReferenceNumber : $isTransitDeclarationExist ? $.transit_declaration.transit_id : null, /*TODO: Burasida sorulacak, eger yukaris `T1` yazilirsa asagisi ne yazmasi gerek ? */
           "ArtGeschaeftCode": $v.headerData.procedureCodeRequested = "42" ? "71" : "11", /* eger `procedureCodeRequested` = "42" ise burasi 71 olacak yoksa 11 olarak setlendi TODO: Buranin kosulu biraz karisik sonradan kontrol saglanacak @Alican @Tolga @Emre  */
           "StatistikStatus": null, /* Template data olarak dolacak */
           "Rechnungspreis": $totalAmount, /* AI tarafindan gelecek, ihracat beyannamesi yoksa faturadan. */
