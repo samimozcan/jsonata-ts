@@ -195,7 +195,7 @@ $abzugHinzurechnung := function($args) {(
 
 /* WarenNummerEZT *** */
 $warenNummerEZT := function($commodityCode) {(
-  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? $substring($commodityCode, 0, 8) : $commodityCode;
+  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? null : $commodityCode;
 )};
 
 $getWarenPosition := function($procedureCodeRequested) {(

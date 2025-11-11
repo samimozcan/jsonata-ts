@@ -413,6 +413,20 @@
                         $map($v.items, function($vv, $ii) {
                             [
                                 /* Commodity Code Validations*/
+                                /*$max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0038", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})*/
+                            ]
+                        }) ~> $customAppend()
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $invoiceWarningFirst := $isInvoiceExist and $type(invoice) = "array" ?
+            $filter([
+                $map(invoice, function($v, $i) {
+                    [
+                        $map($v.items, function($vv, $ii) {
+                            [
+                                /* Commodity Code Validations*/
                                 $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0038", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
                             ]
                         }) ~> $customAppend()
@@ -423,7 +437,9 @@
         $invoiceErrors := $count($invoiceErrorsFirst) ? $map($invoiceErrorsFirst, function($error) {
             $formatErrorMessage($error)
         }) : [];
-        $invoiceWarnings := [];
+        $invoiceWarnings := $count($invoiceWarningFirst) ? $map($invoiceWarningFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
 
           /* --- */
         /* --- */
@@ -439,6 +455,16 @@
                 $map(tr_export_declaration.items, function($v, $i) {
                     [
                             /* Commodity Code Validations*/
+                            /*$max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]})*/
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $declarationWarningsFirst := $isDeclarationExist and $type(tr_export_declaration) = "object" ?
+            $filter([
+                $map(tr_export_declaration.items, function($v, $i) {
+                    [
+                            /* Commodity Code Validations*/
                             $max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]})
                     ]
                 }) ~> $customAppend() 
@@ -447,7 +473,9 @@
         $declarationErrors := $count($declarationErrorsFirst) ? $map($declarationErrorsFirst, function($error) {
             $formatErrorMessage($error)
         }) : [];
-        $declarationWarnings := [];
+        $declarationWarnings := $count($declarationWarningsFirst) ? $map($declarationWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
 
 
 
