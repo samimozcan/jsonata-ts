@@ -6,7 +6,7 @@
 /* --- UTILS  --- */
 /* ------------------------------------ */
 /* Compact function to remove null/undefined/false/""/NaN values from array --- @utils */
-$_compact := function($arr) { $arr ~> $filter(function($v) { $v }) };
+$_compact := function($arr) { $arr != "array" ? [$arr] : $arr ~> $arr ~> $filter(function($v) { $v }) };
 
 /* Remove duplicates from array of objects by field  --- @utils */
 $uniqueByField := function($arr, $field) {(
@@ -73,10 +73,10 @@ $totalAmount := $isDeclarationExist
         : $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_total_amount ~> $_compact() ~> $sum() 
           : undefined;
 $totalNetWeight := $isDeclarationExist 
-  ? $sum($map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0})) ~> $_compact() ~> $round(1)
+  ? $map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
     : undefined;
 $totalGrossWeight := $isDeclarationExist 
-  ? $sum($map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0})) ~> $_compact() ~> $round(1)
+  ? $map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
     : $isCmrExist
     ? $round($.cmr.total_weight ? $.cmr.total_weight : 0, 1) 
       : undefined;
@@ -192,6 +192,38 @@ $warenNummerEZT := function($commodityCode) {(
   $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? null : $commodityCode;
 )};
 
+$allDeclarationItemsCommodityCodeSuccess := $isDeclarationExist ? 
+  $filter($.tr_export_declaration.items, function($v) { $type($v.commodity_code) != "string" or $length($v.commodity_code) > 11 }) ~> $count() = 0
+    : false;
+$allInvoiceItemsCommodityCodeSuccess :=
+  $isInvoiceExist ?
+  (
+    $reduce($.invoice, function($acc, $inv){
+      $acc + (
+        $filter($inv.items, function($v){
+          $type($v.invoice_item_commodity_code) != "string"
+          or $length($v.invoice_item_commodity_code) > 11
+        }) ~> $count()
+      )
+    }, 0) = 0
+  )
+  : false;
+$allCommercialInvoiceItemsCommodityCodeSuccess :=
+  $isCommercialInvoiceExist ?
+  (
+    $reduce($.commercial_invoice, function($acc, $inv){
+      $acc + (
+        $filter($inv.items, function($v){
+          $type($v.invoice_item_commodity_code) != "string"
+          or $length($v.invoice_item_commodity_code) > 11
+        }) ~> $count()
+      )
+    }, 0) = 0
+  )
+  : false;
+$declarationCommodityCondition := $isDeclarationExist and $allDeclarationItemsCommodityCodeSuccess or ($allInvoiceItemsCommodityCodeSuccess != false and $allCommercialInvoiceItemsCommodityCodeSuccess != false);
+$invoiceCommodityCondition := $isInvoiceExist and $allInvoiceItemsCommodityCodeSuccess or ($allDeclarationItemsCommodityCodeSuccess != false and $allCommercialInvoiceItemsCommodityCodeSuccess != false);
+
 $getWarenPosition := function($procedureCodeRequested) {(
     $response := $isCombineItemsExist ? $map($.combine_items.items, function($v, $i) {
       {
@@ -216,7 +248,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "currency": $v.reference_item_details[0].currency /* TODO: Burasi hallediverilecek. @samimozcan*/
             })
           }
-    }) : $isDeclarationExist ? $map($.tr_export_declaration.items, function($v, $i) {
+    }) : $isDeclarationExist and $declarationCommodityCondition ? $map($.tr_export_declaration.items, function($v, $i) {
           {
             "Positionsnummer": $v.index,
             "WarenNummerEZT": $warenNummerEZT($v.commodity_code),
@@ -240,7 +272,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             })
           }
     })
-    : $isInvoiceExist ?
+    : $isInvoiceExist and $invoiceCommodityCondition ?
         $map(invoice, function($v, $i) {(
           $map($v.items, function($vv, $ii) {(
             {
