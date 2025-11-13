@@ -1,29 +1,34 @@
 {
   "atr": {
-    "id": "11405448",
-    "date": "2025-10-27",
-    "sender": "ISRINGHAUSEN OTO YAN.SAN.YEDEK PARCA VE KOLT.SIS.TIC AS.",
-    "receiver": "TREMONIA MOBILITY GMBH",
-    "export_mrn": "25160100EX00129162",
-    "total_weight": 4300,
-    "total_package": 17
+    "id": "N0570487",
+    "date": "2025-10-31",
+    "sender": "ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "receiver": "'JORN GMBH",
+    "export_mrn": "25160100έχ00130501",
+    "total_weight": 10861,
+    "total_package": 14
   },
   "cmr": {
-    "date": "2025-10-27",
-    "sender": "ISRINGHAUSEN OTO YAN SAN\nDEMIR TAS MAH 2\n01111 / BURSA / TR",
-    "plate_no": "PB3680EB",
-    "receiver": "TREMONIA MOBILITY GMBH\nNIEDERSACHSENWEG 20\n44309 / DORTMUND / DE",
-    "total_weight": 4300,
-    "loading_place": null,
-    "total_package": 17,
-    "delivery_place": "DE"
+    "date": "2025-10-31",
+    "sender": "ANGST PFISTER GELISIM TEKNIK\nCOZUMLER A. S.",
+    "plate_no": "/Ma xt 210",
+    "receiver": "JORN GMBH",
+    "total_weight": 10861,
+    "loading_place": "BURSA - TURKIYE",
+    "total_package": 14,
+    "delivery_place": "WAIBLINGEN GERMANY"
   },
   "cache": {
     "commodity_codes": [
       {
-        "code": "39269097900",
-        "oldCode": "392690979018",
-        "description": "Waren aus Kunststoff ua.Stoffen d.Pos.3901-3914, a.n.g. / Motorhauben-Kunststoff"
+        "code": "40169952900",
+        "oldCode": "401699520000",
+        "description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)"
+      },
+      {
+        "code": "40169991900",
+        "oldCode": "401699910000",
+        "description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)"
       }
     ]
   },
@@ -32,32 +37,68 @@
       "items": [
         {
           "invoice_item_no": 1,
-          "invoice_item_quantity": 135,
-          "invoice_item_unit_type": "Pcs",
-          "invoice_item_product_id": "MB.01.200.020",
-          "invoice_item_unit_price": 22.85,
-          "invoice_item_description": "Waren aus Kunststoff ua.Stoffen d.Pos.3901-3914, a.n.g. / Motorhauben-Kunststoff",
-          "invoice_item_total_amount": 3084.75,
-          "invoice_item_commodity_code": "39269097900",
+          "invoice_item_quantity": 1868,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7000",
+          "invoice_item_unit_price": 3.22,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 6014.96,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 1170,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7004",
+          "invoice_item_unit_price": 2.99,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 3498.3,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 8160,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 77 6031",
+          "invoice_item_unit_price": 3.38,
+          "invoice_item_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 27580.8,
+          "invoice_item_commodity_code": "40169952900",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 5270,
+          "invoice_item_unit_type": "Adet",
+          "invoice_item_product_id": "C 75 7002",
+          "invoice_item_unit_price": 3.25,
+          "invoice_item_description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)",
+          "invoice_item_total_amount": 17127.5,
+          "invoice_item_commodity_code": "40169991900",
           "invoice_item_package_quantity": null,
           "invoice_item_country_of_origin": "TR"
         }
       ],
-      "invoice_id": "ISK2025000000147",
-      "invoice_date": "2025-10-27",
+      "invoice_id": "API2025000001229",
+      "invoice_date": "2025-10-31",
       "invoice_currency": "EUR",
-      "invoice_po_number": "0050066241",
-      "invoice_payment_term": "30 Days net",
-      "invoice_total_amount": 3084.75,
-      "invoice_customer_name": "Tremonia Mobilty Gmbh",
-      "invoice_delivery_term": "EXW",
-      "invoice_supplier_name": "Isringhausen Oto Yan Sanayi Yedek Parça ve Koltuk Sistemleri San. ve Tic. A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": "Niedersachsenweg 20 44309",
+      "invoice_po_number": null,
+      "invoice_payment_term": "Mal Mukabi",
+      "invoice_total_amount": 54221.56,
+      "invoice_customer_name": "Jöm GmbH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "ANGST PFISTER GELİŞMIŞ TEKNIK ÇÖZÜMLER A.Ş.",
+      "invoice_total_quantity": 16468,
+      "invoice_customer_address": "Kriegsbergstr. 17 Ortsteil",
       "invoice_customer_country": "DE",
-      "invoice_supplier_address": "Demirtaş Dumlupınar OSB Mah",
+      "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE",
       "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": null,
+      "invoice_total_package_quantity": 14,
       "invoice_shipment_country_of_origin": "TR"
     }
   ],
@@ -67,40 +108,37 @@
       {
         "addresses": [
           {
-            "city": "SUBEN",
-            "district": "Suben",
-            "postalCode": "4975",
+            "city": " Waiblingen",
+            "postalCode": "71336",
             "addressType": "CN",
-            "companyName": "TESTKUNDE",
+            "companyName": "Jörn GmbH",
             "countryCode": "DE",
-            "participantEORI": "DE123456789",
-            "streetAndNumber": "Suben",
-            "participantSubsidiaryNumber": 555
+            "participantEORI": "DE4770773",
+            "streetAndNumber": "Kriegsbergstrasse 17",
+            "participantSubsidiaryNumber": ""
           }
         ],
         "headerData": {
           "agentContact": {
             "contactPersonName": "Andreas Luxbauer",
-            "contactPersonEmail": "test@test.com",
             "contactPersonPosition": "Zolldeklarant/in",
-            "contactPersonPhoneNumber": "555 55 55"
+            "contactPersonPhoneNumber": ""
           },
           "inputTaxDeduction": true,
           "destinationCountry": "DE",
           "declarantIsConsignee": true,
-          "addressedCustomsOffice": "7701",
           "procedureCodeRequested": "40",
-          "destinationFederalState": "25",
-          "transportMeansArrivalIdentity": "TEST22042025",
-          "transportMeansNationalityCode": "TR",
-          "representationRelationshipCode": 1,
+          "destinationFederalState": "08",
+          "transportMeansArrivalIdentity": "MAXT210",
+          "transportMeansNationalityCode": "",
+          "representationRelationshipCode": "",
           "previousAdministrativeReferenceType": "T1",
-          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+          "previousAdministrativeReferenceNumber": "25TR160100071343M0"
         },
         "objectIdentification": {
           "username": "ANDREAS",
-          "objectName": "4803/2602206_TEST_1149",
-          "objectAlias": "4803/260220122042025_160905",
+          "objectName": "4803/2602206_TEST_1134",
+          "objectAlias": "4803/25065519/A07112025_095042",
           "declarationType": "EZA-D",
           "referenceNumberOverlay": "AA_EZA_DE_IM4000"
         }
@@ -109,291 +147,66 @@
     "transaction": {
       "ioPartner": "VERA",
       "ioDivision3": "SUB",
-      "ioReference": "4803/260220122042025_160905"
+      "ioReference": "4803/25065519/A07112025_095042"
     }
   },
   "dispatch_country": "TR",
   "additional_setting": {
-    "userId": 1,
+    "userId": 11,
     "companyId": 1,
     "combineOptions": [],
-    "disableOutbound": false,
-    "outputApplicationId": "dakosy/sftp/vera",
-    "disableDocumentConverter": false
+    "outputApplicationId": "dakosy/sftp/verg"
   },
-  "commercial_invoice": [
-    {
-      "items": [
-        {
-          "invoice_item_no": 1,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 3624,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 2,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 3161.2,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 3,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 448.77,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 4,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 3084.75,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 5,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 130.75,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 6,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 263.05,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 7,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 130.75,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 8,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 835.89,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 9,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1195.4,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 10,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1195.4,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 11,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 12,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1698.12,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 13,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1698.12,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 14,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 15,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 16,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 17,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 18,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1117.2,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 19,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1195.4,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 20,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1265.51,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        },
-        {
-          "invoice_item_no": 21,
-          "invoice_item_quantity": null,
-          "invoice_item_unit_type": null,
-          "invoice_item_product_id": "ISK2025000",
-          "invoice_item_unit_price": null,
-          "invoice_item_description": null,
-          "invoice_item_total_amount": 1645.1,
-          "invoice_item_commodity_code": null,
-          "invoice_item_package_quantity": null,
-          "invoice_item_country_of_origin": null
-        }
-      ],
-      "invoice_id": null,
-      "invoice_date": "2025-10-27",
-      "invoice_currency": "EUR",
-      "invoice_po_number": null,
-      "invoice_payment_term": null,
-      "invoice_total_amount": 29016.96,
-      "invoice_customer_name": "Tremonia Mobility GmbH",
-      "invoice_delivery_term": "EXW",
-      "invoice_supplier_name": "Isringhausen Oto Yan Sanayi Yedek Parça ve Koltuk Sistemleri San. ve Tic. A.Ş.",
-      "invoice_total_quantity": null,
-      "invoice_customer_address": null,
-      "invoice_customer_country": "DE",
-      "invoice_supplier_address": "Demirtaş Dumlupınar OSB Maha",
-      "invoice_supplier_country": "TR",
-      "invoice_total_package_quantity": 17,
-      "invoice_shipment_country_of_origin": null
-    }
-  ],
-  "destination_country": "DE"
+  "destination_country": "DE",
+  "transit_declaration": null,
+  "tr_export_declaration": {
+    "id": "25160100EX00130501",
+    "date": "2025-10-31",
+    "buyer": "JORN GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00130501-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000|",
+        "quantity": 11198,
+        "item_value": 37094.06,
+        "net_weight": 7176.42,
+        "gross_weight": 7430.23,
+        "commodity_code": "40169952900",
+        "unit_of_measure": "AD",
+        "package_quantity": "Ticari tanımı: MUHTELİF BURC",
+        "statistical_value": 41487.72,
+        "commodity_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Verschiedene Büsche (Antivibrationsbusch)"
+      },
+      {
+        "id": "TR-25160100EX00130501-ITEM2",
+        "index": "2",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 5270,
+        "item_value": 17127.5,
+        "net_weight": 3313.58,
+        "gross_weight": 3430.77,
+        "commodity_code": "40169991900",
+        "unit_of_measure": "AD",
+        "package_quantity": 14,
+        "statistical_value": 19156.19,
+        "commodity_description": "Gummi-Metallteile aus Weichkautschuk / Verschiedene Büsche (Antivibrationsbusch)"
+      }
+    ],
+    "sender": "LANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "tax_id": "6080551890",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024** *2017/7 SAY. TEB. ISTINADEN E-FA TURA ID SISTEME DÜŞMEDİĞİNDEN E-FATURALI İŞLEM YERİNE NORMAL FATURALI İŞLEM YAPILMIŞTIR IML ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 Fatura Var 31.10.2025/API2025000001229 A.TR Dolaşım Belgesi\nBasit 31.10.20 25/N0570487 TPS-Kripto Numarası Var\n3110.2025/25153097211086075984584/1",
+    "total_value": "54221.56",
+    "total_weight": null,
+    "delivery_term": "DAP",
+    "total_package": "14",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "2",
+    "dispatch_country": "TR",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "3",
+    "destination_country": "DE"
+  }
 }

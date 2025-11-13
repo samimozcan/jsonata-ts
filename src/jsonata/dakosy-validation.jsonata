@@ -4,225 +4,169 @@
         $A1460 := ["1", "0"];
 
         $errorMap := {
-            "INVALID_0001": {
-                "en": "IO Partner is not valid",
-                "tr": "IO Partner geçerli değil"
-            },
-            "INVALID_0002": {
-                "en": "IO Division 3 is not valid",
-                "tr": "IO Division 3 geçerli değil"
-            },
-            "INVALID_0003": {
-                "en": "IO Reference is not valid",
-                "tr": "IO Reference geçerli değil"
-            },
-            "INVALID_0004": {
-                "en": "Object name is not valid",
-                "tr": "Nesne adı geçerli değil"
-            },
-            "INVALID_0005": {
-                "en": "Object alias is not valid",
-                "tr": "Nesne takma adı geçerli değil"
-            },
-            "INVALID_0006": {
-                "en": "Declaration type is not valid",
-                "tr": "Beyanname türü geçerli değil"
-            },
-            "INVALID_0007": {
-                "en": "Username is not valid",
-                "tr": "Kullanıcı adı geçerli değil"
-            },
-            "INVALID_0008": {
-                "en": "Reference number overlay is not valid",
-                "tr": "Referans numarası önblengi geçerli değil"
-            },
-            "INVALID_0009": {
-                "en": "Customs office is not valid",
-                "tr": "Gümrük müdürlüğü geçerli değil"
-            },
-            "INVALID_0010": {
-                "en": "Representation relationship code is not valid",
-                "tr": "Temsil ilişkisi kodu geçerli değil"
-            },
-            "INVALID_0011": {
-                "en": "Contact person name is not valid",
-                "tr": "İletişim kişisi adı geçerli değil"
-            },
-            "INVALID_0012": {
-                "en": "Contact person phone number is not valid",
-                "tr": "İletişim kişisi telefon numarası geçerli değil"
-            },
-            "INVALID_0013": {
-                "en": "Contact person position is not valid",
-                "tr": "İletişim kişisi pozisyonu geçerli değil"
-            },
-            "INVALID_0014": {
-                "en": "Contact person email is not valid",
-                "tr": "İletişim kişisi e-posta adresi geçerli değil"
-            },
-            "INVALID_0015": {
-                "en": "Procedure code is not valid",
-                "tr": "Prosedür kodu geçerli değil"
-            },
-            "INVALID_0016": {
-                "en": "Departure country is not valid",
-                "tr": "Kalkış ülkesi geçerli değil"
-            },
-            "INVALID_0017": {
-                "en": "Destination federal state is not valid",
-                "tr": "Hedef federal eyalet geçerli değil"
-            },
-            "INVALID_0018": {
-                "en": "Destination country is not valid",
-                "tr": "Hedef ülke geçerli değil"
-            },
-            "INVALID_0019": {
-                "en": "Transport means arrival identity is not valid",
-                "tr": "Taşıma aracı varış kimliği geçerli değil"
-            },
-            "INVALID_0020": {
-                "en": "Transport means nationality code is not valid",
-                "tr": "Taşıma aracı uyruk kodu geçerli değil"
-            },
-            "INVALID_0021": {
-                "en": "Previous administrative reference type is not valid",
-                "tr": "Önceki idari referans türü geçerli değil"
-            },
-            "INVALID_0022": {
-                "en": "Previous administrative reference number is not valid",
-                "tr": "Önceki idari referans numarası geçerli değil"
-            },
-            "INVALID_0023": {
-                "en": "Document division is not valid",
-                "tr": "Belge bölümü geçerli değil"
-            },
-            "INVALID_0024": {
-                "en": "Address type is not valid",
-                "tr": "Adres türü geçerli değil"
-            },
-            "INVALID_0025": {
-                "en": "Address code is not valid",
-                "tr": "Adres kodu geçerli değil"
-            },
-            "INVALID_0026": {
-                "en": "Participant EORI is not valid",
-                "tr": "Katılımcı EORI geçerli değil"
-            },
-            "INVALID_0027": {
-                "en": "Participant subsidiary number is not valid",
-                "tr": "Katılımcı bağlı kuruluş numarası geçerli değil"
-            },
-            "INVALID_0028": {
-                "en": "Company name is not valid",
-                "tr": "Şirket adı geçerli değil"
-            },
-            "INVALID_0029": {
-                "en": "Street and number is not valid",
-                "tr": "Sokak ve numara geçerli değil"
-            },
-            "INVALID_0030": {
-                "en": "District is not valid",
-                "tr": "İlçe geçerli değil"
-            },
-            "INVALID_0031": {
-                "en": "Country code is not valid",
-                "tr": "Ülke kodu geçerli değil"
-            },
-            "INVALID_0032": {
-                "en": "Postal code is not valid",
-                "tr": "Posta kodu geçerli değil"
-            },
-            "INVALID_0033": {
-                "en": "City is not valid",
-                "tr": "Şehir geçerli değil"
-            },
-            "MISSING_0001": {
-                "en": "Transaction is missing",
-                "tr": "İşlem eksik"
-            },
             "MISSING_0002": {
-                "en": "IO Partner is missing",
-                "tr": "IO Partner eksik"
+                "en": "IO Partner is required",
+                "tr": "IO Partner zorunludur"
             },
             "MISSING_0003": {
-                "en": "IO Reference is missing",
-                "tr": "IO Reference eksik"
-            },
-            "MISSING_0004": {
-                "en": "Object identification is missing",
-                "tr": "Nesne tanımlaması eksik"
+                "en": "IO Reference is required",
+                "tr": "IO Reference zorunludur"
             },
             "MISSING_0005": {
-                "en": "Object name is missing",
-                "tr": "Nesne adı eksik"
+                "en": "Object name is required",
+                "tr": "Nesne adı zorunludur"
             },
             "MISSING_0006": {
-                "en": "Username is missing",
-                "tr": "Kullanıcı adı eksik"
+                "en": "Username is required",
+                "tr": "Kullanıcı adı zorunludur"
             },
-            "MISSING_0007": {
-                "en": "Invoice item commodity code is missing",
-                "tr": "Fatura kalemi eşya kodu eksik"
+            "INVALID_0001": {
+                "en": "IO Partner must not exceed 100 characters",
+                "tr": "IO Partner 100 karakterden uzun olamaz"
+            },
+            "INVALID_0002": {
+                "en": "IO Division 3 must not exceed 10 characters",
+                "tr": "IO Division 3 10 karakterden uzun olamaz"
+            },
+            "INVALID_0003": {
+                "en": "IO Reference must not exceed 35 characters",
+                "tr": "IO Reference 35 karakterden uzun olamaz"
+            },
+            "INVALID_0004": {
+                "en": "Object name must not exceed 35 characters",
+                "tr": "Nesne adı 35 karakterden uzun olamaz"
+            },
+            "INVALID_0005": {
+                "en": "Object alias must not exceed 35 characters",
+                "tr": "Nesne takma adı 35 karakterden uzun olamaz"
+            },
+            "INVALID_0006": {
+                "en": "Declaration type must not exceed 5 characters",
+                "tr": "Beyanname türü 5 karakterden uzun olamaz"
+            },
+            "INVALID_0007": {
+                "en": "Username must not exceed 70 characters",
+                "tr": "Kullanıcı adı 70 karakterden uzun olamaz"
+            },
+            "INVALID_0008": {
+                "en": "Reference number overlay must not exceed 35 characters",
+                "tr": "Referans numarası 35 karakterden uzun olamaz"
+            },
+            "INVALID_0009": {
+                "en": "Customs office code must not exceed 35 characters",
+                "tr": "Gümrük müdürlüğü kodu 35 karakterden uzun olamaz"
+            },
+            "INVALID_0010": {
+                "en": "Representation relationship code must be 1 character",
+                "tr": "Temsil ilişkisi kodu 1 karakter olmalıdır"
+            },
+            "INVALID_0011": {
+                "en": "Contact person name must not exceed 35 characters",
+                "tr": "İletişim kişisi adı 35 karakterden uzun olamaz"
+            },
+            "INVALID_0012": {
+                "en": "Contact person phone must not exceed 35 characters",
+                "tr": "İletişim kişisi telefonu 35 karakterden uzun olamaz"
+            },
+            "INVALID_0013": {
+                "en": "Contact person position must not exceed 35 characters",
+                "tr": "İletişim kişisi pozisyonu 35 karakterden uzun olamaz"
+            },
+            "INVALID_0014": {
+                "en": "Contact person email must not exceed 256 characters",
+                "tr": "İletişim kişisi e-postası 256 karakterden uzun olamaz"
+            },
+            "INVALID_0015": {
+                "en": "Procedure code must be 2 characters",
+                "tr": "Prosedür kodu 2 karakter olmalıdır"
+            },
+            "INVALID_0016": {
+                "en": "Departure country code must be 2 characters",
+                "tr": "Kalkış ülke kodu 2 karakter olmalıdır"
+            },
+            "INVALID_0017": {
+                "en": "Destination federal state must be 2 characters",
+                "tr": "Hedef eyalet kodu 2 karakter olmalıdır"
+            },
+            "INVALID_0018": {
+                "en": "Destination country code must be 2 characters",
+                "tr": "Hedef ülke kodu 2 karakter olmalıdır"
+            },
+            "INVALID_0019": {
+                "en": "Transport means identity must not exceed 30 characters",
+                "tr": "Taşıma aracı kimliği 30 karakterden uzun olamaz"
+            },
+            "INVALID_0020": {
+                "en": "Transport means nationality code must be 2 characters",
+                "tr": "Taşıma aracı uyruk kodu 2 karakter olmalıdır"
+            },
+            "INVALID_0021": {
+                "en": "Previous administrative reference type must not exceed 6 characters",
+                "tr": "Önceki idari referans türü 6 karakterden uzun olamaz"
+            },
+            "INVALID_0022": {
+                "en": "Previous administrative reference number must not exceed 28 characters",
+                "tr": "Önceki idari referans numarası 28 karakterden uzun olamaz"
+            },
+            "INVALID_0023": {
+                "en": "Document division must be 1 character",
+                "tr": "Belge bölümü 1 karakter olmalıdır"
+            },
+            "INVALID_0024": {
+                "en": "Address type must not exceed 10 characters",
+                "tr": "Adres türü 10 karakterden uzun olamaz"
+            },
+            "INVALID_0025": {
+                "en": "Address code must not exceed 10 characters",
+                "tr": "Adres kodu 10 karakterden uzun olamaz"
+            },
+            "INVALID_0026": {
+                "en": "Participant EORI must not exceed 17 characters",
+                "tr": "Katılımcı EORI 17 karakterden uzun olamaz"
+            },
+            "INVALID_0027": {
+                "en": "Participant subsidiary number must not exceed 4 characters",
+                "tr": "Katılımcı bağlı kuruluş numarası 4 karakterden uzun olamaz"
+            },
+            "INVALID_0028": {
+                "en": "Company name must not exceed 120 characters",
+                "tr": "Şirket adı 120 karakterden uzun olamaz"
+            },
+            "INVALID_0029": {
+                "en": "Street and number must not exceed 35 characters",
+                "tr": "Sokak ve numara 35 karakterden uzun olamaz"
+            },
+            "INVALID_0030": {
+                "en": "District must not exceed 35 characters",
+                "tr": "İlçe 35 karakterden uzun olamaz"
+            },
+            "INVALID_0031": {
+                "en": "Country code must not exceed 3 characters",
+                "tr": "Ülke kodu 3 karakterden uzun olamaz"
+            },
+            "INVALID_0032": {
+                "en": "Postal code must not exceed 9 characters",
+                "tr": "Posta kodu 9 karakterden uzun olamaz"
+            },
+            "INVALID_0033": {
+                "en": "City must not exceed 35 characters",
+                "tr": "Şehir 35 karakterden uzun olamaz"
             },
             "INVALID_0034": {
-                "en": "Declarant is consignee flag is not valid",
-                "tr": "Beyan eden alıcıdır işareti geçerli değil"
+                "en": "Declarant is consignee flag must be boolean",
+                "tr": "Beyan eden alıcıdır alanı boolean olmalıdır"
             },
             "INVALID_0035": {
-                "en": "Input tax deduction flag is not valid",
-                "tr": "KDV indirim işareti geçerli değil"
-            },
-            "INVALID_0036": {
-                "en": "Object name is too long, declaration index: {{1}}",
-                "tr": "Nesne adı çok uzun, declaration index: {{1}}"
-            },
-            "INVALID_0037": {
-                "en": "Username is too long declaration index: {{1}}",
-                "tr": "Kullanıcı adı çok uzun declaration index: {{1}}"
-            },
-            "ERROR_0001": {
-                "en": "Invoice total amount is not equal to the sum of invoice items. Total amount: {{1}}, Invoice items total amount: {{2}}",
-                "tr": "Fatura toplam tutarı, fatura kalemlerinin toplamına eşit değil . Toplam tutar: {{1}}, Fatura kalemlerinin toplam tutarı: {{2}}"
-            },
-            "ERROR_0002": {
-                "en": "Declaration total value is not equal to the sum of declaration items. Total value: {{1}}, Declaration items total value: {{2}}",
-                "tr": "Beyanname toplam değeri, beyanname kalemlerinin toplamına eşit değil. Toplam değer: {{1}}, Beyanname kalemlerinin toplam değeri: {{2}}"
+                "en": "Input tax deduction flag must be boolean",
+                "tr": "KDV indirimi alanı boolean olmalıdır"
             },
             "INVALID_0038": {
-                "en": "Invoice commodity code is not valid, invoice item index: {{1}}",
-                "tr": "Fatura eşya kodu geçerli değil, fatura item index: {{1}}"
+                "en": "Invoice commodity code must not exceed 11 characters at item {{1}}",
+                "tr": "Fatura eşya kodu 11 karakterden uzun olamaz, kalem {{1}}"
             },
             "INVALID_0039": {
-                "en": "Declaration commodity code is not valid, declaration index: {{1}}",
-                "tr": "Beyanname eşya kodu geçerli değil, declaration index: {{1}}"
-            },
-            "INVALID_0040": {
-                "en": "Invoice currency is not valid",
-                "tr": "Fatura para birimi geçerli değil"
-            },
-            "INVALID_0041": {
-                "en": "Invoice item country of origin is not valid, invoice item index: {{1}}",
-                "tr": "Fatura kalemi menşe ülkesi geçerli değil, fatura item index: {{1}}"
-            },
-            "INVALID_0042": {
-                "en": "Declaration item country of origin is not valid, declaration index: {{1}}",
-                "tr": "Beyanname kalemi menşe ülkesi geçerli değil, declaration index: {{1}}"
-            },
-            "ERROR_0003": {
-                "en": "Declaration total line item is not equal to the number of declaration items. Total line item field value: {{1}}, Declaration items count: {{2}}",
-                "tr": "Beyanname toplam satır kalemi, beyanname kalem sayısına eşit değil. Toplam satır kalem bilgisi: {{1}}, Beyanname kalem sayısı: {{2}}"
-            },
-            "ERROR_0004": {
-                "en": "Declaration total gross weight is not equal to the sum of declaration items. Total gross weight field value: {{1}}, Declaration items total gross weight: {{2}}",
-                "tr": "Beyanname toplam brüt ağırlığı, beyanname kalemlerinin toplamına eşit değil. Toplam brüt ağırlık bilgisi: {{1}}, Beyanname kalemlerinin toplam brüt ağırlığı: {{2}}"
-            },
-            "ERROR_0005": {
-                "en": "Declaration total value is not equal to the invoice total value. Declaration total value: {{1}}, Invoice total value: {{2}}",
-                "tr": "Beyanname toplam değeri, fatura toplam değerine eşit değil. Beyanname toplam değeri: {{1}}, Fatura toplam değeri: {{2}}"
-            },
-            "ERROR_0006": {
-                "en": "Invoice total quantity is not equal to the sum of invoice items. Total quantity: {{1}}, Invoice items total quantity: {{2}}",
-                "tr": "Fatura toplam miktarı, fatura kalemlerinin toplamına eşit değil. Toplam miktar: {{1}}, Fatura kalemlerinin toplam miktarı: {{2}}"
+                "en": "Declaration commodity code must not exceed 11 characters at item {{1}}",
+                "tr": "Beyanname eşya kodu 11 karakterden uzun olamaz, kalem {{1}}"
             },
             "ERROR_0007": {
                 "en": "Dispatch country and destination country cannot be the same",

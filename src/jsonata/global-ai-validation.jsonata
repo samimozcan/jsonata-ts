@@ -6,52 +6,44 @@
                 "tr": "Fatura kalemi eşya kodu eksik"
             },
             "ERROR_0001": {
-                "en": "Invoice total amount is not equal to the sum of invoice items. Total amount: {{1}}, Invoice items total amount: {{2}}",
-                "tr": "Fatura toplam tutarı, fatura kalemlerinin toplamına eşit değil . Toplam tutar: {{1}}, Fatura kalemlerinin toplam tutarı: {{2}}"
+                "en": "Invoice total amount ({{1}}) does not match sum of items ({{2}})",
+                "tr": "Fatura toplam tutarı ({{1}}), kalemlerin toplamı ({{2}}) ile eşleşmiyor"
             },
             "ERROR_0002": {
-                "en": "Declaration total value is not equal to the sum of declaration items. Total value: {{1}}, Declaration items total value: {{2}}",
-                "tr": "Beyanname toplam değeri, beyanname kalemlerinin toplamına eşit değil. Toplam değer: {{1}}, Beyanname kalemlerinin toplam değeri: {{2}}"
-            },
-            "INVALID_0038": {
-                "en": "Invoice commodity code is not valid, invoice item index: {{1}}",
-                "tr": "Fatura eşya kodu geçerli değil, fatura item index: {{1}}"
-            },
-            "INVALID_0039": {
-                "en": "Declaration commodity code is not valid, declaration index: {{1}}",
-                "tr": "Beyanname eşya kodu geçerli değil, declaration index: {{1}}"
-            },
-            "INVALID_0040": {
-                "en": "Invoice currency is not valid",
-                "tr": "Fatura para birimi geçerli değil"
-            },
-            "INVALID_0041": {
-                "en": "Invoice item country of origin is not valid, invoice item index: {{1}}",
-                "tr": "Fatura kalemi menşe ülkesi geçerli değil, fatura item index: {{1}}"
-            },
-            "INVALID_0042": {
-                "en": "Declaration item country of origin is not valid, declaration index: {{1}}",
-                "tr": "Beyanname kalemi menşe ülkesi geçerli değil, declaration index: {{1}}"
+                "en": "Declaration total value ({{1}}) does not match sum of items ({{2}})",
+                "tr": "Beyanname toplam değeri ({{1}}), kalemlerin toplamı ({{2}}) ile eşleşmiyor"
             },
             "ERROR_0003": {
-                "en": "Declaration total line item is not equal to the number of declaration items. Total line item field value: {{1}}, Declaration items count: {{2}}",
-                "tr": "Beyanname toplam satır kalemi, beyanname kalem sayısına eşit değil. Toplam satır kalem bilgisi: {{1}}, Beyanname kalem sayısı: {{2}}"
+                "en": "Declaration line item count ({{1}}) does not match actual items ({{2}})",
+                "tr": "Beyanname satır sayısı ({{1}}), gerçek kalem sayısı ({{2}}) ile eşleşmiyor"
             },
             "ERROR_0004": {
-                "en": "Declaration total gross weight is not equal to the sum of declaration items. Total gross weight field value: {{1}}, Declaration items total gross weight: {{2}}",
-                "tr": "Beyanname toplam brüt ağırlığı, beyanname kalemlerinin toplamına eşit değil. Toplam brüt ağırlık bilgisi: {{1}}, Beyanname kalemlerinin toplam brüt ağırlığı: {{2}}"
+                "en": "Declaration total gross weight ({{1}}) does not match sum of items ({{2}})",
+                "tr": "Beyanname toplam brüt ağırlığı ({{1}}), kalemlerin toplamı ({{2}}) ile eşleşmiyor"
             },
             "ERROR_0005": {
-                "en": "Declaration total value is not equal to the invoice total value. Declaration total value: {{1}}, Invoice total value: {{2}}",
-                "tr": "Beyanname toplam değeri, fatura toplam değerine eşit değil. Beyanname toplam değeri: {{1}}, Fatura toplam değeri: {{2}}"
-            },
-            "ERROR_0006": {
-                "en": "Invoice total quantity is not equal to the sum of invoice items. Total quantity: {{1}}, Invoice items total quantity: {{2}}",
-                "tr": "Fatura toplam miktarı, fatura kalemlerinin toplamına eşit değil. Toplam miktar: {{1}}, Fatura kalemlerinin toplam miktarı: {{2}}"
+                "en": "Declaration value ({{1}}) does not match invoice value ({{2}})",
+                "tr": "Beyanname değeri ({{1}}), fatura değeri ({{2}}) ile eşleşmiyor"
             },
             "ERROR_0007": {
-                "en": "Transit document declaration and invoice mismatch",
-                "tr": "T1 dokuman, beyanname ve fatura uyumsuzluğu"
+                "en": "Missing required documents: at least one of transit document, declaration, or invoice must be present",
+                "tr": "Eksik belgeler: transit belgesi, beyanname veya faturadan en az biri mevcut olmalıdır"
+            },
+            "INVALID_0039": {
+                "en": "Declaration commodity code is missing at item {{1}}",
+                "tr": "Beyanname eşya kodu eksik, kalem {{1}}"
+            },
+            "INVALID_0040": {
+                "en": "Invoice currency code must be 3 characters or less",
+                "tr": "Fatura para birimi kodu 3 karakter veya daha az olmalıdır"
+            },
+            "INVALID_0041": {
+                "en": "Invoice item country of origin must be 2 characters at item {{1}}",
+                "tr": "Fatura kalemi menşe ülkesi 2 karakter olmalıdır, kalem {{1}}"
+            },
+            "INVALID_0042": {
+                "en": "Declaration item country of origin must be 2 characters at item {{1}}",
+                "tr": "Beyanname kalemi menşe ülkesi 2 karakter olmalıdır, kalem {{1}}"
             }
         };
 
