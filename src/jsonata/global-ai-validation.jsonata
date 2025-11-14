@@ -159,10 +159,9 @@
                         $map($v.items, function($vv, $ii) {
                             [
                                 /* Country of Origin Validations*/
-                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]}),
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]})
 
                                 /* Commodity Code Validations*/
-                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
 
                             ]
                         }) ~> $customAppend()
@@ -178,6 +177,7 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
+                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
                             ]
                         }) ~> $customAppend()
                     ]
