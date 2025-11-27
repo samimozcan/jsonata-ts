@@ -96,7 +96,7 @@
       "invoice_total_quantity": 16468,
       "invoice_customer_address": "Kriegsbergstr. 17 Ortsteil",
       "invoice_customer_country": "DE",
-      "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE",
+      "invoice_supplier_address": "HASANAĞA OSB MAH. 15. CADDE HASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDEHASANAĞA OSB MAH. 15. CADDE",
       "invoice_supplier_country": "TR",
       "invoice_total_package_quantity": 14,
       "invoice_shipment_country_of_origin": "TR"
@@ -158,7 +158,30 @@
     "outputApplicationId": "dakosy/sftp/verg"
   },
   "destination_country": "DE",
-  "transit_declaration": null,
+  "transit_declaration": {
+    "date": "2025-05-06",
+    "destination_country": "NO",
+    "destination_customs_authority": "NO371001 - Sonesund GÜB",
+    "dispatch_country": "TR",
+    "dispatch_place": "NO",
+    "items": [
+      {
+        "export_id": "25341300EX00361149",
+        "invoice_no": "IHR2025000000043",
+        "item_index": "1",
+        "sender": "MAXXMORA İNŞAAT PROJE DANIŞMANLIK SAN VE TİC.AŞ",
+        "total_gross_weight": 13611.0,
+        "total_net_weight": 11569.35,
+        "total_package": 9
+      }
+    ],
+    "loading_place": "TR",
+    "mode_of_transport": "30",
+    "transit_id": "25TR341300132739M9",
+    "truck_id_border": "34CJL770",
+    "truck_id_transit": "34CJL770",
+    "type_of_transport": "30"
+  },
   "tr_export_declaration": {
     "id": "25160100EX00130501",
     "date": "2025-10-31",

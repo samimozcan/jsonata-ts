@@ -231,9 +231,6 @@
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
-                    /* Commodity Code */
-                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]}),
-
                     /* Country of Origin */
                     $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]}),
                     $max($v.origin, 2, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]})
@@ -247,6 +244,8 @@
             $isEqualTotalValueDeclarationInvoice(tr_export_declaration),
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
+                     /* Commodity Code */
+                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]})
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];

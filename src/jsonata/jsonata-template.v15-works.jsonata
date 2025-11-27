@@ -79,7 +79,8 @@ $totalGrossWeight := $isDeclarationExist
   ? $map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
     : $isCmrExist
     ? $round($.cmr.total_weight ? $.cmr.total_weight : 0, 1) 
-      : undefined;
+      : $isTransitDeclarationExist ? $.transit_declaration.items ~> $map(function($i) { $i.total_gross_weight ? $i.total_gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(2)
+        : undefined;
 $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
     ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
       : $isInvoiceExist and $type($.invoice) = "object" 
@@ -416,14 +417,25 @@ $lieferbedingungSchluessel := function() {(
               "AdressCode": "1",
               "TeilnehmerEORI": $a.participantEORI,
               "TeilnehmerNLNR": $a.participantSubsidiaryNumber,
-              "NameFirma": $a.companyName,
-              "StrasseHausNr": $a.streetAndNumber,
-              "Ortsteil": $a.district,
+              "NameFirma": $substring($a.companyName ?? '', 0, 120),
+              "StrasseHausNr": $substring($a.streetAndNumber ?? '', 0, 35),
+              "Ortsteil": $substring($a.district ?? '', 0, 35),
               "LandCode": $a.countryCode,
               "PLZ-S": $a.postalCode,
               "Ort-S": $a.city
             }
-          })
+          }) ~> $append($isInvoiceExist and $count($v.addresses ?? []) < 2 ? {
+             "AdressTyp": "CZ",  /** CZ olacak default */
+              "AdressCode": "1", /** default 1 */
+              "TeilnehmerEORI": "", /** boş kalacak */
+              "TeilnehmerNLNR": "", /** boş kalacak */
+              "NameFirma": $substring($.invoice[0].invoice_supplier_name ?? '', 0, 70), /** sender(consignor) invoice, ihracat beyanname */
+              "StrasseHausNr": "Istanbul", /** default Istanbul */
+              "Ortsteil": $substring($.invoice[0].invoice_supplier_address ?? '', 0, 35), /** default boş */
+              "LandCode": $.invoice[0].invoice_supplier_country, /** supplier_country (TR), invoice, beyanname */
+              "PLZ-S": "34000", /** default 34000 */
+              "Ort-S": "Istanbul2" /** adres buraya GELECEK, /* invoice, beyanname */
+          } : [])
         },
         "WarenPosition": $getWarenPosition($v.headerData.procedureCodeRequested)
       }
