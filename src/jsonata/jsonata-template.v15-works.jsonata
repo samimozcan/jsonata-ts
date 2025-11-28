@@ -399,7 +399,7 @@ $lieferbedingungSchluessel := function() {(
           "Bestimmungsland": $globalDestionationCountry ?? $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
           "KennzeichenNameBefoerderungsmittelAnkunft": $v.headerData.transportMeansArrivalIdentity,
           "BefoerderungsmittelGrenzeStaatszugehoerigkeitCode": $v.headerData.transportMeansNationalityCode,
-          "BefoerderungsmittelGrenzeArt": "01", /* (Tasima araci tipi) AI den alinacak. Transit beyannamesinden alinabilinir. */
+          "BefoerderungsmittelGrenzeArt": "03", /* Turkiye Almanya arasi daima kara yolu kullanilacak */
           "LieferbedingungCode": $globalDeliveryTerm,
           "LieferbedingungSchluessel": $lieferbedingungSchluessel(), 
           "LieferbedingungOrt": $lieferbedingungOrt($v.addresses[0].city), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */
