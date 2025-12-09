@@ -171,6 +171,18 @@
             "ERROR_0007": {
                 "en": "Dispatch country and destination country cannot be the same",
                 "tr": "Gönderim ülkesi ve varış ülkesi aynı olamaz"
+            },
+            "MISSING_0007": {
+                "tr": "Fatura tarihi eksik, varsayılan tarih kullanıldı. Fatura NO: {{1}}",
+                "en": "Invoice date is missing, default date is used. Invoice NO: {{1}}"
+            },
+            "MISSING_0008": {
+                "tr": "CMR tarihi eksik, varsayılan tarih kullanıldı.",
+                "en": "CMR date is missing, default date is used."
+            },
+            "MISSING_0009": {
+                "tr": "ATR numarası eksik, varsayılan numara kullanıldı.",
+                "en": "ATR number is missing, default number is used."
             }
         };
 
@@ -368,6 +380,7 @@
             $filter([
                 $map(invoice, function($v, $i) {
                     [
+                        $isExist($v.invoice_date, {"code": "MISSING_0007", "path": ["invoice", $i, "invoice_date"], "args": [$v.invoice_id]}),
                         $map($v.items, function($vv, $ii) {
                             [
                                 /* Commodity Code Validations*/
@@ -421,6 +434,56 @@
             $formatErrorMessage($error)
         }) : [];
 
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        /*CMR ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $cmrErrorsFirst := $isCmrExist and $type(cmr) = "object" ?
+            $filter([
+            ], function($v) { $v != null })
+        : [];
+        $cmrWarningsFirst := $isCmrExist and $type(cmr) = "object" ?
+            $filter([
+                $isExist($.cmr.date, {"code": "MISSING_0008", "path": ["cmr", "date"], "args": []})
+            ], function($v) { $v != null })
+        : [];
+        $cmrErrors := $count($cmrErrorsFirst) ? $map($cmrErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $cmrWarnings := $count($cmrWarningsFirst) ? $map($cmrWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        /*ATR ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $atrErrorsFirst := $isAtrExist and $type(atr) = "object" ?
+            $filter([
+            ], function($v) { $v != null })
+        : [];
+        $atrWarningsFirst := $isAtrExist and $type(atr) = "object" ?
+            $filter([
+                $isExist($.atr.date, {"code": "MISSING_0009", "path": ["atr", "date"], "args": []})
+            ], function($v) { $v != null })
+        : [];
+        $atrErrors := $count($atrErrorsFirst) ? $map($atrErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $atrWarnings := $count($atrWarningsFirst) ? $map($atrWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
 
 
         /* --- */
@@ -465,6 +528,14 @@
             "tr_export_declaration": {
                 "errors": $count($declarationErrors) = 1 ? [$declarationErrors] : $declarationErrors,
                 "warnings": $count($declarationWarnings) = 1 ? [$declarationWarnings] : $declarationWarnings
+            },
+            "cmr": {
+                "errors": $count($cmrErrors) = 1 ? [$cmrErrors] : $cmrErrors,
+                "warnings": $count($cmrWarnings) = 1 ? [$cmrWarnings] : $cmrWarnings
+            },
+            "atr": {
+                "errors": $count($atrErrors) = 1 ? [$atrErrors] : $atrErrors,
+                "warnings": $count($atrWarnings) = 1 ? [$atrWarnings] : $atrWarnings
             },
             "global": {
                 "errors": $count($globalErrors) = 1 ? [$globalErrors] : $globalErrors,

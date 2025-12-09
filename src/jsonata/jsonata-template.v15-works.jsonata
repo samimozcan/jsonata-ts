@@ -79,7 +79,7 @@ $totalGrossWeight := $isDeclarationExist
   ? $map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
     : $isCmrExist
     ? $round($.cmr.total_weight ? $.cmr.total_weight : 0, 1) 
-      : $isTransitDeclarationExist ? $.transit_declaration.items ~> $map(function($i) { $i.total_gross_weight ? $i.total_gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(2)
+      : $isTransitDeclarationExist ? $.transit_declaration.items ~> $map(function($i) { $i.total_gross_weight ? $i.total_gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
         : undefined;
 $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
     ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
@@ -124,13 +124,13 @@ $getUnterlage := function($procedureCodeRequested) {(
     "Bereich": "4", /* default */
     "Art":  "N380", /* default */
     "Nummer": $.invoice.invoice_id, /*  */
-    "DatumAusstellung": $.invoice.invoice_date /*  */
+    "DatumAusstellung": $.invoice.invoice_date ?? $now() /*  */
   } : $isInvoiceExist and $type($.invoice) = "array" ? $map($.invoice, function($v, $i) {(
     {
       "Bereich": "4", /* default */
       "Art":  "N380", /* default */
       "Nummer": $v.invoice_id, /*  */
-      "DatumAusstellung": $v.invoice_date /*  */
+      "DatumAusstellung": $v.invoice_date ?? $now() /*  */
     }
   )}) : undefined;
 
@@ -144,7 +144,7 @@ $itemUnterlage := function($item) {(
       "Bereich": "4", /* default */
       "Art":  "N380", /* default */
       "Nummer": $item.invoice_id, /*  */
-      "DatumAusstellung": $item.invoice_date, /*  */
+      "DatumAusstellung": $item.invoice_date ?? $now(), /*  */
       "VorlageKz": "1" /* default */
     }
   })) : undefined;
@@ -153,7 +153,7 @@ $itemUnterlage := function($item) {(
     "Bereich": "6", /* default */
     "Art":  "N018", /* default */
     "Nummer": $.atr.id, /*  */
-    "DatumAusstellung": $.atr.date, /*  */
+    "DatumAusstellung": $.atr.date ?? $now(), /*  */
     "VorlageKz": "1" /* default */
   } : undefined;
 
@@ -161,7 +161,7 @@ $itemUnterlage := function($item) {(
     "Bereich": "4", /* default */
     "Art":  "7HHF", /* default */
     "Nummer": "CMR", /* TODO: AI ekibinden okunmasi istendi sornasinda duzeltilecek @samimozcan @alican  */
-    "DatumAusstellung": $.cmr.date, /*  */
+    "DatumAusstellung": $.cmr.date ?? $now(), /*  */
     "VorlageKz": "1" /* default */
   } : undefined;
 
@@ -190,7 +190,7 @@ $abzugHinzurechnung := function($args) {(
 
 /* WarenNummerEZT *** */
 $warenNummerEZT := function($commodityCode) {(
-  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? null : $commodityCode;
+  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? "" : $commodityCode;
 )};
 
 $allDeclarationItemsCommodityCodeSuccess := $isDeclarationExist ? 
