@@ -126,6 +126,12 @@ $globalDestionationCountry := $.tr_export_declaration.destination_country and $l
         : $.destination_country and $length($.destination_country) = 2
         ? $.destination_country
           : null;
+$totalInvoiceItemCount := $isInvoiceExist 
+  ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
+    : 0;
+$totalCommercialInvoiceItemCount := $isCommercialInvoiceExist 
+  ? $reduce($.commercial_invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
+    : 0;
 
 /* Unterlage Root Not item*/
 $getUnterlage := function($procedureCodeRequested) {(
@@ -234,6 +240,13 @@ $allCommercialInvoiceItemsCommodityCodeSuccess :=
 $declarationCommodityCondition := $isDeclarationExist and $allDeclarationItemsCommodityCodeSuccess or ($allInvoiceItemsCommodityCodeSuccess != false and $allCommercialInvoiceItemsCommodityCodeSuccess != false);
 $invoiceCommodityCondition := $isInvoiceExist and $allInvoiceItemsCommodityCodeSuccess or ($allDeclarationItemsCommodityCodeSuccess != false and $allCommercialInvoiceItemsCommodityCodeSuccess != false);
 
+/* Net Weight Function*/
+$getNetWeightForItem := function($netWeight, $totalItemCount) {(
+  $perWeight := $totalNetWeight and $totalItemCount > 0 ? $totalNetWeight / $totalItemCount : 0;
+
+  $response := $netWeight != null and $netWeight != undefined and $netWeight > 0 ? $netWeight : $perWeight ~> $round()
+)};
+
 $getWarenPosition := function($procedureCodeRequested) {(
     $response := $isCombineItemsExist ? $map($.combine_items.items, function($v, $i) {
       {
@@ -242,7 +255,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "WarenBezeichnung": $v.combined_item_description ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
-            "Eigenmasse": $getFirstElement([$v.combined_item_net_weight, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "Eigenmasse": $getNetWeightForItem($v.combined_item_net_weight, $.combine_items.meta.total_merged_items), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
@@ -291,7 +304,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
-              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+              "Eigenmasse": $getNetWeightForItem(null, $totalInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
               "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
               "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
               "AHStatWert": null, /* statistical value */
@@ -318,7 +331,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
-              "Eigenmasse": 1, /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
+              "Eigenmasse": $getNetWeightForItem(null, $totalCommercialInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
               "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
               "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
               "AHStatWert": null, /* statistical value */

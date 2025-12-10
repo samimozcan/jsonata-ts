@@ -32,6 +32,48 @@
       }
     ]
   },
+  "combine_items": {
+    "meta": {
+      "total_items": 1,
+      "total_merged_items": 1,
+      "combination_filters": ["commodity_code"]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 19112.34,
+        "reference_item_details": [
+          {
+            "regime": "3151",
+            "source": "declaration",
+            "item_no": 1,
+            "currency": "EUR",
+            "unit_type": "METRE",
+            "net_amount": 16893.53,
+            "net_weight": 23351,
+            "description": "Rohre,Hohlprof.,nichtkreisförm.Querschn.,a.Fe/and.St. / Handelsbeschreibung: ANDERE ROHRLÖCHER, UNLACKIERT UND UNBESCHICHTET *Markeninformation: Nicht registriert**NOKS\nEL*818694,25TRY",
+            "document_no": "TR-25341300EX00894160-ITEM1",
+            "gross_amount": null,
+            "gross_weight": 23351,
+            "document_date": "2025-11-01",
+            "item_quantity": 19112.34,
+            "commodity_code": "73066990000",
+            "package_quantity": "Ticari tanimi: DIGER BORULAR BOYASIZ VE KAPLAMASIZ *Marka Bilgi: Tescilsiz**NOKS\nEL*818694,25TRY",
+            "country_of_origin": "TR",
+            "statistical_value": 0
+          }
+        ],
+        "combined_item_unit_type": "METRE",
+        "combined_item_net_weight": 23351,
+        "combined_item_description": "Rohre,Hohlprof.,nichtkreisförm.Querschn.,a.Fe/and.St. / Handelsbeschreibung: ANDERE ROHRLÖCHER, UNLACKIERT UND UNBESCHICHTET *Markeninformation: Nicht registriert**NOKS\nEL*818694,25TRY",
+        "combined_item_gross_weight": 23351,
+        "combined_item_total_amount": 16893.53,
+        "combined_item_commodity_code": "73066990000",
+        "combined_item_package_quantity": 0,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
   "invoice": [
     {
       "items": [
