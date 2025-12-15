@@ -159,7 +159,7 @@ $itemUnterlage := function($item) {(
       "Bereich": "4", /* default */
       "Art":  "N380", /* default */
       "Nummer": $item.invoice_id, /*  */
-      "DatumAusstellung": $item.invoice_date ?? $now(), /*  */
+      "DatumAusstellung": $getFirstElement([$item.invoice_date, $now()]), /*  */
       "VorlageKz": "1" /* default */
     }
   })) : undefined;
@@ -168,7 +168,7 @@ $itemUnterlage := function($item) {(
     "Bereich": "6", /* default */
     "Art":  "N018", /* default */
     "Nummer": $.atr.id, /*  */
-    "DatumAusstellung": $.atr.date ?? $now(), /*  */
+    "DatumAusstellung": $getFirstElement([$.atr.date, $now()]), /*  */
     "VorlageKz": "1" /* default */
   } : undefined;
 
@@ -176,7 +176,7 @@ $itemUnterlage := function($item) {(
     "Bereich": "4", /* default */
     "Art":  "7HHF", /* default */
     "Nummer": "CMR", /* TODO: AI ekibinden okunmasi istendi sornasinda duzeltilecek @samimozcan @alican  */
-    "DatumAusstellung": $.cmr.date ?? $now(), /*  */
+    "DatumAusstellung": $getFirstElement([$.cmr.date, $now()]), /*  */
     "VorlageKz": "1" /* default */
   } : undefined;
 
@@ -244,7 +244,7 @@ $invoiceCommodityCondition := $isInvoiceExist and $allInvoiceItemsCommodityCodeS
 $getNetWeightForItem := function($netWeight, $totalItemCount) {(
   $perWeight := $totalNetWeight and $totalItemCount > 0 ? $totalNetWeight / $totalItemCount : 0;
 
-  $response := $netWeight != null and $netWeight != undefined and $netWeight > 0 ? $netWeight : $perWeight ~> $round()
+  $response := $netWeight != null and $netWeight != undefined and $netWeight > 0 ? $netWeight ~> $round() : $perWeight ~> $round()
 )};
 
 $getWarenPosition := function($procedureCodeRequested) {(
@@ -278,7 +278,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "WarenBezeichnung": $v.commodity_description ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
-            "Eigenmasse": $getFirstElement([$v.net_weight, 1, 1]) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "Eigenmasse": $getNetWeightForItem($v.net_weight, $totalInvoiceItemCount) ~> $round(), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
             "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
