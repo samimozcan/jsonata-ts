@@ -2,8 +2,8 @@
 
         $errorMap := {
             "MISSING_0007": {
-                "en": "Invoice item commodity code is missing",
-                "tr": "Fatura kalemi eşya kodu eksik"
+                "en": "Invoice item commodity code is missing. invoice {{1}} item {{2}}",
+                "tr": "Fatura kalemi eşya kodu eksik, fatura {{1}} kalem {{2}}"
             },
             "ERROR_0001": {
                 "en": "Invoice total amount ({{1}}) does not match sum of items ({{2}})",
@@ -38,8 +38,8 @@
                 "tr": "Fatura para birimi kodu 3 karakter veya daha az olmalıdır"
             },
             "INVALID_0041": {
-                "en": "Invoice item country of origin must be 2 characters at item {{1}}",
-                "tr": "Fatura kalemi menşe ülkesi 2 karakter olmalıdır, kalem {{1}}"
+                "en": "Invoice item country of origin must be 2 characters at invoice {{1}} item {{2}}",
+                "tr": "Fatura kalemi menşe ülkesi 2 karakter olmalıdır, fatura {{1}} kalem {{2}}"
             },
             "INVALID_0042": {
                 "en": "Declaration item country of origin must be 2 characters at item {{1}}",
@@ -159,7 +159,7 @@
                         $map($v.items, function($vv, $ii) {
                             [
                                 /* Country of Origin Validations*/
-                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$ii]})
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$i + 1,$ii + 1]})
 
                                 /* Commodity Code Validations*/
 
@@ -177,7 +177,7 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
-                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$ii]})
+                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$i + 1,$ii + 1]})
                             ]
                         }) ~> $customAppend()
                     ]
@@ -232,8 +232,8 @@
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                     /* Country of Origin */
-                    $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]}),
-                    $max($v.origin, 2, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i]})
+                    $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]}),
+                    $max($v.origin, 2, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]})
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];
@@ -245,7 +245,7 @@
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                      /* Commodity Code */
-                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i]})
+                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i + 1]})
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];
