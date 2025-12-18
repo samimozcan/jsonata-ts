@@ -74,10 +74,10 @@ $totalAmount := $isDeclarationExist
           : undefined;
 $totalNetWeight := $isDeclarationExist 
   ? $map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
-    : $isInvoiceExist and $.invoice[0].invoice_item_net_weight and $.invoice[0].invoice_item_net_weight > 0
-    ? $map($.invoice, function($inv) { $map($inv.items, function($item) { $item.invoice_item_net_weight ? $item.invoice_item_net_weight : 0}) }) ~> $_compact() ~> $sum() ~> $round(1)
-      : $isCommercialInvoiceExist and $.commercial_invoice[0].invoice_item_net_weight and $.commercial_invoice[0].invoice_item_net_weight > 0
-      ? $map($.commercial_invoice, function($inv) {$map($inv.items, function($item) { $item.invoice_item_net_weight ? $item.invoice_item_net_weight : 0}) }) ~> $_compact() ~> $sum() ~> $round(1)
+    : $isInvoiceExist and $.invoice[0].invoice_total_net_weight and $.invoice[0].invoice_total_net_weight > 0
+    ? $map($.invoice, function($inv) { $inv.invoice_total_net_weight }) ~> $_compact() ~> $sum() ~> $round(1)
+      : $isCommercialInvoiceExist and $.commercial_invoice[0].invoice_total_net_weight and $.commercial_invoice[0].invoice_total_net_weight > 0
+      ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_net_weight }) ~> $_compact() ~> $sum() ~> $round(1)
         : $isCmrExist and $.cmr.total_net_weight and $.cmr.total_net_weight > 0
         ? $round($.cmr.total_net_weight ? $.cmr.total_net_weight : 0, 1) 
           : undefined;
@@ -89,7 +89,9 @@ $totalGrossWeight := $isDeclarationExist
       ? $map($.invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
         : $isCommercialInvoiceExist 
         ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum() ~> $round(1)
-          : undefined;
+          : $isAtrExist and $.atr.total_gross_weight and $.atr.total_gross_weight > 0
+          ? $round($.atr.total_gross_weight ? $.atr.total_gross_weight : 0, 1) 
+            : undefined;
 $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
     ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
       : $isInvoiceExist and $type($.invoice) = "object" 
