@@ -7,7 +7,7 @@
 /* ------------------------------------ */
 /* Compact function to remove null/undefined/false/""/NaN values from array --- @utils */
 $_compact := function($arr) { $arr != "array" ? [$arr] : $arr ~> $arr ~> $filter(function($v) { $v }) };
-$_dateWithoutTime($date); /* assign function to jsonata */
+$_dateWithoutTime; /* assign function to jsonata */
 
 /* Remove duplicates from array of objects by field  --- @utils */
 $uniqueByField := function($arr, $field) {(
@@ -285,7 +285,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.net_weight, $totalDeclarationItemCount), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": v.package_quantity ? $round($v.package_quantity, 3) : undefined,
+            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : undefined,
             "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
@@ -453,7 +453,7 @@ $lieferbedingungSchluessel := function() {(
               "Ort-S": $a.city
             }
           }) ~> $append($isInvoiceExist and $count($v.addresses ?? []) < 2 and $.invoice[0] ? {
-             "AdressTyp": "CZ",  /** CZ olacak default */
+              "AdressTyp": "CZ",  /** CZ olacak default */
               "AdressCode": "1", /** default 1 */
               "TeilnehmerEORI": "", /** boş kalacak */
               "TeilnehmerNLNR": "", /** boş kalacak */

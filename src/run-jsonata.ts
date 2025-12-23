@@ -35,7 +35,7 @@ const jsonataInputBodyPath = path.join(
 );
 
 
-const getValidDateWithoutTime = (input: string | Date): string => {
+const getValidDateWithoutTime = (input: string | Date | null): string => {
   const date = dayjs(input);
   return (date.isValid() ? date : dayjs()).format('YYYY-MM-DD');
 };
@@ -47,10 +47,10 @@ const isValidDateWithoutTime = (date: string) => {
     return dayjs(date, "YYYY-MM-DD", true).isValid();
 }
 
-export const assignFunctionList: {name: string; func: (this: any, ...args: any[]) => any; type: string}[] = [
-  {name: "_dateWithoutTime", func: getValidDateWithoutTime, type: "<s:s>"},
-  {name: "_isValidDate", func: isValidDate, type: "<s:b>"},
-  {name: "_isValidDateWithoutTime", func: isValidDateWithoutTime, type: "<s:b>"}
+export const assignFunctionList: {name: string; func: (this: any, ...args: any[]) => any; type?: string}[] = [
+  {name: "_dateWithoutTime", func: getValidDateWithoutTime},
+  {name: "_isValidDate", func: isValidDate},
+  {name: "_isValidDateWithoutTime", func: isValidDateWithoutTime}
 ]
 
 

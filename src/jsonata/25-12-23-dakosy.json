@@ -1,0 +1,217 @@
+{
+  "atr": {
+    "id": "(253)8684562661019AA482353",
+    "date": "2025-12-06",
+    "sender": "NYO İTHALAT İHRACAT VE İÇ TİC.LTD.ŞTİ.",
+    "receiver": "LES INTERNATIONAL GMBH & CO. KG",
+    "export_mrn": "25341300EX01004866",
+    "total_package": 3,
+    "total_gross_weight": 1519
+  },
+  "cmr": {
+    "date": null,
+    "sender": "NYO ITH.IHR.VE IC TIC.LTD.STI ORG.SAN.BOLG.18.CAD.NO:27",
+    "plate_no": "81 FS 426",
+    "receiver": "LES INTERNATIONAL EGIN & SCHMIDT GMBH & CO.KG SEBASTIAN-MUNSTER-STRASSE 6B 91438 BAD WINDSHEIM/GERMANY",
+    "loading_place": "TURKEY",
+    "total_package": 3,
+    "delivery_place": "GERMANY",
+    "total_net_weight": null,
+    "total_gross_weight": 1519
+  },
+  "cache": {
+    "commodity_codes": [
+      {
+        "code": "94032080000",
+        "oldCode": "940320809000",
+        "description": "Andere Metallmöbel / DEMONTIERBARER METALLSTÄNDER",
+        "oldDescription": "DEMONTE METAL STAND"
+      },
+      {
+        "code": "94032080000",
+        "oldCode": "940320809000",
+        "description": "Andere Metallmöbel / Handelsbeschreibung: zerlegter Metallständer",
+        "oldDescription": "Ticari tanımı: demonte metal stand"
+      }
+    ]
+  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 300,
+          "invoice_item_unit_type": "ADET",
+          "invoice_item_net_weight": null,
+          "invoice_item_product_id": "601.02",
+          "invoice_item_unit_price": 115,
+          "invoice_item_description": "Andere Metallmöbel / DEMONTIERBARER METALLSTÄNDER",
+          "invoice_item_gross_weight": null,
+          "invoice_item_total_amount": 34500,
+          "invoice_item_commodity_code": "94032080000",
+          "invoice_item_package_quantity": 8,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "end_page": 1,
+      "invoice_id": "NDT2025000000215",
+      "start_page": 1,
+      "invoice_date": "2025-12-05",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "MAL MUKABILI",
+      "invoice_total_amount": 34500,
+      "invoice_customer_name": "LES INTERNATIONAL GMBH & CO. KG",
+      "invoice_delivery_term": "EXW",
+      "invoice_supplier_name": "NYO ITHALAT IHRACAT VE IC TICARET LTD.STI.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "SEBASTIAN-MUNSTER-STR. 6B,",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "KAYSERIOSB MAH. 18 CAD. NYO",
+      "invoice_supplier_country": "TR",
+      "invoice_total_net_weight": null,
+      "invoice_total_gross_weight": null,
+      "invoice_total_package_quantity": 8,
+      "invoice_shipment_country_of_origin": null
+    }
+  ],
+  "regime_type": "IM",
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "BAD WINDSHEIM",
+            "postalCode": "91438",
+            "addressType": "CN",
+            "companyName": "LES INTERNATIONAL",
+            "countryCode": "DE",
+            "participantEORI": "DE971001535946310",
+            "streetAndNumber": "SEBASTIAN MÜNSTER STRASSE 6B",
+            "participantSubsidiaryNumber": ""
+          },
+          {
+            "city": "Ümraniye/Istanbul",
+            "postalCode": "34000",
+            "addressType": "CZ",
+            "companyName": "EGIN DIS TIC LTD STI",
+            "countryCode": "TR",
+            "participantEORI": "",
+            "streetAndNumber": "TATLISU MAH. AKIF INAN SOKAK NO:16/24",
+            "participantSubsidiaryNumber": ""
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Mathias Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "departureCountry": "TR",
+          "inputTaxDeduction": true,
+          "destinationCountry": "DE",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "09",
+          "transportMeansArrivalIdentity": "81FS426",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": ""
+        },
+        "objectIdentification": {
+          "username": "MATHIAS",
+          "objectName": "4803/2602206_TEST_1321",
+          "objectAlias": "4803/2507319308122025_095833",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUB",
+      "ioReference": "4803/2507319308122025_095833"
+    }
+  },
+  "dispatch_country": "TR",
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "outputApplicationId": "dakosy/sftp/vera"
+  },
+  "commercial_invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 1000,
+          "invoice_item_unit_type": null,
+          "invoice_item_net_weight": null,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 34.5,
+          "invoice_item_description": "Korb/Basket",
+          "invoice_item_gross_weight": null,
+          "invoice_item_total_amount": 34500,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "NDT2024000000215",
+      "invoice_date": "2025-12-05",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": "50% adv.",
+      "invoice_total_amount": 34500,
+      "invoice_customer_name": "LES International GmbH & Co. KG",
+      "invoice_delivery_term": null,
+      "invoice_supplier_name": "NYO ITHALAT IHRACAT VE IC TICARET LTD STI.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "Sebastian-Munster-Str. 6b",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "Organize San. Bol. 18. Cad.",
+      "invoice_supplier_country": "TR",
+      "invoice_total_net_weight": null,
+      "invoice_total_gross_weight": null,
+      "invoice_total_package_quantity": null,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "destination_country": "DE",
+  "tr_export_declaration": {
+    "id": "25341300EX01004866",
+    "date": "06-12-25",
+    "buyer": "LES INTERNATIONAL GMBH & CO. KG",
+    "items": [
+      {
+        "id": "TR-25341300EX01004866-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 300,
+        "item_value": 34500,
+        "net_weight": 1.399,
+        "gross_weight": 1.519,
+        "commodity_code": "94032080000",
+        "unit_of_measure": "ADET(UNIT)",
+        "package_quantity": "Ticari tanımı: demonte metal stand",
+        "statistical_value": 40.20863,
+        "commodity_description": "Andere Metallmöbel / Handelsbeschreibung: zerlegter Metallständer"
+      }
+    ],
+    "sender": "NYO İTHALAT İHRACAT VE İÇ TİCARET LTD ŞTİ.",
+    "tax_id": "6320372517",
+    "invoice_no": "6320372517 FATURA NO:NDT2025000000215 İMALATÇI FİRMA: NUH YAŞAR MET\nVE AĞ.İŞL.SAN.TİC.A.Ş., TPS-e Fatura V 25243160110886045781667/1 #\n05/12/25, TPS-Kripto V 25153097211086077297674/1 # 06/12/25, DB A.TR\nDolaşım Belgesi V 25TIM0321000024264713 # 06/12/25",
+    "total_value": "34500",
+    "total_weight": null,
+    "delivery_term": "EXW",
+    "total_package": "3",
+    "delivery_place": "KAYSERI",
+    "total_line_item": "1",
+    "dispatch_country": "TR",
+    "total_net_weight": 1.4,
+    "total_value_curr": "EUR",
+    "total_gross_weight": 1.52,
+    "destination_country": "DE",
+    "border_transport_mode": "3"
+  }
+}
