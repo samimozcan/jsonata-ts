@@ -7,7 +7,10 @@
 /* ------------------------------------ */
 /* Compact function to remove null/undefined/false/""/NaN values from array --- @utils */
 $_compact := function($arr) { $arr != "array" ? [$arr] : $arr ~> $arr ~> $filter(function($v) { $v }) };
+/* @args date */
 $_dateWithoutTime; /* assign function to jsonata */
+/* @args source, destination(can be regex), regex flag must be null if not be send */
+$_removeAfter; /* assign function to jsonata */
 
 /* Remove duplicates from array of objects by field  --- @utils */
 $uniqueByField := function($arr, $field) {(
@@ -258,7 +261,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
       {
             "Positionsnummer": $v.combined_item_no,
             "WarenNummerEZT": $warenNummerEZT($v.combined_item_commodity_code),
-            "WarenBezeichnung": $v.combined_item_description ~> $substring(0, 240),
+            "WarenBezeichnung": $v.combined_item_description ~> $_removeAfter("1?-?unregistriert", null) ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.combined_item_net_weight, $.combine_items.meta.total_merged_items), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
@@ -281,7 +284,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
           {
             "Positionsnummer": $i + 1,
             "WarenNummerEZT": $warenNummerEZT($v.commodity_code),
-            "WarenBezeichnung": $v.commodity_description ~> $substring(0, 240),
+            "WarenBezeichnung": $v.commodity_description ~> $_removeAfter("1?-?unregistriert", null) ~> $substring(0, 240),
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.net_weight, $totalDeclarationItemCount), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
@@ -307,7 +310,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             {
               "Positionsnummer": "default", /* will be set later because of many invoices */
               "WarenNummerEZT": $warenNummerEZT($vv.invoice_item_commodity_code), 
-              "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
+              "WarenBezeichnung": $vv.invoice_item_description ~> $_removeAfter("1?-?unregistriert", null) ~> $substring(0, 240),
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem($vv.invoice_item_net_weight, $totalInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
@@ -334,7 +337,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             {
               "Positionsnummer": "default", /* will be set later because of many invoices */
               "WarenNummerEZT": $warenNummerEZT($vv.invoice_item_commodity_code), 
-              "WarenBezeichnung": $vv.invoice_item_description ~> $substring(0, 240),
+              "WarenBezeichnung": $vv.invoice_item_description ~> $_removeAfter("1?-?unregistriert", null) ~> $substring(0, 240),
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem(null, $totalCommercialInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */

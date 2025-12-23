@@ -2,10 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 import jsonata from "jsonata";
 import { fileURLToPath } from "url";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat.js";
+import { assignFunctionList } from "./jsonata-utils.js";
 
-dayjs.extend(customParseFormat);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,25 +31,6 @@ const jsonataInputBodyPath = path.join(
   "../src/jsonata/",
   inputBodyFileName
 );
-
-
-const getValidDateWithoutTime = (input: string | Date | null): string => {
-  const date = dayjs(input);
-  return (date.isValid() ? date : dayjs()).format('YYYY-MM-DD');
-};
-const isValidDate = (input: string | Date): boolean => {
-  const date = dayjs(input);
-  return date.isValid();
-}
-const isValidDateWithoutTime = (date: string) => {
-    return dayjs(date, "YYYY-MM-DD", true).isValid();
-}
-
-export const assignFunctionList: {name: string; func: (this: any, ...args: any[]) => any; type?: string}[] = [
-  {name: "_dateWithoutTime", func: getValidDateWithoutTime},
-  {name: "_isValidDate", func: isValidDate},
-  {name: "_isValidDateWithoutTime", func: isValidDateWithoutTime}
-]
 
 
 async function main() {
