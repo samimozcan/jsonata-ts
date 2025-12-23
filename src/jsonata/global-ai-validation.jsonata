@@ -38,14 +38,22 @@
                 "tr": "Fatura para birimi kodu 3 karakter veya daha az olmalıdır"
             },
             "INVALID_0041": {
-                "en": "Invoice item country of origin must be 2 characters at invoice {{1}} item {{2}}",
-                "tr": "Fatura kalemi menşe ülkesi 2 karakter olmalıdır, fatura {{1}} kalem {{2}}"
+                "en": "Invoice item country of origin must be 2 characters at invoice {{1}} item {{2}}. Used TR as a default value",
+                "tr": "Fatura kalemi menşe ülkesi 2 karakter olmalıdır, fatura {{1}} kalem {{2}}. TR kullanıldı"
             },
             "INVALID_0042": {
-                "en": "Declaration item country of origin must be 2 characters at item {{1}}",
-                "tr": "Beyanname kalemi menşe ülkesi 2 karakter olmalıdır, kalem {{1}}"
+                "en": "Declaration item country of origin must be 2 characters at item {{1}}. Used TR as a default value",
+                "tr": "Beyanname kalemi menşe ülkesi 2 karakter olmalıdır, kalem {{1}}. TR kullanıldı"
             }
         };
+
+
+        /*
+        -------------------
+        Assign functions
+        -------------------
+        */
+        $_isValidDate($date);
 
         $isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declaration) = "object";
         $isInvoiceExist := $exists(invoice) and $type(invoice) = "array" and $count(invoice) > 0;
@@ -158,9 +166,7 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
-                                /* Country of Origin Validations*/
-                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$i + 1,$ii + 1]})
-
+                                
                                 /* Commodity Code Validations*/
 
                             ]
@@ -177,7 +183,9 @@
                         $max($v.invoice_currency, 3, {"code": "INVALID_0040", "path": ["invoice", $i, "invoice_currency"], "args": []}),
                         $map($v.items, function($vv, $ii) {
                             [
-                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$i + 1,$ii + 1]})
+                                $isExist($vv.invoice_item_commodity_code, {"code": "MISSING_0007", "path": ["invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$i + 1,$ii + 1]}),
+                                /* Country of Origin Validations*/
+                                $max($vv.invoice_item_country_of_origin, 2, {"code": "INVALID_0041", "path": ["invoice", $i, "items", $ii, "invoice_item_country_of_origin"], "args": [$i + 1,$ii + 1]})
                             ]
                         }) ~> $customAppend()
                     ]
@@ -231,9 +239,7 @@
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
-                    /* Country of Origin */
-                    $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]}),
-                    $max($v.origin, 2, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]})
+
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];
@@ -245,7 +251,10 @@
             $map($.tr_export_declaration.items, function($v, $i) {
                 [
                      /* Commodity Code */
-                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i + 1]})
+                    $isExist($v.commodity_code, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i + 1]}),
+                     /* Country of Origin */
+                    $isExist($v.origin, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]}),
+                    $max($v.origin, 2, {"code": "INVALID_0042", "path": ["tr_export_declaration", "items", $i, "origin"], "args": [$i + 1]})
                 ]
             }) ~> $customAppend()
         ], function($v) { $v != null }) : [];

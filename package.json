@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "jsonata": "^2.1.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "dayjs": "^1.11.19"
   },
   "devDependencies": {
     "typescript": "^5.8.3",

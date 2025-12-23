@@ -1,8 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
 import jsonata from "jsonata";
-import { execSync } from "child_process";
 import { fileURLToPath } from "url";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat.js";
+
+dayjs.extend(customParseFormat);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,6 +34,26 @@ const jsonataInputBodyPath = path.join(
   inputBodyFileName
 );
 
+
+const getValidDateWithoutTime = (input: string | Date): string => {
+  const date = dayjs(input);
+  return (date.isValid() ? date : dayjs()).format('YYYY-MM-DD');
+};
+const isValidDate = (input: string | Date): boolean => {
+  const date = dayjs(input);
+  return date.isValid();
+}
+const isValidDateWithoutTime = (date: string) => {
+    return dayjs(date, "YYYY-MM-DD", true).isValid();
+}
+
+export const assignFunctionList: {name: string; func: (this: any, ...args: any[]) => any; type: string}[] = [
+  {name: "_dateWithoutTime", func: getValidDateWithoutTime, type: "<s:s>"},
+  {name: "_isValidDate", func: isValidDate, type: "<s:b>"},
+  {name: "_isValidDateWithoutTime", func: isValidDateWithoutTime, type: "<s:b>"}
+]
+
+
 async function main() {
   try {
     // Check if the JSONata file exists
@@ -39,7 +62,13 @@ async function main() {
     const template = await fs.readFile(jsonataFilePath, "utf8");
     const inputBody = await fs.readFile(jsonataInputBodyPath, "utf8");
 
-    const jsonataResponse = await jsonata(template).evaluate(
+    const expression = jsonata(template)
+
+    assignFunctionList.forEach((func) => {
+      expression.registerFunction(func.name, func.func, func.type)
+    })
+    
+    const jsonataResponse = await expression.evaluate(
       JSON.parse(inputBody)
     );
 

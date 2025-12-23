@@ -174,17 +174,33 @@
             },
             "MISSING_0007": {
                 "tr": "Fatura tarihi eksik, varsayılan tarih kullanıldı. Fatura NO: {{1}}",
-                "en": "Invoice date is missing, default date is used. Invoice NO: {{1}}"
+                "en": "Invoice date is missing or invalid, default date is used. Invoice NO: {{1}}"
             },
             "MISSING_0008": {
                 "tr": "CMR tarihi eksik, varsayılan tarih kullanıldı.",
                 "en": "CMR date is missing, default date is used."
             },
-            "MISSING_0009": {
-                "tr": "ATR numarası eksik, varsayılan numara kullanıldı.",
-                "en": "ATR number is missing, default number is used."
+            "INVALID_0040": {
+                "tr": "CMR tarihi hatalı, varsayılan tarih kullanıldı.",
+                "en": "CMR date is invalid, default date is used."
+            },
+            "INVALID_0041": {
+                "tr": "ATR tarihi hatalı, varsayılan tarih kullanıldı.",
+                "en": "ATR date is invalid, default date is used."
+            },
+           "MISSING_0009": {
+                "tr": "ATR tarihi eksik, varsayılan tarih kullanıldı.",
+                "en": "ATR date is missing, default date is used."
             }
         };
+
+        /*
+        -------------------
+        Assign functions
+        -------------------
+        */
+        $_isValidDate($date);
+        $_isValidDateWithoutTime($date);
 
         $isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declaration) = "object";
         $isInvoiceExist := $exists(invoice) and $type(invoice) = "array" and $count(invoice) > 0;
@@ -380,7 +396,7 @@
             $filter([
                 $map(invoice, function($v, $i) {
                     [
-                        $isExist($v.invoice_date, {"code": "MISSING_0007", "path": ["invoice", $i, "invoice_date"], "args": [$v.invoice_id]}),
+                        $_isValidDateWithoutTime($v.invoice_date) ? null : {"code": "MISSING_0007", "path": ["invoice", $i, "invoice_date"], "args": [$v.invoice_id]},
                         $map($v.items, function($vv, $ii) {
                             [
                                 /* Commodity Code Validations*/
@@ -449,7 +465,7 @@
         : [];
         $cmrWarningsFirst := $isCmrExist and $type(cmr) = "object" ?
             $filter([
-                $isExist($.cmr.date, {"code": "MISSING_0008", "path": ["cmr", "date"], "args": []})
+                $_isValidDateWithoutTime($.cmr.date) ? null : {"code": "INVALID_0040", "path": ["cmr", "date"], "args": []}
             ], function($v) { $v != null })
         : [];
         $cmrErrors := $count($cmrErrorsFirst) ? $map($cmrErrorsFirst, function($error) {
@@ -474,7 +490,7 @@
         : [];
         $atrWarningsFirst := $isAtrExist and $type(atr) = "object" ?
             $filter([
-                $isExist($.atr.date, {"code": "MISSING_0009", "path": ["atr", "date"], "args": []})
+                $_isValidDateWithoutTime($.atr.date) ? null : {"code": "INVALID_0041", "path": ["atr", "date"], "args": []}
             ], function($v) { $v != null })
         : [];
         $atrErrors := $count($atrErrorsFirst) ? $map($atrErrorsFirst, function($error) {

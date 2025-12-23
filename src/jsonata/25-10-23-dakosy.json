@@ -38,9 +38,7 @@
           "commodity_description": "MUHTELİF BURC 1-Tescilsiz-ANGST-833393,32TL"
         }
       ],
-      "invoice_no": [
-        "API2025000001229"
-      ],
+      "invoice_no": ["API2025000001229"],
       "total_value": 54221.56,
       "total_package": 14,
       "total_value_curr": "EUR",
