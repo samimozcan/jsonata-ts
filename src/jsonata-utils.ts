@@ -63,16 +63,16 @@ const removeAfter = (
 };
 
 export const assignFunctionList: {
-  name: string;
-  func: (this: any, ...args: any[]) => any;
-  type: string;
+    name: string;
+    func: (this: any, ...args: any[]) => any;
+    type: string;
 }[] = [
-  { name: '_dateWithoutTime', func: getValidDateWithoutTime, type: '<(sl):s>' },
-  { name: '_isValidDate', func: isValidDate, type: '<(sl)>:b>' },
-  {
-    name: '_isValidDateWithoutTime',
-    func: isValidDateWithoutTime,
-    type: '<(sl):b>',
-  },
-  { name: '_removeAfter', func: removeAfter, type: '<(sl)(sl)(sl):s>' },
+    { name: '_dateWithoutTime', func: getValidDateWithoutTime, type: '<(sl):s>' },
+    { name: '_isValidDate', func: isValidDate, type: '<(sl):b>' },
+    {
+        name: '_isValidDateWithoutTime',
+        func: isValidDateWithoutTime,
+        type: '<(sl):b>',
+    },
+    { name: '_removeAfter', func: removeAfter, type: '<(sl)(sl)(sl)?:s>' },
 ];

@@ -1,10 +1,16 @@
 ( /*  update error_0004 bugs   11-08-2025 */
 
         $errorMap := {
+            /*--------------------*/
+            /*---MISSING----------*/
+            /*--------------------*/
             "MISSING_0007": {
                 "en": "Invoice item commodity code is missing. invoice {{1}} item {{2}}",
                 "tr": "Fatura kalemi eşya kodu eksik, fatura {{1}} kalem {{2}}"
             },
+            /*--------------------*/
+            /*---ERROR------------*/
+            /*--------------------*/
             "ERROR_0001": {
                 "en": "Invoice total amount ({{1}}) does not match sum of items ({{2}})",
                 "tr": "Fatura toplam tutarı ({{1}}), kalemlerin toplamı ({{2}}) ile eşleşmiyor"
@@ -25,10 +31,17 @@
                 "en": "Declaration value ({{1}}) does not match invoice value ({{2}})",
                 "tr": "Beyanname değeri ({{1}}), fatura değeri ({{2}}) ile eşleşmiyor"
             },
+            "ERROR_0006": {
+                "en": "Declaration total net weight ({{1}}) does not match sum of items ({{2}})",
+                "tr": "Beyanname toplam net ağırlığı ({{1}}), kalemlerin toplamı ({{2}}) ile eşleşmiyor"
+            },
             "ERROR_0007": {
                 "en": "Missing required documents: at least one of transit document, declaration, or invoice must be present",
                 "tr": "Eksik belgeler: transit belgesi, beyanname veya faturadan en az biri mevcut olmalıdır"
             },
+            /*--------------------*/
+            /*---INVALID----------*/
+            /*--------------------*/
             "INVALID_0039": {
                 "en": "Declaration commodity code is missing at item {{1}}",
                 "tr": "Beyanname eşya kodu eksik, kalem {{1}}"
@@ -215,12 +228,12 @@
             $invoiceTotalValue = 0 or $declarationTotalValue = 0 or $round($invoiceTotalValue, 2) = $round($declarationTotalValue, 2) ? null : {"code": "ERROR_0005", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $invoiceTotalValue] }
         )};
         $isEqualDeclarationTotalGrossWeight := function($declaration) {(
-            $grossWeight := $declaration.total_weight ? $declaration.total_weight : 0;
+            $grossWeight := $declaration.total_gross_weight ? $declaration.total_gross_weight : 0;
             $itemTotalGrossWeight := $reduce($declaration.items, function($acc, $v) {
                 $acc + ($v.gross_weight ? $v.gross_weight : 0)
             }, 0) ~> $round(2);
 
-            ($round($grossWeight, 2) = $itemTotalGrossWeight or $grossWeight = 0) ? null : {"code": "ERROR_0004", "path": ["tr_export_declaration", "total_weight"], "args": [$grossWeight, $itemTotalGrossWeight] }
+            ($round($grossWeight, 2) = $itemTotalGrossWeight or $grossWeight = 0) ? null : {"code": "ERROR_0004", "path": ["tr_export_declaration", "total_gross_weight"], "args": [$grossWeight, $itemTotalGrossWeight] }
         )};
         $isEqualDeclarationTotalItemLine := function($declaration) {(
             $totalLineItem := $declaration.total_line_item ~> $type() = "string" ? $atoi($declaration.total_line_item) : $declaration.total_line_item;
@@ -235,6 +248,14 @@
             $declarationTotalValue := $declaration.total_value ? $atoi($declaration.total_value) : 0;
 
             $round($itemTotalValue, 2) = $declarationTotalValue ? null : { "code":"ERROR_0002", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $itemTotalValue] }
+        )};
+        $isDeclarationTotalNetWeightEqual := function($declaration) {(
+            $itemTotalNetWeight := $reduce($declaration.items, function($acc, $v) {
+                $acc + ($v.net_weight ? $v.net_weight : 0)
+            }, 0) ~> $round(2);
+            $declarationTotalNetWeight := $declaration.total_net_weight ? $declaration.total_net_weight : 0;
+
+            $round($declarationTotalNetWeight, 2) = $itemTotalNetWeight ? null : {"code": "ERROR_0006", "path": ["tr_export_declaration", "total_net_weight"], "args": [$declarationTotalNetWeight, $itemTotalNetWeight] }
         )};
         $declarationErrorsFirst := $isDeclarationExist ? $filter([
             $map($.tr_export_declaration.items, function($v, $i) {

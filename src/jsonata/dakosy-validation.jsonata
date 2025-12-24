@@ -4,22 +4,9 @@
         $A1460 := ["1", "0"];
 
         $errorMap := {
-            "MISSING_0002": {
-                "en": "IO Partner is required",
-                "tr": "IO Partner zorunludur"
-            },
-            "MISSING_0003": {
-                "en": "IO Reference is required",
-                "tr": "IO Reference zorunludur"
-            },
-            "MISSING_0005": {
-                "en": "Object name is required",
-                "tr": "Nesne adı zorunludur"
-            },
-            "MISSING_0006": {
-                "en": "Username is required",
-                "tr": "Kullanıcı adı zorunludur"
-            },
+            /*--------------------*/
+            /*---INVALID----------*/
+            /*--------------------*/
             "INVALID_0001": {
                 "en": "IO Partner must not exceed 100 characters",
                 "tr": "IO Partner 100 karakterden uzun olamaz"
@@ -168,9 +155,32 @@
                 "en": "Declaration commodity code must not exceed 11 characters at item {{1}}",
                 "tr": "Beyanname eşya kodu 11 karakterden uzun olamaz, kalem {{1}}"
             },
-            "ERROR_0007": {
-                "en": "Dispatch country and destination country cannot be the same",
-                "tr": "Gönderim ülkesi ve varış ülkesi aynı olamaz"
+            "INVALID_0040": {
+                "tr": "CMR tarihi hatalı, varsayılan tarih kullanıldı.",
+                "en": "CMR date is invalid, default date is used."
+            },
+            "INVALID_0041": {
+                "tr": "ATR tarihi hatalı, varsayılan tarih kullanıldı.",
+                "en": "ATR date is invalid, default date is used."
+            },
+            /*--------------------*/
+            /*---MISSING----------*/
+            /*--------------------*/
+            "MISSING_0002": {
+                "en": "IO Partner is required",
+                "tr": "IO Partner zorunludur"
+            },
+            "MISSING_0003": {
+                "en": "IO Reference is required",
+                "tr": "IO Reference zorunludur"
+            },
+            "MISSING_0005": {
+                "en": "Object name is required",
+                "tr": "Nesne adı zorunludur"
+            },
+            "MISSING_0006": {
+                "en": "Username is required",
+                "tr": "Kullanıcı adı zorunludur"
             },
             "MISSING_0007": {
                 "tr": "Fatura tarihi eksik, varsayılan tarih kullanıldı. Fatura NO: {{1}}",
@@ -180,17 +190,44 @@
                 "tr": "CMR tarihi eksik, varsayılan tarih kullanıldı.",
                 "en": "CMR date is missing, default date is used."
             },
-            "INVALID_0040": {
-                "tr": "CMR tarihi hatalı, varsayılan tarih kullanıldı.",
-                "en": "CMR date is invalid, default date is used."
-            },
-            "INVALID_0041": {
-                "tr": "ATR tarihi hatalı, varsayılan tarih kullanıldı.",
-                "en": "ATR date is invalid, default date is used."
-            },
            "MISSING_0009": {
                 "tr": "ATR tarihi eksik, varsayılan tarih kullanıldı.",
                 "en": "ATR date is missing, default date is used."
+            },
+            "MISSING_0010": {
+                "en": "Total gross weight in TR Export Declaration could not retrieved.",
+                "tr": "Beyanname toplam brüt ağırlık alınamadı."
+            },
+            "MISSING_0011": {
+                "en": "Total net weight in TR Export Declaration could not retrieved.",
+                "tr": "Beyanname toplam net ağırlık alınamadı."
+            },
+            "MISSING_0012": {
+                "en": "Item gross weight in TR Export Declaration could not retrieved at item {{1}}.",
+                "tr": "Beyanname kalem brüt ağırlık alınamadı, kalem {{1}}."
+            },
+            "MISSING_0013": {
+                "en": "Item net weight in TR Export Declaration could not retrieved at item {{1}}.",
+                "tr": "Beyanname kalem net ağırlık alınamadı, kalem {{1}}."
+            },
+            "MISSING_0014": {
+                "en": "Item statistical value in TR Export Declaration could not retrieved at item {{1}}.",
+                "tr": "Beyanname kalem istatistiki değer alınamadı, kalem {{1}}."
+            },
+            "MISSING_0015": {
+                "en": "Item quantity in TR Export Declaration could not retrieved at item {{1}}.",
+                "tr": "Beyanname kalem miktar alınamadı, kalem {{1}}."
+            },
+            "MISSING_0016": {
+                "en": "Item value in TR Export Declaration could not retrieved at item {{1}}.",
+                "tr": "Beyanname kalem değer alınamadı, kalem {{1}}."
+            },
+            /*--------------------*/
+            /*---ERROR------------*/
+            /*--------------------*/
+            "ERROR_0007": {
+                "en": "Dispatch country and destination country cannot be the same",
+                "tr": "Gönderim ülkesi ve varış ülkesi aynı olamaz"
             }
         };
 
@@ -435,10 +472,19 @@
         : [];
         $declarationWarningsFirst := $isDeclarationExist and $type(tr_export_declaration) = "object" ?
             $filter([
+                /* Total weight validations */
+                $isNotNull($.tr_export_declaration.total_gross_weight, {"code": "MISSING_0010", "path": ["tr_export_declaration", "total_gross_weight"], "args": []}),
+                $isNotNull($.tr_export_declaration.total_net_weight, {"code": "MISSING_0011", "path": ["tr_export_declaration", "total_net_weight"], "args": []}),
                 $map(tr_export_declaration.items, function($v, $i) {
                     [
                             /* Commodity Code Validations*/
-                            $max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i + 1]})
+                            $max($v.commodity_code, 11, {"code": "INVALID_0039", "path": ["tr_export_declaration", "items", $i, "commodity_code"], "args": [$i + 1]}),
+                            /* Item weight validations */
+                            $isNotNull($v.gross_weight, {"code": "MISSING_0012", "path": ["tr_export_declaration", "items", $i, "gross_weight"], "args": [$i + 1]}),
+                            $isNotNull($v.net_weight, {"code": "MISSING_0013", "path": ["tr_export_declaration", "items", $i, "net_weight"], "args": [$i + 1]}),
+                            $isNotNull($v.statistical_value, {"code": "MISSING_0014", "path": ["tr_export_declaration", "items", $i, "statistical_value"], "args": [$i + 1]}),
+                            $isNotNull($v.quantity, {"code": "MISSING_0015", "path": ["tr_export_declaration", "items", $i, "quantity"], "args": [$i + 1]}),
+                            $isNotNull($v.item_value, {"code": "MISSING_0016", "path": ["tr_export_declaration", "items", $i, "item_value"], "args": [$i + 1]})
                     ]
                 }) ~> $customAppend() 
             ], function($v) { $v != null })
