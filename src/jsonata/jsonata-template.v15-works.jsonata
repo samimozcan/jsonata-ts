@@ -51,6 +51,7 @@ $isTransitDeclarationExist := $exists($.transit_declaration) and $type($.transit
 $isCombineItemsExist := $exists($.combine_items) and $type($.combine_items) = "object" and $count($.combine_items.items) > 0;
 $isCombineItemsCreatedFromInvoice := $isCombineItemsExist and $.combine_items.items[0].reference_item_details[0].source = 'invoice';
 $isCommercialInvoiceExist := $exists($.commercial_invoice) and $type($.commercial_invoice) = "array";
+$isFztExist := $exists($.fzt) and $type($.fzt) = "object";
 
 /*ZollrechtlicherStatus condition @return "CO" "EU" "IM"*/
 /*https://atez.atlassian.net/wiki/spaces/relayhub/pages/3476291624/Relayhub+Algorithm+i+in+Alan+Dakosy+Analizleri*/
@@ -75,7 +76,9 @@ $totalAmount := $isDeclarationExist
       : $isInvoiceExist and $type($.invoice) = "array" 
         ? $.invoice.invoice_total_amount ~> $_compact() ~> $sum() 
         : $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_total_amount ~> $_compact() ~> $sum() 
-          : undefined;
+          : $isFztExist and $.fzt.total_value
+          ? $.fzt.total_value 
+            : null;
 $totalNetWeight := $isDeclarationExist 
   ? $map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0}) ~> $_compact() ~> $sum()
     : $isInvoiceExist and $.invoice[0].invoice_total_net_weight and $.invoice[0].invoice_total_net_weight > 0
@@ -84,7 +87,7 @@ $totalNetWeight := $isDeclarationExist
       ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_net_weight }) ~> $_compact() ~> $sum()
         : $isCmrExist and $.cmr.total_net_weight and $.cmr.total_net_weight > 0
         ? $round($.cmr.total_net_weight ? $.cmr.total_net_weight : 0, 1) 
-          : undefined;
+          : null;
 $totalGrossWeight := $isDeclarationExist
   ? $map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0}) ~> $_compact() ~> $sum()
     : $isCmrExist and $.cmr.total_gross_weight and $.cmr.total_gross_weight > 0
@@ -95,7 +98,9 @@ $totalGrossWeight := $isDeclarationExist
         ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum()
           : $isAtrExist and $.atr.total_gross_weight and $.atr.total_gross_weight > 0
           ? $round($.atr.total_gross_weight ? $.atr.total_gross_weight : 0, 1) 
-            : undefined;
+            : $isFztExist and $.fzt.total_gross_weight and $.fzt.total_gross_weight > 0
+            ? $round($.fzt.total_gross_weight ? $.fzt.total_gross_weight : 0, 1) 
+              : null;
 $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
     ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
       : $isInvoiceExist and $type($.invoice) = "object" 
@@ -104,16 +109,26 @@ $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_p
         ? $.invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
           : $isCommercialInvoiceExist 
           ? $.commercial_invoice[0].invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
-            : undefined;
+            : $isFztExist and $.fzt.total_package
+            ? $.fzt.total_package ~> $number() ~> $round(0)
+              : null;
 $totalAmountCurrency := $isDeclarationExist 
   ? $.tr_export_declaration.total_value_curr 
     : $isInvoiceExist and $type($.invoice) = "object" 
     ? $.invoice.invoice_currency 
       : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice[0].invoice_currency
       ? $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_currency
-        : undefined;
-$globalDeliveryTerm := $.tr_export_declaration.delivery_term ?? $.invoice[0].invoice_delivery_term ?? $.commercial_invoice[0].invoice_delivery_term;
-$globalModeOfTransport := $.tr_export_declaration.border_transport_mode ?? $.transit_declaration.border_transport_mode ?? null;
+        : $isFztExist and $.fzt.total_value_curr
+        ? $.fzt.total_value_curr 
+          : null;
+$globalDeliveryTerm := $.tr_export_declaration.delivery_term 
+  ?? $.invoice[0].invoice_delivery_term 
+    ?? $.commercial_invoice[0].invoice_delivery_term
+      ?? null;
+$globalModeOfTransport := $.tr_export_declaration.border_transport_mode 
+  ?? $.transit_declaration.border_transport_mode 
+    ?? $.fzt.mode_of_transport
+      ?? null;
 $globalDispatchCountry := $.tr_export_declaration.dispatch_country and $length($.tr_export_declaration.dispatch_country) = 2
   ? $.tr_export_declaration.dispatch_country
     : $.invoice[0].invoice_country_of_dispatch and $length($.invoice[0].invoice_country_of_dispatch) = 2
@@ -131,7 +146,10 @@ $globalDestionationCountry := $.tr_export_declaration.destination_country and $l
       ? $.commercial_invoice[0].invoice_shipment_country_of_origin
         : $.destination_country and $length($.destination_country) = 2
         ? $.destination_country
-          : null;
+          : $.fzt.destination_country and $length($.fzt.destination_country) = 2
+          ? $.fzt.destination_country
+            : null;
+
 $totalInvoiceItemCount := $isInvoiceExist 
   ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
     : 0;
@@ -141,6 +159,16 @@ $totalCommercialInvoiceItemCount := $isCommercialInvoiceExist
 $totalDeclarationItemCount := $isDeclarationExist
   ? $count($.tr_export_declaration.items)
     : 0;
+$globalBuyerName := $isFztExist 
+  ? $.fzt.buyer
+    : $isDeclarationExist
+    ? $.tr_export_declaration.buyer
+      : null;
+$globalSenderName := $isFztExist 
+  ? $.fzt.sender
+    : $isDeclarationExist
+    ? $.tr_export_declaration.sender
+      : null;
 
 /* Unterlage Root Not item*/
 $getUnterlage := function($procedureCodeRequested) {(
