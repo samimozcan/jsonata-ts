@@ -149,6 +149,32 @@ $globalDestionationCountry := $.tr_export_declaration.destination_country and $l
           : $.fzt.destination_country and $length($.fzt.destination_country) = 2
           ? $.fzt.destination_country
             : null;
+$globalExporterAddress := $isInvoiceExist
+  ? $.invoice[0].invoice_supplier_address
+    : $isAtrExist
+    ? $.atr.exporter_address
+      : $isCmrExist
+      ? $.cmr.exporter_address
+        : null;
+$globalExporterCountry := $isInvoiceExist
+  ? $.invoice[0].invoice_supplier_country
+    : $isAtrExist
+    ? $.atr.exporter_country
+      : $isCmrExist
+      ? $.cmr.exporter_country
+        : null;
+$globalExporterName := $isInvoiceExist
+  ? $.invoice[0].invoice_supplier_name
+    : $isAtrExist
+    ? $.atr.sender
+      : $isCmrExist
+      ? $.cmr.sender
+        : null;
+$globalExporterCity := $isAtrExist
+    ? $.atr.exporter_city
+      : $isCmrExist
+      ? $.cmr.exporter_city
+        : "Istanbul";
 
 $totalInvoiceItemCount := $isInvoiceExist 
   ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
@@ -305,7 +331,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "Zollwert": $.combine_items.items.combined_item_total_amount ? $.combine_items.items.combined_item_total_amount ~> $_compact() ~> $sum() ~> $round(2) : undefined,
             "AbzugHinzurechnung": $abzugHinzurechnung({
               "amount": $v.combined_item_total_amount,
-              "currency": $v.reference_item_details[0].currency /* TODO: Burasi hallediverilecek. @samimozcan*/
+              "currency": $totalAmountCurrency /* TODO: Burasi hallediverilecek. @samimozcan*/
             })
           }
     }) : $isDeclarationExist and $declarationCommodityCondition ? $map($.tr_export_declaration.items, function($v, $i) {
@@ -328,7 +354,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "Zollwert": $.tr_export_declaration.total_value,
             "AbzugHinzurechnung": $abzugHinzurechnung({
               "amount": $v.item_value,
-              "currency": $.tr_export_declaration.total_value_curr
+              "currency": $totalAmountCurrency
             })
           }
     })
@@ -354,7 +380,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "Zollwert": $.invoice.invoice_total_amount ? $.invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, 
               "AbzugHinzurechnung": $abzugHinzurechnung({
                 "amount": $vv.invoice_item_total_amount,
-                "currency": $v.invoice_currency
+                "currency": $totalAmountCurrency
               })
             }
           )})
@@ -381,7 +407,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "Zollwert": $.commercial_invoice.invoice_total_amount ? $.commercial_invoice.invoice_total_amount ~> $_compact() ~> $sum() : undefined, 
               "AbzugHinzurechnung": $abzugHinzurechnung({
                 "amount": $vv.invoice_item_total_amount,
-                "currency": $v.invoice_currency
+                "currency": $totalAmountCurrency
               })
             }
           )})
@@ -488,12 +514,12 @@ $lieferbedingungSchluessel := function() {(
               "AdressCode": "1", /** default 1 */
               "TeilnehmerEORI": "", /** boş kalacak */
               "TeilnehmerNLNR": "", /** boş kalacak */
-              "NameFirma": $substring($.invoice[0].invoice_supplier_name ?? '', 0, 120), /** sender(consignor) invoice, ihracat beyanname */
-              "StrasseHausNr": $substring($.invoice[0].invoice_supplier_address ?? '', 0, 35), /** default Istanbul */
+              "NameFirma": $substring($globalExporterName ?? '', 0, 120), /** sender(consignor) invoice, ihracat beyanname */
+              "StrasseHausNr": $substring($globalExporterAddress ?? '', 0, 35), /** default Istanbul */
               "Ortsteil": "", /** default boş */
-              "LandCode": $.invoice[0].invoice_supplier_country, /** supplier_country (TR), invoice, beyanname */
+              "LandCode": $globalExporterCountry, /** supplier_country (TR), invoice, beyanname */
               "PLZ-S": "34000", /** default 34000 */
-              "Ort-S": "Istanbul" /** adres buraya GELECEK, /* invoice, beyanname */
+              "Ort-S": $globalExporterCity /** adres buraya GELECEK, /* invoice, beyanname */
           } : [])
         },
         "WarenPosition": $getWarenPosition($v.headerData.procedureCodeRequested)

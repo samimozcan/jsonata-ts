@@ -1,0 +1,408 @@
+{
+  "atr": {
+    "id": "N0691497",
+    "date": "2025-10-31",
+    "sender": "DİKKAN DIŞ TİC.A.Ş.",
+    "receiver": "VERZAHNUNG & METALLBEARBEITUNG KAISER GMBH",
+    "export_mrn": "25350300EX00141026",
+    "exporter_city": "IZMIR",
+    "total_package": 1,
+    "transport_type": "KAMYON-BY TRUCK",
+    "exporter_address": "İZMİR-KEMALPAŞA YOLU NO:3035730 HAYITLIKIR MEVKİ, KEMALPAŞA",
+    "exporter_country": "TR",
+    "total_gross_weight": 1170
+  },
+  "cmr": {
+    "date": "2025-11-26",
+    "sender": "NEHİR KAĞITCILIK İTH.İHR SAN.VE TİC.LTD.ŞTİ",
+    "plate_no": "34 ZR 6698",
+    "receiver": "MOBİLPACK",
+    "exporter_city": "ISTANBUL",
+    "loading_place": "ISTANBUL",
+    "total_package": 10,
+    "delivery_place": "D-55452 DORSHEIM",
+    "exporter_address": "SELİMPAŞA MAH.6061 SK.NO:1",
+    "exporter_country": "TR",
+    "total_net_weight": null,
+    "total_gross_weight": 2647
+  },
+  "ftz": {
+    "shipment": {
+      "id": "25160100EX00130501",
+      "date": "2025-10-31",
+      "buyer": "JORN GMBH",
+      "sender": "ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+      "positions": [
+        {
+          "index": 2,
+          "value": 17127.5,
+          "origin": "TR",
+          "quantity": 5270,
+          "delivery_term": "DAP",
+          "commodity_code": "401699910000",
+          "unit_of_measure": "NAR",
+          "package_quantity": 14,
+          "commodity_description": "MUHTELIF BURC 1-Tescilsiz-ANGST-833393,32TL"
+        }
+      ],
+      "invoice_no": [
+        "API2025000001229"
+      ],
+      "total_value": 54221.56,
+      "total_package": 14,
+      "total_value_curr": "EUR",
+      "mode_of_transport": "3",
+      "total_gross_weight": 10861,
+      "destination_country": "DE"
+    }
+  },
+  "cache": {
+    "commodity_codes": [
+      {
+        "code": "74112900000",
+        "oldCode": "741129000000",
+        "description": "Rohre aus anderen Kupferlegierungen / BRONZEPFEIFE",
+        "oldDescription": "BRONZ BORU"
+      },
+      {
+        "code": "40169952900",
+        "oldCode": "401699520000",
+        "description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Produktbeschreibung: VERSCHIEDENE STERNZEICHEN",
+        "oldDescription": "Ticari tanımı: MUHTELİF BURC"
+      },
+      {
+        "code": "40169991900",
+        "oldCode": "401699910000",
+        "description": "Gummi-Metallteile aus Weichkautschuk / VERSCHIEDENE STERNZEICHEN 1-Unregistriert-ANGST-833393.32TL",
+        "oldDescription": "MUHTELIF BURC 1-Tescilsiz-ANGST-833393,32TL"
+      }
+    ]
+  },
+  "origin": {
+    "sender": null,
+    "receiver": "ALCATEL LUCENT TELETAS A.S",
+    "total_net_weight": null,
+    "total_gross_weight": null
+  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 1109,
+          "invoice_item_unit_type": "KGM",
+          "invoice_item_net_weight": 1109,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 12.03787196,
+          "invoice_item_description": "Rohre aus anderen Kupferlegierungen / BRONZEPFEIFE",
+          "invoice_item_gross_weight": 1170,
+          "invoice_item_total_amount": 13350,
+          "invoice_item_commodity_code": "74112900000",
+          "invoice_item_package_quantity": 1,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "end_page": 1,
+      "invoice_id": "DKB2025000000035",
+      "start_page": 1,
+      "invoice_vkn": "2960401079",
+      "invoice_date": "2025-10-31",
+      "invoice_currency": "EUR",
+      "invoice_po_number": "PINA25013",
+      "invoice_payment_term": "INVOICE DA",
+      "invoice_total_amount": 13350,
+      "invoice_customer_name": "Verzahnung & Metallbearbeitung Kaiser GmbH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "Dikkan Dis Ticaret A.S.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "Pratzschwitzer Str. 201, 01",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "Izmir Kemalpasa Yolu, Hayitli",
+      "invoice_supplier_country": "TR",
+      "invoice_total_net_weight": 1109,
+      "invoice_total_gross_weight": 1170,
+      "invoice_total_package_quantity": 1,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "regime_type": "IM",
+  "combine_items": {
+    "meta": {
+      "total_items": 1,
+      "total_merged_items": 1,
+      "combination_filters": [
+        "commodity_code",
+        "country_of_origin"
+      ]
+    },
+    "items": [
+      {
+        "combined_item_no": 1,
+        "combined_item_quantity": 1109,
+        "reference_item_details": [
+          {
+            "regime": null,
+            "source": "invoice",
+            "item_no": 1,
+            "currency": "EUR",
+            "unit_type": "KGM",
+            "net_amount": 13350,
+            "net_weight": null,
+            "description": "Rohre aus anderen Kupferlegierungen / BRONZEPFEIFE",
+            "document_no": "DKB2025000000035",
+            "gross_amount": null,
+            "gross_weight": null,
+            "document_date": "2025-10-31",
+            "item_quantity": 1109,
+            "commodity_code": "74112900000",
+            "package_quantity": 1,
+            "country_of_origin": "TR",
+            "statistical_value": null
+          }
+        ],
+        "combined_item_unit_type": "KGM",
+        "combined_item_net_weight": null,
+        "combined_item_description": "Rohre aus anderen Kupferlegierungen / BRONZEPFEIFE",
+        "combined_item_gross_weight": null,
+        "combined_item_total_amount": 13350,
+        "combined_item_commodity_code": "74112900000",
+        "combined_item_package_quantity": 1,
+        "combined_item_country_of_origin": "TR"
+      }
+    ]
+  },
+  "delivery_note": {
+    "sender": "YEEBO MANUFACTURING LIMITED",
+    "receiver": "EMPA ELEKTRONIK SANAYI VE TICARET A.S",
+    "total_package": 75,
+    "total_net_weight": 341.1,
+    "total_gross_weight": 416.1
+  },
+  "packaging_list": {
+    "sender": "YEEBO MANUFACTURING LIMITED\n7/F, On Dak Industrial Building, 2-6 Wah Sing Street\nKwai Chung, New Territories, Hong Kong",
+    "receiver": "EMPA ELEKTRONIK SANAYI VE TICARET A.S\nZiya Gökalp Mah. Süleyman Demirel Bulvarş\nSimpaş şş Modern D-14 Başakşehir/şstanbul\nTUR",
+    "total_package": null,
+    "total_gross_weight": 416.1
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "PIRNA",
+            "postalCode": "01796",
+            "addressType": "CN",
+            "companyName": "VERZAHNUNG & METALLBEARBEITUNG",
+            "countryCode": "DE",
+            "participantEORI": "DE7292694",
+            "streetAndNumber": "PRATZSCHWITZER STR. 201",
+            "participantSubsidiaryNumber": "0000"
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "DE",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "14",
+          "transportMeansArrivalIdentity": "35HD8728",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": ""
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "5003/25012103",
+          "objectAlias": "5003/2501210307112025_102428",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERG",
+      "ioDivision3": "SUB",
+      "ioReference": "5003/2501210307112025_102428"
+    }
+  },
+  "dispatch_country": "TR",
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "combineOptions": [
+      "commodity_code",
+      "country_of_origin"
+    ],
+    "disableOutbound": false,
+    "outputApplicationId": "dakosy/sftp/vera",
+    "disableDocumentConverter": false
+  },
+  "commercial_invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": "NAR",
+          "invoice_item_net_weight": 25.2,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 60,
+          "invoice_item_description": "DL2 Side Panels",
+          "invoice_item_gross_weight": 35.2,
+          "invoice_item_total_amount": 60,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": 0.2,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 2,
+          "invoice_item_quantity": 1,
+          "invoice_item_unit_type": "NAR",
+          "invoice_item_net_weight": 25.2,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 60,
+          "invoice_item_description": "DL2 Side Panels AR",
+          "invoice_item_gross_weight": 35.2,
+          "invoice_item_total_amount": 60,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": 0.2,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 3,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "NAR",
+          "invoice_item_net_weight": 25.2,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "DL2 Inner Signage Units",
+          "invoice_item_gross_weight": 35.2,
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": 0.2,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 4,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "NAR",
+          "invoice_item_net_weight": 25.2,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "DL2-Outer Signage Units",
+          "invoice_item_gross_weight": 35.2,
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": 0.2,
+          "invoice_item_country_of_origin": "TR"
+        },
+        {
+          "invoice_item_no": 5,
+          "invoice_item_quantity": 2,
+          "invoice_item_unit_type": "NAR",
+          "invoice_item_net_weight": 25.2,
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 50,
+          "invoice_item_description": "CUPBOARDS KİCKBOARDS",
+          "invoice_item_gross_weight": 35.2,
+          "invoice_item_total_amount": 100,
+          "invoice_item_commodity_code": null,
+          "invoice_item_package_quantity": 0.2,
+          "invoice_item_country_of_origin": "TR"
+        }
+      ],
+      "invoice_id": "GR22025000000220",
+      "invoice_date": "2025-10-24",
+      "invoice_currency": "EUR",
+      "invoice_po_number": null,
+      "invoice_payment_term": null,
+      "invoice_total_amount": 420,
+      "invoice_customer_name": "APS GROUP DEUTSCHLAND GMBH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "Görsel Reklam San.Tic.A.Ş.",
+      "invoice_total_quantity": null,
+      "invoice_customer_address": "Graf-Adolf-Platz 12, 40213,",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "Fevzi Çakmak Caddesi No: 7",
+      "invoice_supplier_country": "TR",
+      "invoice_total_net_weight": 126,
+      "invoice_total_gross_weight": 176,
+      "invoice_total_package_quantity": 1,
+      "invoice_shipment_country_of_origin": "TR"
+    }
+  ],
+  "destination_country": "DE",
+  "transit_declaration": {
+    "date": "2025-11-04",
+    "items": [],
+    "transit_id": "25TR350300070926M1",
+    "loading_place": "TR",
+    "total_package": 141,
+    "dispatch_place": "DE",
+    "truck_id_border": null,
+    "dispatch_country": "TR",
+    "total_net_weight": null,
+    "truck_id_transit": "35HD8728",
+    "type_of_transport": "3",
+    "total_gross_weight": 16953.57,
+    "destination_country": "DE",
+    "border_transport_mode": "1",
+    "destination_customs_authority": "DE007458 Bad Reichenhall-Autobahn"
+  },
+  "tr_export_declaration": {
+    "id": "25160100EX00130501",
+    "date": "2025-10-31",
+    "buyer": "JORN GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00130501-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 11198,
+        "item_value": 37094.06,
+        "net_weight": 7176.42,
+        "gross_weight": 7430.23,
+        "commodity_code": "40169952900",
+        "unit_of_measure": "NAR",
+        "package_quantity": "Ticari tanımı: MUHTELİF BURC",
+        "statistical_value": 41487.72,
+        "commodity_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Produktbeschreibung: VERSCHIEDENE STERNZEICHEN"
+      },
+      {
+        "id": "TR-25160100EX00130501-ITEM1",
+        "index": "1",
+        "origin": null,
+        "regime": null,
+        "quantity": 5270,
+        "item_value": 17127.5,
+        "net_weight": 3313.58,
+        "gross_weight": 0,
+        "commodity_code": "40169991900",
+        "unit_of_measure": "NAR",
+        "package_quantity": 14,
+        "statistical_value": 19156.19,
+        "commodity_description": "Gummi-Metallteile aus Weichkautschuk / VERSCHIEDENE STERNZEICHEN 1-Unregistriert-ANGST-833393.32TL"
+      }
+    ],
+    "sender": "LANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "tax_id": "6080551890",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024** *2017/7 SAY. TEB. ISTINADEN E-FA TURA ID SISTEME DÜŞMEDİĞİNDEN E-FATURALI İŞLEM YERİNE NORMAL FATURALI İŞLEM YAPILMIŞTIR IML ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 Fatura Var 31.10.2025/API2025000001229 A.TR Dolaşım Belgesi\nBasit 31.10.20 25/N0570487 TPS-Kripto Numarası Var\n3110.2025/25153097211086075984584/1",
+    "total_value": "54221.56",
+    "total_weight": null,
+    "delivery_term": "DAP",
+    "total_package": "14",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "2",
+    "dispatch_country": "TR",
+    "total_net_weight": 10490,
+    "total_value_curr": "EUR",
+    "total_gross_weight": 7430.23,
+    "destination_country": "DE",
+    "border_transport_mode": "3"
+  }
+}
