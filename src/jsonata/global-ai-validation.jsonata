@@ -68,13 +68,15 @@
         */
         $_isValidDate($date);
 
-        $isDeclarationExist := $exists(tr_export_declaration) and $type(tr_export_declaration) = "object";
-        $isInvoiceExist := $exists(invoice) and $type(invoice) = "array" and $count(invoice) > 0;
-        $isCmrExist := $exists(cmr) and $type(cmr) = "object";
-        $isAtrExist := $exists(atr) and $type(atr) = "object";
-        $t1Exist := $exists(transit_document) and $type(transit_document) = "object";
-        $isCombineItemsExist := $exists(combine_items) and $type(combine_items) = "object";
-        $isCommercialInvoiceExist := $exists(commercial_invoice) and $type(commercial_invoice) = "array";
+        $isDeclarationExist := $exists($.tr_export_declaration) and $type($.tr_export_declaration) = "object";
+        $isInvoiceExist := $exists($.invoice) and $type($.invoice) = "array" and $count($.invoice) > 0;
+        $isCmrExist := $exists($.cmr) and $type($.cmr) = "object";
+        $isAtrExist := $exists($.atr) and $type($.atr) = "object";
+        $isTransitDeclarationExist := $exists($.transit_declaration) and $type($.transit_declaration) = "object";
+        $isCombineItemsExist := $exists($.combine_items) and $type($.combine_items) = "object" and $count($.combine_items.items) > 0;
+        $isCombineItemsCreatedFromInvoice := $isCombineItemsExist and $.combine_items.items[0].reference_item_details[0].source = 'invoice';
+        $isCommercialInvoiceExist := $exists($.commercial_invoice) and $type($.commercial_invoice) = "array";
+        $isFtzExist := $exists($.ftz) and $type($.ftz) = "object" and $.ftz.shipment.id ?? null;
 
 
         $atoi := function($data) {$type($data) = "string" ? $round($number($replace($data, ",", ".")), 2) : $data};
@@ -311,7 +313,7 @@
         /* --- */
         /* --- */
         $t1_trDeclaration_invoice_mismatch := function() {(
-            $isDeclarationExist or $isInvoiceExist or $t1Exist or $isCommercialInvoiceExist ?
+            $isDeclarationExist or $isInvoiceExist or $isFtzExist or $isCommercialInvoiceExist ?
                null : {"code": "ERROR_0007"}
         )};
 

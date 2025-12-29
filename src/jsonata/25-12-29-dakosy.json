@@ -45,9 +45,7 @@
           "commodity_description": "MUHTELIF BURC 1-Tescilsiz-ANGST-833393,32TL"
         }
       ],
-      "invoice_no": [
-        "API2025000001229"
-      ],
+      "invoice_no": ["API2025000001229"],
       "total_value": 54221.56,
       "total_package": 14,
       "total_value_curr": "EUR",
@@ -130,10 +128,7 @@
     "meta": {
       "total_items": 1,
       "total_merged_items": 1,
-      "combination_filters": [
-        "commodity_code",
-        "country_of_origin"
-      ]
+      "combination_filters": ["commodity_code", "country_of_origin"]
     },
     "items": [
       {
@@ -167,7 +162,8 @@
         "combined_item_total_amount": 13350,
         "combined_item_commodity_code": "74112900000",
         "combined_item_package_quantity": 1,
-        "combined_item_country_of_origin": "TR"
+        "combined_item_country_of_origin": "TR",
+        "combined_item_statistical_value": null
       }
     ]
   },
@@ -233,10 +229,7 @@
   "additional_setting": {
     "userId": 2,
     "companyId": 1,
-    "combineOptions": [
-      "commodity_code",
-      "country_of_origin"
-    ],
+    "combineOptions": ["commodity_code", "country_of_origin"],
     "disableOutbound": false,
     "outputApplicationId": "dakosy/sftp/vera",
     "disableDocumentConverter": false

@@ -51,7 +51,7 @@ $isTransitDeclarationExist := $exists($.transit_declaration) and $type($.transit
 $isCombineItemsExist := $exists($.combine_items) and $type($.combine_items) = "object" and $count($.combine_items.items) > 0;
 $isCombineItemsCreatedFromInvoice := $isCombineItemsExist and $.combine_items.items[0].reference_item_details[0].source = 'invoice';
 $isCommercialInvoiceExist := $exists($.commercial_invoice) and $type($.commercial_invoice) = "array";
-$isFztExist := $exists($.fzt) and $type($.fzt) = "object";
+$isFtzExist := $exists($.ftz) and $type($.ftz) = "object" and $.ftz.shipment.id ?? null;
 
 /*ZollrechtlicherStatus condition @return "CO" "EU" "IM"*/
 /*https://atez.atlassian.net/wiki/spaces/relayhub/pages/3476291624/Relayhub+Algorithm+i+in+Alan+Dakosy+Analizleri*/
@@ -76,8 +76,8 @@ $totalAmount := $isDeclarationExist
       : $isInvoiceExist and $type($.invoice) = "array" 
         ? $.invoice.invoice_total_amount ~> $_compact() ~> $sum() 
         : $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_total_amount ~> $_compact() ~> $sum() 
-          : $isFztExist and $.fzt.total_value
-          ? $.fzt.total_value 
+          : $isFtzExist and $.ftz.total_value
+          ? $.ftz.total_value 
             : null;
 $totalNetWeight := $isDeclarationExist 
   ? $map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0}) ~> $_compact() ~> $sum()
@@ -98,8 +98,8 @@ $totalGrossWeight := $isDeclarationExist
         ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum()
           : $isAtrExist and $.atr.total_gross_weight and $.atr.total_gross_weight > 0
           ? $round($.atr.total_gross_weight ? $.atr.total_gross_weight : 0, 1) 
-            : $isFztExist and $.fzt.total_gross_weight and $.fzt.total_gross_weight > 0
-            ? $round($.fzt.total_gross_weight ? $.fzt.total_gross_weight : 0, 1) 
+            : $isFtzExist and $.ftz.total_gross_weight and $.ftz.total_gross_weight > 0
+            ? $round($.ftz.total_gross_weight ? $.ftz.total_gross_weight : 0, 1) 
               : null;
 $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
     ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
@@ -109,8 +109,8 @@ $totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_p
         ? $.invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
           : $isCommercialInvoiceExist 
           ? $.commercial_invoice[0].invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
-            : $isFztExist and $.fzt.total_package
-            ? $.fzt.total_package ~> $number() ~> $round(0)
+            : $isFtzExist and $.ftz.total_package
+            ? $.ftz.total_package ~> $number() ~> $round(0)
               : null;
 $totalAmountCurrency := $isDeclarationExist 
   ? $.tr_export_declaration.total_value_curr 
@@ -118,16 +118,18 @@ $totalAmountCurrency := $isDeclarationExist
     ? $.invoice.invoice_currency 
       : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice[0].invoice_currency
       ? $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_currency
-        : $isFztExist and $.fzt.total_value_curr
-        ? $.fzt.total_value_curr 
+        : $isFtzExist and $.ftz.total_value_curr
+        ? $.ftz.total_value_curr 
           : null;
 $globalDeliveryTerm := $.tr_export_declaration.delivery_term 
   ?? $.invoice[0].invoice_delivery_term 
     ?? $.commercial_invoice[0].invoice_delivery_term
-      ?? null;
+      ?? $.ftz.shipment.positions[0].delivery_term
+        ?? $.commercial_invoice[0].invoice_delivery_term
+          ?? null;
 $globalModeOfTransport := $.tr_export_declaration.border_transport_mode 
   ?? $.transit_declaration.border_transport_mode 
-    ?? $.fzt.mode_of_transport
+    ?? $.ftz.mode_of_transport
       ?? null;
 $globalDispatchCountry := $.tr_export_declaration.dispatch_country and $length($.tr_export_declaration.dispatch_country) = 2
   ? $.tr_export_declaration.dispatch_country
@@ -146,8 +148,8 @@ $globalDestionationCountry := $.tr_export_declaration.destination_country and $l
       ? $.commercial_invoice[0].invoice_shipment_country_of_origin
         : $.destination_country and $length($.destination_country) = 2
         ? $.destination_country
-          : $.fzt.destination_country and $length($.fzt.destination_country) = 2
-          ? $.fzt.destination_country
+          : $.ftz.destination_country and $length($.ftz.destination_country) = 2
+          ? $.ftz.destination_country
             : null;
 $globalExporterAddress := $isInvoiceExist
   ? $.invoice[0].invoice_supplier_address
@@ -175,7 +177,6 @@ $globalExporterCity := $isAtrExist
       : $isCmrExist
       ? $.cmr.exporter_city
         : "Istanbul";
-
 $totalInvoiceItemCount := $isInvoiceExist 
   ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
     : 0;
@@ -185,13 +186,13 @@ $totalCommercialInvoiceItemCount := $isCommercialInvoiceExist
 $totalDeclarationItemCount := $isDeclarationExist
   ? $count($.tr_export_declaration.items)
     : 0;
-$globalBuyerName := $isFztExist 
-  ? $.fzt.buyer
+$globalBuyerName := $isFtzExist 
+  ? $.ftz.buyer
     : $isDeclarationExist
     ? $.tr_export_declaration.buyer
       : null;
-$globalSenderName := $isFztExist 
-  ? $.fzt.sender
+$globalSenderName := $isFtzExist 
+  ? $.ftz.sender
     : $isDeclarationExist
     ? $.tr_export_declaration.sender
       : null;
@@ -319,9 +320,9 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.combined_item_net_weight, $.combine_items.meta.total_merged_items), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : undefined,
-            "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
-            "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "AHStatMenge": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : null,
+            "AHStatMengeMasseinheit": $v.combined_item_unit_type,
+            "AHStatWert": $aHStatWert($v.combined_item_statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
             "PackstueckArt": $i = 0 ? "PK" : undefined, /* default */
             "PackstueckZeichen": $i = 0 ? "OHNE" : undefined, /* default */
@@ -342,8 +343,8 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.net_weight, $totalDeclarationItemCount), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : undefined,
-            "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
+            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : null,
+            "AHStatMengeMasseinheit": $v.unit_of_measure, 
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
             "PackstueckArt": $i = 0 ? "PK" : undefined, /* default */
@@ -368,8 +369,8 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem($vv.invoice_item_net_weight, $totalInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
-              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
-              "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
+              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : null, /* statistical quantity not exist in invoice */
+              "AHStatMengeMasseinheit": $vv.invoice_item_unit_type,
               "AHStatWert": null, /* statistical value */
               "PackstueckAnzahl": $ii = 0 ? $totalPackageQuantity : undefined, 
               "PackstueckArt": $ii = 0 ? "PK" : undefined, /*default*/
@@ -396,7 +397,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem(null, $totalCommercialInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
               "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
-              "AHStatMengeMasseinheit": undefined, /* TODO: *** Hazim abinin service bekleniyor *** */
+              "AHStatMengeMasseinheit": $vv.invoice_item_unit_type, 
               "AHStatWert": null, /* statistical value */
               "PackstueckAnzahl": $ii = 0 ? totalPackageQuantity : undefined, 
               "PackstueckArt": $ii = 0 ? "PK" : undefined, /*default*/
@@ -412,6 +413,30 @@ $getWarenPosition := function($procedureCodeRequested) {(
             }
           )})
         )}) ~> $customAppend() ~> function($data) {$map($data, function($v, $i) {($merge([$v, {"Positionsnummer": $i + 1}]))})}
+        : $isFtzExist ? $map($.ftz.shipment.positions, function($v, $i) {
+          {
+            "Positionsnummer": $i + 1,
+            "WarenNummerEZT": $warenNummerEZT($v.commodity_code),
+            "WarenBezeichnung": $v.commodity_description ~> $_removeAfter("1?-?unregistriert") ~> $substring(0, 240),
+            "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
+            "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
+            "Eigenmasse": $getNetWeightForItem($v.net_weight, $count($.ftz.shipment.positions)), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
+            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : null,
+            "AHStatMengeMasseinheit": $v.unit_of_measure, 
+            "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
+            "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
+            "PackstueckArt": $i = 0 ? "PK" : undefined, /* default */
+            "PackstueckZeichen": $i = 0 ? "OHNE" : undefined, /* default */
+            "BeguenstigungBeantragtCode": $beguenstigungBeantragtCode(), 
+            "AHStatWertManuellKZ": "N", /* default to disable manual price setting */
+            "Unterlage": $itemUnterlage($v),
+            "Zollwert": $.ftz.total_value,
+            "AbzugHinzurechnung": $abzugHinzurechnung({
+              "amount": $v.value,
+              "currency": $totalAmountCurrency
+            })
+          }
+    })
         : undefined
 )};
 
@@ -509,7 +534,7 @@ $lieferbedingungSchluessel := function() {(
               "PLZ-S": $a.postalCode,
               "Ort-S": $a.city
             }
-          }) ~> $append($isInvoiceExist and $count($v.addresses ?? []) < 2 and $.invoice[0] ? {
+          }) ~> $append($count($v.addresses ?? []) < 2 ? {
               "AdressTyp": "CZ",  /** CZ olacak default */
               "AdressCode": "1", /** default 1 */
               "TeilnehmerEORI": "", /** boş kalacak */

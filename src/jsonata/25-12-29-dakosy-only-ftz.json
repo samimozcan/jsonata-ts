@@ -1,0 +1,174 @@
+{
+  "atr": {
+    "id": "N0691497",
+    "date": "2025-10-31",
+    "sender": "DİKKAN DIŞ TİC.A.Ş.",
+    "receiver": "VERZAHNUNG & METALLBEARBEITUNG KAISER GMBH",
+    "export_mrn": "25350300EX00141026",
+    "exporter_city": "IZMIR",
+    "total_package": 1,
+    "transport_type": "KAMYON-BY TRUCK",
+    "exporter_address": "İZMİR-KEMALPAŞA YOLU NO:3035730 HAYITLIKIR MEVKİ, KEMALPAŞA",
+    "exporter_country": "TR",
+    "total_gross_weight": 1170
+  },
+  "cmr": {
+    "date": "2025-11-26",
+    "sender": "NEHİR KAĞITCILIK İTH.İHR SAN.VE TİC.LTD.ŞTİ",
+    "plate_no": "34 ZR 6698",
+    "receiver": "MOBİLPACK",
+    "exporter_city": "ISTANBUL",
+    "loading_place": "ISTANBUL",
+    "total_package": 10,
+    "delivery_place": "D-55452 DORSHEIM",
+    "exporter_address": "SELİMPAŞA MAH.6061 SK.NO:1",
+    "exporter_country": "TR",
+    "total_net_weight": null,
+    "total_gross_weight": 2647
+  },
+  "ftz": {
+    "shipment": {
+      "id": "25160100EX00130501",
+      "date": "2025-10-31",
+      "buyer": "JORN GMBH",
+      "sender": "ANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+      "positions": [
+        {
+          "index": 2,
+          "value": 17127.5,
+          "origin": "TR",
+          "quantity": 5270,
+          "delivery_term": "DAP",
+          "commodity_code": "401699910000",
+          "unit_of_measure": "NAR",
+          "package_quantity": 14,
+          "commodity_description": "MUHTELIF BURC 1-Tescilsiz-ANGST-833393,32TL"
+        }
+      ],
+      "invoice_no": ["API2025000001229"],
+      "total_value": 54221.56,
+      "total_package": 14,
+      "total_value_curr": "EUR",
+      "mode_of_transport": "3",
+      "total_gross_weight": 10861,
+      "destination_country": "DE"
+    }
+  },
+  "cache": {
+    "commodity_codes": [
+      {
+        "code": "74112900000",
+        "oldCode": "741129000000",
+        "description": "Rohre aus anderen Kupferlegierungen / BRONZEPFEIFE",
+        "oldDescription": "BRONZ BORU"
+      },
+      {
+        "code": "40169952900",
+        "oldCode": "401699520000",
+        "description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Produktbeschreibung: VERSCHIEDENE STERNZEICHEN",
+        "oldDescription": "Ticari tanımı: MUHTELİF BURC"
+      },
+      {
+        "code": "40169991900",
+        "oldCode": "401699910000",
+        "description": "Gummi-Metallteile aus Weichkautschuk / VERSCHIEDENE STERNZEICHEN 1-Unregistriert-ANGST-833393.32TL",
+        "oldDescription": "MUHTELIF BURC 1-Tescilsiz-ANGST-833393,32TL"
+      }
+    ]
+  },
+  "origin": {
+    "sender": null,
+    "receiver": "ALCATEL LUCENT TELETAS A.S",
+    "total_net_weight": null,
+    "total_gross_weight": null
+  },
+
+  "regime_type": "IM",
+
+  "delivery_note": {
+    "sender": "YEEBO MANUFACTURING LIMITED",
+    "receiver": "EMPA ELEKTRONIK SANAYI VE TICARET A.S",
+    "total_package": 75,
+    "total_net_weight": 341.1,
+    "total_gross_weight": 416.1
+  },
+  "packaging_list": {
+    "sender": "YEEBO MANUFACTURING LIMITED\n7/F, On Dak Industrial Building, 2-6 Wah Sing Street\nKwai Chung, New Territories, Hong Kong",
+    "receiver": "EMPA ELEKTRONIK SANAYI VE TICARET A.S\nZiya Gökalp Mah. Süleyman Demirel Bulvarş\nSimpaş şş Modern D-14 Başakşehir/şstanbul\nTUR",
+    "total_package": null,
+    "total_gross_weight": 416.1
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "PIRNA",
+            "postalCode": "01796",
+            "addressType": "CN",
+            "companyName": "VERZAHNUNG & METALLBEARBEITUNG",
+            "countryCode": "DE",
+            "participantEORI": "DE7292694",
+            "streetAndNumber": "PRATZSCHWITZER STR. 201",
+            "participantSubsidiaryNumber": "0000"
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "DE",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "14",
+          "transportMeansArrivalIdentity": "35HD8728",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": ""
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "5003/25012103",
+          "objectAlias": "5003/2501210307112025_102428",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERG",
+      "ioDivision3": "SUB",
+      "ioReference": "5003/2501210307112025_102428"
+    }
+  },
+  "dispatch_country": "TR",
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "combineOptions": ["commodity_code", "country_of_origin"],
+    "disableOutbound": false,
+    "outputApplicationId": "dakosy/sftp/vera",
+    "disableDocumentConverter": false
+  },
+
+  "destination_country": "DE",
+  "transit_declaration": {
+    "date": "2025-11-04",
+    "items": [],
+    "transit_id": "25TR350300070926M1",
+    "loading_place": "TR",
+    "total_package": 141,
+    "dispatch_place": "DE",
+    "truck_id_border": null,
+    "dispatch_country": "TR",
+    "total_net_weight": null,
+    "truck_id_transit": "35HD8728",
+    "type_of_transport": "3",
+    "total_gross_weight": 16953.57,
+    "destination_country": "DE",
+    "border_transport_mode": "1",
+    "destination_customs_authority": "DE007458 Bad Reichenhall-Autobahn"
+  }
+}
