@@ -163,6 +163,22 @@
                 "tr": "ATR tarihi hatalı, varsayılan tarih kullanıldı.",
                 "en": "ATR date is invalid, default date is used."
             },
+            "INVALID_0042": {
+                "en": "Commercial invoice commodity code must not exceed 11 characters at invoice {{1}} item {{2}}",
+                "tr": "Ticari fatura eşya kodu 11 karakterden uzun olamaz, fatura {{1}} kalem {{2}}"
+            },
+            "INVALID_0043": {
+                "en": "Commercial invoice date is invalid, default date is used. Invoice NO: {{1}}",
+                "tr": "Ticari fatura tarihi hatalı, varsayılan tarih kullanıldı. Fatura NO: {{1}}"
+            },
+            "INVALID_0044": {
+                "en": "FTZ shipment date is invalid",
+                "tr": "FTZ sevkiyat tarihi hatalı"
+            },
+            "INVALID_0045": {
+                "en": "FTZ commodity code must not exceed 11 characters at position {{1}}",
+                "tr": "FTZ eşya kodu 11 karakterden uzun olamaz, pozisyon {{1}}"
+            },
             /*--------------------*/
             /*---MISSING----------*/
             /*--------------------*/
@@ -221,6 +237,30 @@
             "MISSING_0016": {
                 "en": "Item value in TR Export Declaration could not retrieved at item {{1}}.",
                 "tr": "Beyanname kalem değer alınamadı, kalem {{1}}."
+            },
+            "MISSING_0017": {
+                "en": "Commercial invoice date is missing, default date is used. Invoice NO: {{1}}",
+                "tr": "Ticari fatura tarihi eksik, varsayılan tarih kullanıldı. Fatura NO: {{1}}"
+            },
+            "MISSING_0018": {
+                "en": "FTZ shipment ID is missing",
+                "tr": "FTZ sevkiyat ID eksik"
+            },
+            "MISSING_0019": {
+                "en": "FTZ shipment date is missing",
+                "tr": "FTZ sevkiyat tarihi eksik"
+            },
+            "MISSING_0020": {
+                "en": "FTZ total gross weight could not be retrieved",
+                "tr": "FTZ toplam brüt ağırlık alınamadı"
+            },
+            "MISSING_0021": {
+                "en": "FTZ item quantity could not be retrieved at position {{1}}",
+                "tr": "FTZ kalem miktar alınamadı, pozisyon {{1}}"
+            },
+            "MISSING_0022": {
+                "en": "FTZ item value could not be retrieved at position {{1}}",
+                "tr": "FTZ kalem değer alınamadı, pozisyon {{1}}"
             },
             /*--------------------*/
             /*---ERROR------------*/
@@ -556,6 +596,92 @@
         /* --- */
         /* --- */
         /* --- */
+        /*Commercial Invoice ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $commercialInvoiceErrorsFirst := $isCommercialInvoiceExist and $type(commercial_invoice) = "array" ?
+            $filter([
+                $map(commercial_invoice, function($v, $i) {
+                    [
+                        $map($v.items, function($vv, $ii) {
+                            [
+                                /* Commodity Code Validations*/
+                            ]
+                        }) ~> $customAppend()
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $commercialInvoiceWarningFirst := $isCommercialInvoiceExist and $type(commercial_invoice) = "array" ?
+            $filter([
+                $map(commercial_invoice, function($v, $i) {
+                    [
+                        $_isValidDateWithoutTime($v.invoice_date) ? null : {"code": "MISSING_0017", "path": ["commercial_invoice", $i, "invoice_date"], "args": [$v.invoice_id]},
+                        $map($v.items, function($vv, $ii) {
+                            [
+                                /* Commodity Code Validations*/
+                                $max($vv.invoice_item_commodity_code, 11, {"code": "INVALID_0042", "path": ["commercial_invoice", $i, "items", $ii, "invoice_item_commodity_code"], "args": [$i + 1, $ii + 1]})
+                            ]
+                        }) ~> $customAppend()
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $commercialInvoiceErrors := $count($commercialInvoiceErrorsFirst) ? $map($commercialInvoiceErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $commercialInvoiceWarnings := $count($commercialInvoiceWarningFirst) ? $map($commercialInvoiceWarningFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        /*FTZ ---*/
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
+        $ftzErrorsFirst := $isFtzExist and $type(ftz) = "object" ?
+            $filter([
+                $map(ftz.shipment.positions, function($v, $i) {
+                    [
+                            /* Commodity Code Validations*/
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $ftzWarningsFirst := $isFtzExist and $type(ftz) = "object" ?
+            $filter([
+                /* Shipment date validation */
+                $_isValidDateWithoutTime($.ftz.shipment.date) ? null : {"code": "INVALID_0044", "path": ["ftz", "shipment", "date"], "args": []},
+                /* Total weight validation */
+                $isNotNull($.ftz.shipment.total_gross_weight, {"code": "MISSING_0020", "path": ["ftz", "shipment", "total_gross_weight"], "args": []}),
+                $map(ftz.shipment.positions, function($v, $i) {
+                    [
+                            /* Commodity Code Validations*/
+                            $max($v.commodity_code, 11, {"code": "INVALID_0045", "path": ["ftz", "shipment", "positions", $i, "commodity_code"], "args": [$i + 1]}),
+                            /* Item validations */
+                            $isNotNull($v.quantity, {"code": "MISSING_0021", "path": ["ftz", "shipment", "positions", $i, "quantity"], "args": [$i + 1]}),
+                            $isNotNull($v.value, {"code": "MISSING_0022", "path": ["ftz", "shipment", "positions", $i, "value"], "args": [$i + 1]})
+                    ]
+                }) ~> $customAppend() 
+            ], function($v) { $v != null })
+        : [];
+        $ftzErrors := $count($ftzErrorsFirst) ? $map($ftzErrorsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+        $ftzWarnings := $count($ftzWarningsFirst) ? $map($ftzWarningsFirst, function($error) {
+            $formatErrorMessage($error)
+        }) : [];
+
+        /* --- */
+        /* --- */
+        /* --- */
+        /* --- */
         /*Global ---*/
         /* --- */
         /* --- */
@@ -602,6 +728,14 @@
             "atr": {
                 "errors": $count($atrErrors) = 1 ? [$atrErrors] : $atrErrors,
                 "warnings": $count($atrWarnings) = 1 ? [$atrWarnings] : $atrWarnings
+            },
+            "commercial_invoice": {
+                "errors": $count($commercialInvoiceErrors) = 1 ? [$commercialInvoiceErrors] : $commercialInvoiceErrors,
+                "warnings": $count($commercialInvoiceWarnings) = 1 ? [$commercialInvoiceWarnings] : $commercialInvoiceWarnings
+            },
+            "ftz": {
+                "errors": $count($ftzErrors) = 1 ? [$ftzErrors] : $ftzErrors,
+                "warnings": $count($ftzWarnings) = 1 ? [$ftzWarnings] : $ftzWarnings
             },
             "global": {
                 "errors": $count($globalErrors) = 1 ? [$globalErrors] : $globalErrors,

@@ -1,0 +1,113 @@
+{
+  "regime_type": "IM",
+
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "PIRNA",
+            "postalCode": "01796",
+            "addressType": "CN",
+            "companyName": "VERZAHNUNG & METALLBEARBEITUNG",
+            "countryCode": "DE",
+            "participantEORI": "DE7292694",
+            "streetAndNumber": "PRATZSCHWITZER STR. 201",
+            "participantSubsidiaryNumber": "0000"
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "DE",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "14",
+          "transportMeansArrivalIdentity": "35HD8728",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": ""
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "5003/25012103",
+          "objectAlias": "5003/2501210307112025_102428",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERG",
+      "ioDivision3": "SUB",
+      "ioReference": "5003/2501210307112025_102428"
+    }
+  },
+  "dispatch_country": "TR",
+  "additional_setting": {
+    "userId": 2,
+    "companyId": 1,
+    "combineOptions": ["commodity_code", "country_of_origin"],
+    "disableOutbound": false,
+    "outputApplicationId": "dakosy/sftp/vera",
+    "disableDocumentConverter": false
+  },
+
+  "destination_country": "DE",
+
+  "tr_export_declaration": {
+    "id": "25160100EX00130501",
+    "date": "2025-10-31",
+    "buyer": "JORN GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00130501-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 11198,
+        "item_value": 37094.06,
+        "net_weight": 7176.42,
+        "gross_weight": 7430.23,
+        "commodity_code": "40169952900",
+        "unit_of_measure": "NAR",
+        "package_quantity": "Ticari tanımı: MUHTELİF BURC",
+        "statistical_value": 41487.72,
+        "commodity_description": "Gummi-Metallteile a.Weichkaut. für Kfz d.Pos. 8701-8705 / Produktbeschreibung: VERSCHIEDENE STERNZEICHEN"
+      },
+      {
+        "id": "TR-25160100EX00130501-ITEM1",
+        "index": "1",
+        "origin": null,
+        "regime": null,
+        "quantity": 5270,
+        "item_value": 17127.5,
+        "net_weight": 3313.58,
+        "gross_weight": 0,
+        "commodity_code": "40169991900",
+        "unit_of_measure": "NAR",
+        "package_quantity": 14,
+        "statistical_value": 19156.19,
+        "commodity_description": "Gummi-Metallteile aus Weichkautschuk / VERSCHIEDENE STERNZEICHEN 1-Unregistriert-ANGST-833393.32TL"
+      }
+    ],
+    "sender": "LANGST PFISTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş.",
+    "tax_id": "6080551890",
+    "invoice_no": "KÜBRA VEKALET 'APOSTILLE-116342-07.12.2017' ÇEKİ LİSTESİ ** AEO:1-Yetkilendiril miş Yükümlü TR/AEOF24160001/31.07.2024** *2017/7 SAY. TEB. ISTINADEN E-FA TURA ID SISTEME DÜŞMEDİĞİNDEN E-FATURALI İŞLEM YERİNE NORMAL FATURALI İŞLEM YAPILMIŞTIR IML ANGST PFİSTER GELİŞMİŞ TEKNİK ÇÖZÜMLER A.Ş./VN:6080551890 Fatura Var 31.10.2025/API2025000001229 A.TR Dolaşım Belgesi\nBasit 31.10.20 25/N0570487 TPS-Kripto Numarası Var\n3110.2025/25153097211086075984584/1",
+    "total_value": "54221.56",
+    "total_weight": null,
+    "delivery_term": "DAP",
+    "total_package": "14",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "2",
+    "dispatch_country": "TR",
+    "total_net_weight": 10490,
+    "total_value_curr": "EUR",
+    "total_gross_weight": 7430.23,
+    "destination_country": "DE",
+    "border_transport_mode": "3"
+  }
+}

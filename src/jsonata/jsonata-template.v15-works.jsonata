@@ -157,21 +157,25 @@ $globalExporterAddress := $isInvoiceExist
     ? $.atr.exporter_address
       : $isCmrExist
       ? $.cmr.exporter_address
-        : null;
+        : "";
 $globalExporterCountry := $isInvoiceExist
   ? $.invoice[0].invoice_supplier_country
     : $isAtrExist
     ? $.atr.exporter_country
       : $isCmrExist
       ? $.cmr.exporter_country
-        : null;
+        : "TR";
 $globalExporterName := $isInvoiceExist
   ? $.invoice[0].invoice_supplier_name
     : $isAtrExist
     ? $.atr.sender
       : $isCmrExist
       ? $.cmr.sender
-        : null;
+        : $isFtzExist 
+        ? $.ftz.sender
+          : $isDeclarationExist
+          ? $.tr_export_declaration.sender
+            : "Exporter Name";
 $globalExporterCity := $isAtrExist
     ? $.atr.exporter_city
       : $isCmrExist
@@ -190,11 +194,6 @@ $globalBuyerName := $isFtzExist
   ? $.ftz.buyer
     : $isDeclarationExist
     ? $.tr_export_declaration.buyer
-      : null;
-$globalSenderName := $isFtzExist 
-  ? $.ftz.sender
-    : $isDeclarationExist
-    ? $.tr_export_declaration.sender
       : null;
 
 /* Unterlage Root Not item*/
