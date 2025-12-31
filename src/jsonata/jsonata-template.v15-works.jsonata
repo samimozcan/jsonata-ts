@@ -502,7 +502,7 @@ $lieferbedingungSchluessel := function() {(
           "GesamtRohMasse": $totalGrossWeight ~> $round(1), /* DONE @alican burasi yoksa cmr den alinilicak denilmis ama baska gross goremedim, cmr tarafindaki gross weight ai service den total_weight olarak donuyor @alican @samim Ayni sekilde burasi da integer istiyor*/
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
           "VerkehrszweigInland": $.transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
-          "VerkehrszweigGrenze": $globalModeOfTransport, /* : @Alican tolgalar ile gorusecek bunun icin */
+          "VerkehrszweigGrenze": $substring($globalModeOfTransport ?? "30", 0, 1), /* : @Alican tolgalar ile gorusecek bunun icin */
           "VersendungslandCode": $globalDispatchCountry ?? $v.headerData.departureCountry and $length($v.headerData.departureCountry) = 2 ? $v.headerData.departureCountry,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
           "Bestimmungsland": $globalDestionationCountry ?? $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/

@@ -49,7 +49,7 @@
       "total_value": 54221.56,
       "total_package": 14,
       "total_value_curr": "EUR",
-      "mode_of_transport": "3",
+      "mode_of_transport": "30",
       "total_gross_weight": 10861,
       "destination_country": "DE"
     }
@@ -396,6 +396,6 @@
     "total_value_curr": "EUR",
     "total_gross_weight": 7430.23,
     "destination_country": "DE",
-    "border_transport_mode": "3"
+    "border_transport_mode": "30"
   }
 }
