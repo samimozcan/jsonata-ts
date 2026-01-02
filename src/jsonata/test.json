@@ -1,0 +1,187 @@
+{
+  "tr_export_declaration": {
+    "id": "25341300EX00476924",
+    "date": "2025-06-13",
+    "buyer": "S.OLIVER BERND FREIER GMBH CO.KG",
+    "items": [
+      {
+        "id": "TR-25341300EX00476924-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 415,
+        "item_value": 6204.25,
+        "net_weight": 256.85,
+        "gross_weight": 269.35,
+        "commodity_code": "62034231000",
+        "unit_of_measure": "Adet",
+        "package_quantity": "Ticari tanımı: Denim Erkek Pantolon (Farklı Renkteki İpliklerden):[%100\nPamuk](Astarsız) (Yıkanmış, Taşlanmış, Eskitilmiş, Zımparalanmış)",
+        "statistical_value": 7170.67,
+        "commodity_description": "Aus Denim"
+      },
+      {
+        "id": "TR-25341300EX00476924-ITEM2",
+        "index": "2",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 410,
+        "item_value": 5924.5,
+        "net_weight": 252.15,
+        "gross_weight": 263.65,
+        "commodity_code": "62034231000",
+        "unit_of_measure": "Adet",
+        "package_quantity": 23,
+        "statistical_value": 6847.34,
+        "commodity_description": "Aus Denim"
+      },
+      {
+        "id": "TR-25341300EX00476924-ITEM3",
+        "index": "3",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 1780,
+        "item_value": 26611,
+        "net_weight": 1121.4,
+        "gross_weight": 1170.4,
+        "commodity_code": "62034231000",
+        "unit_of_measure": "Adet",
+        "package_quantity": 100,
+        "statistical_value": 30756.11,
+        "commodity_description": "Aus Denim"
+      },
+      {
+        "id": "TR-25341300EX00476924-ITEM4",
+        "index": "4",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 22,
+        "item_value": 263.12,
+        "net_weight": 13.86,
+        "gross_weight": 15.86,
+        "commodity_code": "62034231000",
+        "unit_of_measure": "Adet",
+        "package_quantity": 2,
+        "statistical_value": 304.11,
+        "commodity_description": "Aus Denim"
+      },
+      {
+        "id": "TR-25341300EX00476924-ITEM5",
+        "index": "5",
+        "origin": "TR",
+        "regime": "3151",
+        "quantity": 2435,
+        "item_value": 35185.75,
+        "net_weight": 1534.5,
+        "gross_weight": 1601,
+        "commodity_code": "62034231000",
+        "unit_of_measure": "Adet",
+        "package_quantity": 134,
+        "statistical_value": 40666.52,
+        "commodity_description": "Aus Denim"
+      }
+    ],
+    "sender": "AKARTEKS TEKSTİL SANAYİ VE TİCARET A.Ş",
+    "tax_id": "0130657316",
+    "invoice_no": "ÖZNURT 33162 BÜYÜKÇEKMECE 14. NOTERİ' OKSB 29.08.2023/23 34/OKS/0870 NOTIFY:FREIER GROUP LOGISTICS GMBH & CO.KG-ALMANYA IML AKAR TEKS TEKSTİL SANAYİ VE TİCARET A.Ş/VN:0130657316 Dahilde İşleme İzin Belges i Var 29.01.2025/25100529001 DB A.TR Dolaşım Belgesi Var 13.06.2025/25TOBBO\n321000022659575 TCGB Var 21.01.2025/25341453IM00038090 TCGB Var 14.01.2025/\n25343100IM00009332 TPS-Dâhilde İşleme İzni Var 14.01.2025/25243082610878065\n936604/3 TPS-Dahilde İşleme İzni Var 21.01.2025/25243082610878066181464/3 Jun Perole PS-E-Fatura-Var 13:06:2025/252431601-10886042669020/1 TPS-Kripto Numarası Va r 13.06.2025/25153097211086071206732/1 2025/01-00529",
+    "total_value": "74188.62",
+    "total_weight": 200,
+    "delivery_term": "FCA",
+    "total_package": "283",
+    "delivery_place": "ISTANBUL",
+    "total_line_item": "5",
+    "dispatch_country": "TR",
+    "total_value_curr": "EUR",
+    "mode_of_transport": "3",
+    "destination_country": "DE"
+  },
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "SUBEN",
+            "district": "Suben",
+            "postalCode": "4975",
+            "addressType": "CN",
+            "companyName": "TESTKUNDE",
+            "countryCode": "AT",
+            "participantEORI": "DE123456789",
+            "streetAndNumber": "Suben",
+            "participantSubsidiaryNumber": 555
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Andreas Luxbauer",
+            "contactPersonEmail": "test@test.com",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": "555 55 55"
+          },
+          "departureCountry": "AT",
+          "dv1CostAllocation": {
+            "costs": 10,
+            "costType": "test",
+            "currencyCode": "EUR"
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "AT",
+          "declarantIsConsignee": true,
+          "addressedCustomsOffice": "7701",
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "25",
+          "transportMeansArrivalIdentity": "TEST22042025",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": 1,
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR060500001220M5"
+        },
+        "objectIdentification": {
+          "username": "ANDREAS",
+          "objectName": "4803/2602202_TEST_0020",
+          "objectAlias": "4803/260220122042025_160905",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERA",
+      "ioDivision3": "SUB",
+      "ioReference": "4803/260220122042025_160905"
+    }
+  },
+  "invoice": [
+    {
+      "items": [
+        {
+          "invoice_item_no": 1,
+          "invoice_item_quantity": 5084,
+          "invoice_item_unit_type": "KG",
+          "invoice_item_product_id": null,
+          "invoice_item_unit_price": 3.9,
+          "invoice_item_description": "Mit einem Titer von weniger als 192,31|dtex, jedoch nicht weniger als 125|dtex (mehr als Nm|52|bis Nm|80)",
+          "invoice_item_total_amount": 19827.6,
+          "invoice_item_commodity_code": "52052400000",
+          "invoice_item_package_quantity": null,
+          "invoice_item_country_of_origin": null
+        }
+      ],
+      "invoice_id": "IHR2025000000119",
+      "invoice_date": "2025-04-24",
+      "invoice_currency": "USD",
+      "invoice_po_number": "000IHR2025-0118",
+      "invoice_payment_term": "MAL MUKABİLİ",
+      "invoice_total_amount": 19827.6,
+      "invoice_customer_name": "TVU GARNVERTRIEB GMBH",
+      "invoice_delivery_term": "DAP",
+      "invoice_supplier_name": "TOPKAPI İPLİK SAN. VE TİC. A. Ş.",
+      "invoice_total_quantity": 5084,
+      "invoice_customer_address": "RAMMERSDORFER STR. 8 D-91578",
+      "invoice_customer_country": "DE",
+      "invoice_supplier_address": "HADIMKÖY MAH. ELVAN SOK. NO:6-8",
+      "invoice_supplier_country": "TR",
+      "invoice_total_package_quantity": 14,
+      "invoice_shipment_country_of_origin": null
+    }
+  ]
+}

@@ -11,6 +11,8 @@ $_compact := function($arr) { $arr != "array" ? [$arr] : $arr ~> $arr ~> $filter
 $_dateWithoutTime; /* assign function to jsonata */
 /* @args source, destination(can be regex), regex flag */
 $_removeAfter; /* assign function to jsonata */
+/* floor function does not take precious so create new one*/
+$_floor;
 
 /* Remove duplicates from array of objects by field  --- @utils */
 $uniqueByField := function($arr, $field) {(
@@ -61,6 +63,38 @@ $getZollrechtlicherStatus := function($departureCountry, $documentDivision, $isA
   $IMStatus := "IM"; /* working like else */
 
   $response := $COStatus ? $COStatus : $EUStatus ? $EUStatus : $IMStatus
+)};
+
+/*
+  Mode of transport mapping
+    10, 12, 16, 18 ->	02 – Schiff (Gemi)	1 – Sea transport
+    20, 21, 24, 25 ->	03 – Waggon (Vagon)	2 – Rail transport
+    30, 16, 17, 23, 90 ->	01 – LKW (Kamyon / Tır)	3 – Road transport
+    40 ->	04 – Flugzeug (Uçak)	4 – Air transport
+    50 ->	07 – Andere (Posta, özel taşıma)	5 – Postal consignments
+    70 ->	07 – Andere	7 – Fixed installations
+    80, 81, 82, 83, 84 ->	02 – Schiff (Su taşıtı)	8 – Inland waterway transport
+    90, 99 ->	01 – LKW / 05 – PKW / 07 – Andere	9 – Own propulsion
+*/
+$getBefoerderungsmittelGrenzeArt := function($modeOfTransport) {(
+  $ship := ["10", "12", "16", "18"];
+  $rail := ["20", "21", "24", "25"];
+  $road := ["30", "16", "17", "23", "90"];
+  $air := ["40"];
+  $postal := ["50"];
+  $fixed := ["70"];
+  $inlandWaterway := ["80", "81", "82", "83", "84"];
+  $ownPropulsion := ["90", "99"];
+
+  $response := $modeOfTransport in $ship ? "02"
+    : $modeOfTransport in $rail ? "03"
+      : $modeOfTransport in $road ? "01"
+        : $modeOfTransport in $air ? "04"
+          : $modeOfTransport in $postal ? "07"
+            : $modeOfTransport in $fixed ? "07"
+              : $modeOfTransport in $inlandWaterway ? "02"
+                : $modeOfTransport in $ownPropulsion ? "01"
+                  : "01";
 )};
 
 
@@ -253,7 +287,7 @@ $beguenstigungBeantragtCode := function() {(
 
 /* If not exist return 1 or floor arg value */
 $aHStatWert := function($value) {(
-  $response := $value != null and $value != undefined ? $value ~> $floor() : 1
+  $response := $value = null or $value = undefined ? null : $value < 1 ? 1 : $value ~> $_floor()
 )};
 
 /* AbzugHinzurechnung */
@@ -319,7 +353,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.combined_item_country_of_origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.combined_item_net_weight, $.combine_items.meta.total_merged_items), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": $v.combined_item_package_quantity ? $round($v.combined_item_package_quantity, 3) : null,
+            "AHStatMenge": $v.combined_item_quantity ? $round($v.combined_item_quantity, 3) : null,
             "AHStatMengeMasseinheit": $v.combined_item_unit_type,
             "AHStatWert": $aHStatWert($v.combined_item_statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
@@ -342,7 +376,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.net_weight, $totalDeclarationItemCount), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : null,
+            "AHStatMenge": $v.quantity and $type($v.quantity) = "number" ? $round($v.quantity, 3) : null,
             "AHStatMengeMasseinheit": $v.unit_of_measure, 
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
@@ -368,7 +402,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem($vv.invoice_item_net_weight, $totalInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
-              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : null, /* statistical quantity not exist in invoice */
+              "AHStatMenge": $vv.invoice_item_quantity ? $round($vv.invoice_item_quantity, 3) : null, /* statistical quantity not exist in invoice */
               "AHStatMengeMasseinheit": $vv.invoice_item_unit_type,
               "AHStatWert": null, /* statistical value */
               "PackstueckAnzahl": $ii = 0 ? $totalPackageQuantity : undefined, 
@@ -395,7 +429,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
               "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
               "UrsprungslandCode": $getFirstElement([$vv.invoice_item_country_of_origin, 'TR']), 
               "Eigenmasse": $getNetWeightForItem(null, $totalCommercialInvoiceItemCount), /*default for now  @alican For AÜV and ATÜV goods, at least 1 kg must be declared. */
-              "AHStatMenge": $vv.invoice_item_package_quantity ? $round($vv.invoice_item_package_quantity, 3) : undefined,
+              "AHStatMenge": $vv.invoice_item_quantity ? $round($vv.invoice_item_quantity, 3) : undefined,
               "AHStatMengeMasseinheit": $vv.invoice_item_unit_type, 
               "AHStatWert": null, /* statistical value */
               "PackstueckAnzahl": $ii = 0 ? totalPackageQuantity : undefined, 
@@ -420,7 +454,7 @@ $getWarenPosition := function($procedureCodeRequested) {(
             "VerfahrenscodeVorangegangenesVerfahren": $procedureCodeRequested ? "00" : null, 
             "UrsprungslandCode": $getFirstElement([$v.origin, 'TR']), 
             "Eigenmasse": $getNetWeightForItem($v.net_weight, $count($.ftz.shipment.positions)), /* Burasi float kabul etmiyor ondan dolayi round atilacak simdilik @alican @samim */
-            "AHStatMenge": $v.package_quantity and $type($v.package_quantity) = "number" ? $round($v.package_quantity, 3) : null,
+            "AHStatMenge": $v.quantity and $type($v.quantity) = "number" ? $round($v.quantity, 3) : null,
             "AHStatMengeMasseinheit": $v.unit_of_measure, 
             "AHStatWert": $aHStatWert($v.statistical_value), /*default for now, eger 1 den kucukse 1 olacak, yoksa floor atilacak*/
             "PackstueckAnzahl": $i = 0 ? $totalPackageQuantity : undefined,
@@ -502,13 +536,13 @@ $lieferbedingungSchluessel := function() {(
           "GesamtRohMasse": $totalGrossWeight ~> $round(1), /* DONE @alican burasi yoksa cmr den alinilicak denilmis ama baska gross goremedim, cmr tarafindaki gross weight ai service den total_weight olarak donuyor @alican @samim Ayni sekilde burasi da integer istiyor*/
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
           "VerkehrszweigInland": $.transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
-          "VerkehrszweigGrenze": $substring($globalModeOfTransport ?? "30", 0, 1), /* : @Alican tolgalar ile gorusecek bunun icin */
+          "VerkehrszweigGrenze":$globalModeOfTransport ? $substring($globalModeOfTransport, 0, 1) : "3", /* : @Alican tolgalar ile gorusecek bunun icin */
           "VersendungslandCode": $globalDispatchCountry ?? $v.headerData.departureCountry and $length($v.headerData.departureCountry) = 2 ? $v.headerData.departureCountry,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
           "Bestimmungsland": $globalDestionationCountry ?? $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
           "KennzeichenNameBefoerderungsmittelAnkunft": $v.headerData.transportMeansArrivalIdentity,
           "BefoerderungsmittelGrenzeStaatszugehoerigkeitCode": $v.headerData.transportMeansNationalityCode,
-          "BefoerderungsmittelGrenzeArt": "01", /* Turkiye Almanya arasi daima kara yolu kullanilacak */
+          "BefoerderungsmittelGrenzeArt": $getBefoerderungsmittelGrenzeArt($v.headerData.modeOfTransport), /* Turkiye Almanya arasi daima kara yolu kullanilacak */
           "LieferbedingungCode": $globalDeliveryTerm,
           "LieferbedingungSchluessel": $lieferbedingungSchluessel(), 
           "LieferbedingungOrt": $lieferbedingungOrt($v.addresses[0].city), /* () AI den alinacak. Kurali eklenecektir. Beyannameden alinacak. */

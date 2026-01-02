@@ -62,17 +62,38 @@ const removeAfter = (
   }
 };
 
+// floor function that works with decimal places
+const floor = (value: number, decimalPlaces: number = 0): number => {
+  const floorHelper = (val: number, places: number): number => {
+    const factor = Math.pow(10, places);
+    return Math.floor(val * factor) / factor;
+  };
+
+  if (typeof value === 'string') {
+    value = parseFloat(value);
+    if (isNaN(value)) {
+      return value;
+    }
+
+    return floorHelper(value, decimalPlaces);
+  }
+
+  return floorHelper(value, decimalPlaces);
+};
+
 export const assignFunctionList: {
-    name: string;
-    func: (this: any, ...args: any[]) => any;
-    type: string;
+  name: string;
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  func: (this: any, ...args: any[]) => any;
+  type: string;
 }[] = [
-    { name: '_dateWithoutTime', func: getValidDateWithoutTime, type: '<(sl):s>' },
-    { name: '_isValidDate', func: isValidDate, type: '<(sl):b>' },
-    {
-        name: '_isValidDateWithoutTime',
-        func: isValidDateWithoutTime,
-        type: '<(sl):b>',
-    },
-    { name: '_removeAfter', func: removeAfter, type: '<(sl)(sl)(sl)?:s>' },
+  { name: '_dateWithoutTime', func: getValidDateWithoutTime, type: '<(sl):s>' },
+  { name: '_isValidDate', func: isValidDate, type: '<(sl):b>' },
+  {
+    name: '_isValidDateWithoutTime',
+    func: isValidDateWithoutTime,
+    type: '<(sl):b>',
+  },
+  { name: '_removeAfter', func: removeAfter, type: '<(sl)(sl)(sl)?:s>' },
+  { name: '_floor', func: floor, type: '<(n)(n)?:n>' },
 ];
