@@ -1,0 +1,132 @@
+{
+  "atr": {
+    "id": "NO:11412150",
+    "date": "2025-12-26",
+    "sender": null,
+    "receiver": "MULLER-DIE LILA LOGISTIK CESKA K.S.",
+    "export_mrn": "25160100EX00153774",
+    "exporter_city": "BURSA",
+    "total_package": 1,
+    "transport_type": null,
+    "exporter_address": "MINARELI CAVUS MAH. MELEK SK.NO:2 D:2",
+    "exporter_country": "TR",
+    "total_gross_weight": 2300.22
+  },
+  "cmr": {
+    "date": "2025-12-31",
+    "sender": "ENKITEX KUMAŞ DIŞ.TİC.A.Ş.",
+    "plate_no": "34 FKE 212",
+    "receiver": "INDES FUGGERHAUS TEXTIL GMBH",
+    "exporter_city": "NILUFER",
+    "loading_place": "BURSA - TURKIYE",
+    "total_package": 171,
+    "delivery_place": "BRNO - CZECH REPUBLIC",
+    "exporter_address": "MİNARELİÇAVUŞ MAH. MELEK SOKAK NO:2-2",
+    "exporter_country": "TR",
+    "total_net_weight": null,
+    "total_gross_weight": 2300.22
+  },
+  "cache": {
+    "commodity_codes": [
+      {
+        "code": "63039290900",
+        "oldCode": "630392900011",
+        "description": "Gardinen, Vorhänge ua. aus synthetischen Chemiefasern / Produktbeschreibung: Fertigvorhänge",
+        "oldDescription": "Ticari tanımı: HAZIR PERDE"
+      }
+    ]
+  },
+  "regime_type": "IM",
+  "additional_data": {
+    "declaration": [
+      {
+        "addresses": [
+          {
+            "city": "MARIENHEIDE",
+            "postalCode": "51709",
+            "addressType": "CN",
+            "companyName": "INDES FUGGERHAUS TEXTIL  GMBH",
+            "countryCode": "DE",
+            "participantEORI": "DE2144468",
+            "streetAndNumber": "EICHENDORFFSTRASSE 2",
+            "participantSubsidiaryNumber": ""
+          }
+        ],
+        "headerData": {
+          "agentContact": {
+            "contactPersonName": "Mathias Luxbauer",
+            "contactPersonPosition": "Zolldeklarant/in",
+            "contactPersonPhoneNumber": ""
+          },
+          "inputTaxDeduction": true,
+          "destinationCountry": "DE",
+          "declarantIsConsignee": true,
+          "procedureCodeRequested": "40",
+          "destinationFederalState": "05",
+          "transportMeansArrivalIdentity": "34FKE212",
+          "transportMeansNationalityCode": "TR",
+          "representationRelationshipCode": "",
+          "previousAdministrativeReferenceType": "T1",
+          "previousAdministrativeReferenceNumber": "25TR160100084406M0"
+        },
+        "objectIdentification": {
+          "username": "MATHIAS",
+          "objectName": "4803/26000337",
+          "objectAlias": "4803/2600033704012026_203438",
+          "declarationType": "EZA-D",
+          "referenceNumberOverlay": "AA_EZA_DE_IM4000"
+        }
+      }
+    ],
+    "transaction": {
+      "ioPartner": "VERG",
+      "ioDivision3": "SUB",
+      "ioReference": "4803/2600033704012026_203438"
+    }
+  },
+  "dispatch_country": "TR",
+  "additional_setting": {
+    "userId": 11,
+    "companyId": 1,
+    "combineOptions": ["commodity_code", "country_of_origin"],
+    "outputApplicationId": "dakosy/sftp/verg"
+  },
+  "destination_country": "DE",
+  "tr_export_declaration": {
+    "id": "25160100EX00153774",
+    "date": "2025-12-26",
+    "buyer": "INDES FUGGERHAUS TEXTIL GMBH",
+    "items": [
+      {
+        "id": "TR-25160100EX00153774-ITEM1",
+        "index": "1",
+        "origin": "TR",
+        "regime": "1000",
+        "quantity": 7539.14,
+        "item_value": 32029.3,
+        "net_weight": 2129.22,
+        "gross_weight": 2300.22,
+        "commodity_code": "63039290900",
+        "unit_of_measure": "MTK",
+        "package_quantity": 171,
+        "statistical_value": 35973.15,
+        "commodity_description": "Gardinen, Vorhänge ua. aus synthetischen Chemiefasern / Produktbeschreibung: Fertigvorhänge"
+      }
+    ],
+    "sender": "ENKİTEX KUMAŞ DIŞ TİCARET A.Ş.",
+    "tax_id": "3350655656",
+    "invoice_no": "ΖΕΥΝΕΡ VEKALET='T.C. BURSA 28. NOTER 18.12.2023/47274' NOTIFY:MÜLLER-DIE LILA LOG 7539,14\nİSTİK-ÇEK CUMHURİYETİ TÜRKİYE HALK BANKASI DUMLUPINAR ŞUBESİ**\nTED=ENKİTEX KUMAŞ DIŞ TİCARET A.Ş./VN:3350655656 DB A.TR Dolaşım Belgesi Var\n26.12.202 5\n/25TOBB0321000024428480 TPS-E-Fatura Var\n26.12.2025/2524316011088604613074 4/1-2 TPS-Kripto Numarası Var\n26.12.2025/25153097211086078126559/1",
+    "total_value": "32029.30",
+    "total_weight": null,
+    "delivery_term": "CIF",
+    "total_package": "171",
+    "delivery_place": "ALMANYA",
+    "total_line_item": "1",
+    "dispatch_country": "TR",
+    "total_net_weight": 2129.22,
+    "total_value_curr": "EUR",
+    "total_gross_weight": 2300.22,
+    "destination_country": "DE",
+    "border_transport_mode": "30"
+  }
+}

@@ -6,13 +6,17 @@
 /* --- UTILS  --- */
 /* ------------------------------------ */
 /* Compact function to remove null/undefined/false/""/NaN values from array --- @utils */
-$_compact := function($arr) { $arr != "array" ? [$arr] : $arr ~> $arr ~> $filter(function($v) { $v }) };
+$_compact;
 /* @args date */
 $_dateWithoutTime; /* assign function to jsonata */
 /* @args source, destination(can be regex), regex flag */
 $_removeAfter; /* assign function to jsonata */
 /* floor function does not take precious so create new one*/
 $_floor;
+/* substring function that handles null/undefined */
+$_substring;
+/* length function that handles null/undefined */
+$_length;
 
 /* Remove duplicates from array of objects by field  --- @utils */
 $uniqueByField := function($arr, $field) {(
@@ -103,132 +107,105 @@ $getBefoerderungsmittelGrenzeArt := function($modeOfTransport) {(
 * Constans
 * ------------------------------------
 */
-$totalAmount := $isDeclarationExist 
-  ? $.tr_export_declaration.total_value 
-    : $isInvoiceExist and $type($.invoice) = "object" 
-    ? $.invoice.invoice_total_amount 
-      : $isInvoiceExist and $type($.invoice) = "array" 
-        ? $.invoice.invoice_total_amount ~> $_compact() ~> $sum() 
-        : $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_total_amount ~> $_compact() ~> $sum() 
-          : $isFtzExist and $.ftz.total_value
-          ? $.ftz.total_value 
-            : null;
-$totalNetWeight := $isDeclarationExist 
-  ? $map($.tr_export_declaration.items, function($item) { $item.net_weight ? $item.net_weight : 0}) ~> $_compact() ~> $sum()
-    : $isInvoiceExist and $.invoice[0].invoice_total_net_weight and $.invoice[0].invoice_total_net_weight > 0
-    ? $map($.invoice, function($inv) { $inv.invoice_total_net_weight }) ~> $_compact() ~> $sum()
-      : $isCommercialInvoiceExist and $.commercial_invoice[0].invoice_total_net_weight and $.commercial_invoice[0].invoice_total_net_weight > 0
-      ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_net_weight }) ~> $_compact() ~> $sum()
-        : $isCmrExist and $.cmr.total_net_weight and $.cmr.total_net_weight > 0
-        ? $round($.cmr.total_net_weight ? $.cmr.total_net_weight : 0, 1) 
-          : null;
-$totalGrossWeight := $isDeclarationExist
-  ? $map($.tr_export_declaration.items, function($item) { $item.gross_weight ? $item.gross_weight : 0}) ~> $_compact() ~> $sum()
-    : $isCmrExist and $.cmr.total_gross_weight and $.cmr.total_gross_weight > 0
-    ? $round($.cmr.total_gross_weight ? $.cmr.total_gross_weight : 0, 1) 
-      : $isInvoiceExist
-      ? $map($.invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum()
-        : $isCommercialInvoiceExist 
-        ? $map($.commercial_invoice, function($inv) { $inv.invoice_total_gross_weight ? $inv.invoice_total_gross_weight : 0}) ~> $_compact() ~> $sum()
-          : $isAtrExist and $.atr.total_gross_weight and $.atr.total_gross_weight > 0
-          ? $round($.atr.total_gross_weight ? $.atr.total_gross_weight : 0, 1) 
-            : $isFtzExist and $.ftz.total_gross_weight and $.ftz.total_gross_weight > 0
-            ? $round($.ftz.total_gross_weight ? $.ftz.total_gross_weight : 0, 1) 
-              : null;
-$totalPackageQuantity := $isDeclarationExist and $.tr_export_declaration.total_package
-    ? $.tr_export_declaration.total_package ~> $number() ~> $round(0)
-      : $isInvoiceExist and $type($.invoice) = "object" 
-      ? $.invoice.invoice_total_package_quantity ? $.invoice.invoice_total_package_quantity ~> $round(0)
-        : $isInvoiceExist and $type($.invoice) = "array" 
-        ? $.invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
-          : $isCommercialInvoiceExist 
-          ? $.commercial_invoice[0].invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) 
-            : $isFtzExist and $.ftz.total_package
-            ? $.ftz.total_package ~> $number() ~> $round(0)
-              : null;
-$totalAmountCurrency := $isDeclarationExist 
-  ? $.tr_export_declaration.total_value_curr 
-    : $isInvoiceExist and $type($.invoice) = "object" 
-    ? $.invoice.invoice_currency 
-      : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice[0].invoice_currency
-      ? $isCommercialInvoiceExist ? $.commercial_invoice[0].invoice_currency
-        : $isFtzExist and $.ftz.total_value_curr
-        ? $.ftz.total_value_curr 
-          : null;
-$globalDeliveryTerm := $.tr_export_declaration.delivery_term 
-  ?? $.invoice[0].invoice_delivery_term 
-    ?? $.commercial_invoice[0].invoice_delivery_term
-      ?? $.ftz.shipment.positions[0].delivery_term
-        ?? $.commercial_invoice[0].invoice_delivery_term
-          ?? null;
-$globalModeOfTransport := $.tr_export_declaration.border_transport_mode 
-  ?? $.transit_declaration.border_transport_mode 
-    ?? $.ftz.mode_of_transport
-      ?? null;
-$globalDispatchCountry := $.tr_export_declaration.dispatch_country and $length($.tr_export_declaration.dispatch_country) = 2
-  ? $.tr_export_declaration.dispatch_country
-    : $.invoice[0].invoice_country_of_dispatch and $length($.invoice[0].invoice_country_of_dispatch) = 2
-    ? $.invoice[0].invoice_country_of_dispatch
-      : $.commercial_invoice[0].invoice_country_of_dispatch and $length($.commercial_invoice[0].invoice_country_of_dispatch) = 2
-      ? $.commercial_invoice[0].invoice_country_of_dispatch
-        : $.dispatch_country and $length($.dispatch_country) = 2
-        ? $.dispatch_country
-          : null;
-$globalDestionationCountry := $.tr_export_declaration.destination_country and $length($.tr_export_declaration.destination_country) = 2
-  ? $.tr_export_declaration.destination_country
-    : $.invoice[0].invoice_shipment_country_of_origin and $length($.invoice[0].invoice_shipment_country_of_origin) = 2
-    ? $.invoice[0].invoice_shipment_country_of_origin
-      : $.commercial_invoice[0].invoice_shipment_country_of_origin and $length($.commercial_invoice[0].invoice_shipment_country_of_origin) = 2
-      ? $.commercial_invoice[0].invoice_shipment_country_of_origin
-        : $.destination_country and $length($.destination_country) = 2
-        ? $.destination_country
-          : $.ftz.destination_country and $length($.ftz.destination_country) = 2
-          ? $.ftz.destination_country
-            : null;
-$globalExporterAddress := $isInvoiceExist
-  ? $.invoice[0].invoice_supplier_address
-    : $isAtrExist
-    ? $.atr.exporter_address
-      : $isCmrExist
-      ? $.cmr.exporter_address
-        : "";
-$globalExporterCountry := $isInvoiceExist
-  ? $.invoice[0].invoice_supplier_country
-    : $isAtrExist
-    ? $.atr.exporter_country
-      : $isCmrExist
-      ? $.cmr.exporter_country
-        : "TR";
-$globalExporterName := $isInvoiceExist
-  ? $.invoice[0].invoice_supplier_name
-    : $isAtrExist
-    ? $.atr.sender
-      : $isCmrExist
-      ? $.cmr.sender
-        : $isFtzExist 
-        ? $.ftz.sender
-          : $isDeclarationExist
-          ? $.tr_export_declaration.sender
-            : "Exporter Name";
-$globalExporterCity := $isAtrExist
-    ? $.atr.exporter_city
-      : $isCmrExist
-      ? $.cmr.exporter_city
-        : "Istanbul";
-$totalInvoiceItemCount := $isInvoiceExist 
-  ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
-    : 0;
-$totalCommercialInvoiceItemCount := $isCommercialInvoiceExist 
-  ? $reduce($.commercial_invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0)
-    : 0;
-$totalDeclarationItemCount := $isDeclarationExist
-  ? $count($.tr_export_declaration.items)
-    : 0;
-$globalBuyerName := $isFtzExist 
-  ? $.ftz.buyer
-    : $isDeclarationExist
-    ? $.tr_export_declaration.buyer
-      : null;
+$totalAmount := $getFirstElement([
+  $.tr_export_declaration.total_value,
+  $.invoice.invoice_total_amount,
+  $.commercial_invoice[0].invoice_total_amount,
+  $.ftz.total_value
+]);
+$totalNetWeight := $getFirstElement([
+  $isDeclarationExist ? $.tr_export_declaration.items.net_weight ~> $_compact() ~> $sum() : null,
+  $isInvoiceExist ? $.invoice.invoice_total_net_weight ~> $_compact() ~> $sum() : null,
+  $isCommercialInvoiceExist ? $.commercial_invoice.invoice_total_net_weight ~> $_compact() ~> $sum() : null,
+  $isCmrExist and $.cmr.total_net_weight ? $round($.cmr.total_net_weight, 1) : null,
+  0
+]);
+$totalGrossWeight := $getFirstElement([
+  $isDeclarationExist ? $.tr_export_declaration.items.gross_weight ~> $_compact() ~> $sum() : null,
+  $isCmrExist and $.cmr.total_gross_weight > 0 ? $round($.cmr.total_gross_weight, 1) : null,
+  $isInvoiceExist ? $.invoice.invoice_total_gross_weight ~> $_compact() ~> $sum() : null,
+  $isCommercialInvoiceExist ? $.commercial_invoice.invoice_total_gross_weight ~> $_compact() ~> $sum() : null,
+  $isAtrExist and $.atr.total_gross_weight > 0 ? $round($.atr.total_gross_weight, 1) : null,
+  $isFtzExist and $.ftz.total_gross_weight > 0 ? $round($.ftz.total_gross_weight, 1) : null,
+  0
+]);
+$totalPackageQuantity := $getFirstElement([
+  $isDeclarationExist ? $.tr_export_declaration.total_package ~> $number() ~> $round(0) : null,
+  $isInvoiceExist ? $.invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) : null,
+  $isCommercialInvoiceExist ? $.commercial_invoice.invoice_total_package_quantity ~> $_compact() ~> $sum() ~> $round(0) : null,
+  $isFtzExist ? $.ftz.total_package ~> $number() ~> $round(0) : null,
+  0
+]);
+$totalAmountCurrency := $getFirstElement([
+  $.tr_export_declaration.total_value_curr,
+  $.invoice.invoice_currency,
+  $.invoice[0].invoice_currency,
+  $.commercial_invoice[0].invoice_currency,
+  $.ftz.total_value_curr
+]);
+$globalDeliveryTerm := $getFirstElement([
+  $.tr_export_declaration.delivery_term,
+  $.invoice[0].invoice_delivery_term,
+  $.commercial_invoice[0].invoice_delivery_term,
+  $.ftz.shipment.positions[0].delivery_term
+]);
+$globalModeOfTransport := $getFirstElement([
+  $.tr_export_declaration.border_transport_mode,
+  $.transit_declaration.border_transport_mode,
+  $.ftz.mode_of_transport
+]);
+$globalDispatchCountry := $getFirstElement([
+  $isDeclarationExist and $_length($.tr_export_declaration.dispatch_country) = 2 ? $.tr_export_declaration.dispatch_country : null,
+  $isInvoiceExist and $_length($.invoice[0].invoice_country_of_dispatch) = 2 ? $.invoice[0].invoice_country_of_dispatch : null,
+  $isCommercialInvoiceExist and $_length($.commercial_invoice[0].invoice_country_of_dispatch) = 2 ? $.commercial_invoice[0].invoice_country_of_dispatch : null,
+  $_length($.dispatch_country) = 2 ? $.dispatch_country : null,
+  $isFtzExist and $_length($.ftz.dispatch_country) = 2 ? $.ftz.dispatch_country : null,
+  "TR"
+]);
+$globalDestionationCountry := $getFirstElement([
+  $isDeclarationExist and $_length($.tr_export_declaration.destination_country) = 2 ? $.tr_export_declaration.destination_country : null,
+  $isInvoiceExist and $_length($.invoice[0].invoice_shipment_country_of_origin) = 2 ? $.invoice[0].invoice_shipment_country_of_origin : null,
+  $isCommercialInvoiceExist and $_length($.commercial_invoice[0].invoice_shipment_country_of_origin) = 2 ? $.commercial_invoice[0].invoice_shipment_country_of_origin : null,
+  $_length($.destination_country) = 2 ? $.destination_country : null,
+  $isFtzExist and $_length($.ftz.destination_country) = 2 ? $.ftz.destination_country : null,
+  "DE"
+]);
+$globalExporterAddress := $getFirstElement([
+  $.invoice[0].invoice_supplier_address,
+  $.atr.exporter_address,
+  $.cmr.exporter_address,
+  ""
+]);
+$globalExporterCountry := $getFirstElement([
+  $.invoice[0].invoice_supplier_country,
+  $.atr.exporter_country,
+  $.cmr.exporter_country,
+  "TR"
+]);
+$globalExporterName := $getFirstElement([
+  $.invoice[0].invoice_supplier_name,
+  $.atr.sender,
+  $.cmr.sender,
+  $.ftz.sender,
+  $.tr_export_declaration.sender,
+  "Exporter Name"
+]);
+$globalExporterCity := $getFirstElement([
+  $.atr.exporter_city,
+  $.cmr.exporter_city,
+  "Istanbul"
+]);
+$globalBuyerName := $getFirstElement([
+  $.ftz.buyer,
+  $.tr_export_declaration.buyer,
+  "Buyer Name"
+]);
+
+/* Total item counts */
+$totalInvoiceItemCount := $isInvoiceExist ? $reduce($.invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0) : 0;
+$totalCommercialInvoiceItemCount := $isCommercialInvoiceExist ? $reduce($.commercial_invoice, function($acc, $inv){$acc + ($count($inv.items)) }, 0) : 0;
+$totalDeclarationItemCount := $isDeclarationExist ? $count($.tr_export_declaration.items) : 0;
+$totalFtzItemCount := $isFtzExist ? $count($.ftz.shipment.positions) : 0;
 
 /* Unterlage Root Not item*/
 $getUnterlage := function($procedureCodeRequested) {(
@@ -302,11 +279,11 @@ $abzugHinzurechnung := function($args) {(
 
 /* WarenNummerEZT *** */
 $warenNummerEZT := function($commodityCode) {(
-  $response := $type($commodityCode) = "string" and $length($commodityCode) > 11 ? "" : $commodityCode;
+  $response := $type($commodityCode) = "string" and $_length($commodityCode) > 11 ? "" : $commodityCode;
 )};
 
 $allDeclarationItemsCommodityCodeSuccess := $isDeclarationExist ? 
-  $filter($.tr_export_declaration.items, function($v) { $type($v.commodity_code) != "string" or $length($v.commodity_code) > 11 }) ~> $count() = 0
+  $filter($.tr_export_declaration.items, function($v) { $type($v.commodity_code) != "string" or $_length($v.commodity_code) > 11 }) ~> $count() = 0
     : false;
 $allInvoiceItemsCommodityCodeSuccess :=
   $isInvoiceExist ?
@@ -315,7 +292,7 @@ $allInvoiceItemsCommodityCodeSuccess :=
       $acc + (
         $filter($inv.items, function($v){
           $type($v.invoice_item_commodity_code) != "string"
-          or $length($v.invoice_item_commodity_code) > 11
+          or $_length($v.invoice_item_commodity_code) > 11
         }) ~> $count()
       )
     }, 0) = 0
@@ -328,7 +305,7 @@ $allCommercialInvoiceItemsCommodityCodeSuccess :=
       $acc + (
         $filter($inv.items, function($v){
           $type($v.invoice_item_commodity_code) != "string"
-          or $length($v.invoice_item_commodity_code) > 11
+          or $_length($v.invoice_item_commodity_code) > 11
         }) ~> $count()
       )
     }, 0) = 0
@@ -537,7 +514,7 @@ $lieferbedingungSchluessel := function() {(
           "VerfahrenBeantragtCode": $v.headerData.procedureCodeRequested, /*ZollrechtlicherStatus eger CO ise 49 olmasi gerek ama burada yazilmayaca, burasi validation a tasinacak...*/
           "VerkehrszweigInland": $.transit_declaration.type_of_transport ?? null, /* : Template datadan bu alan dolduruluyor mu kontrol edilecek. A1990 a bakilarak bir seyler yapilacak gibi.*/
           "VerkehrszweigGrenze":$globalModeOfTransport ? $substring($globalModeOfTransport, 0, 1) : "3", /* : @Alican tolgalar ile gorusecek bunun icin */
-          "VersendungslandCode": $globalDispatchCountry ?? $v.headerData.departureCountry and $length($v.headerData.departureCountry) = 2 ? $v.headerData.departureCountry,
+          "VersendungslandCode": $globalDispatchCountry ?? $v.headerData.departureCountry and $_length($v.headerData.departureCountry) = 2 ? $v.headerData.departureCountry,
           "Bestimmungsbundesland": $v.headerData.destinationFederalState, /*Aviso header dan gelmeye bilir, o durumda biz koyucagiz*/
           "Bestimmungsland": $globalDestionationCountry ?? $v.headerData.destinationCountry, /*TODO: validation icin A1314 e varmi yok mu kontrol saglanacak. eger Bestimmungsbundesland alan 25 ise ve burasi DE ise hata donecek, validation icin*/
           "KennzeichenNameBefoerderungsmittelAnkunft": $v.headerData.transportMeansArrivalIdentity,
