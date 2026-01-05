@@ -66,7 +66,8 @@
         Assign functions
         -------------------
         */
-        $_isValidDate($date);
+        $_isValidDate;
+        $_compact;
 
         $isDeclarationExist := $exists($.tr_export_declaration) and $type($.tr_export_declaration) = "object";
         $isInvoiceExist := $exists($.invoice) and $type($.invoice) = "array" and $count($.invoice) > 0;
@@ -224,7 +225,7 @@
         /* --- */
         /* --- */
         $isEqualTotalValueDeclarationInvoice := function($declaration) {(
-            $invoiceTotalValue := $isInvoiceExist and $type($.invoice) = "object" ? $.invoice.invoice_total_amount : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice.invoice_total_amount ~> $sum() : 0;
+            $invoiceTotalValue := $isInvoiceExist and $type($.invoice) = "object" ? $.invoice.invoice_total_amount : $isInvoiceExist and $type($.invoice) = "array" ? $.invoice.invoice_total_amount ~> $_compact() ~> $sum() : 0;
             $declarationTotalValue := $isDeclarationExist and $declaration.total_value ? $atoi($declaration.total_value) : 0;
 
             $invoiceTotalValue = 0 or $declarationTotalValue = 0 or $round($invoiceTotalValue, 2) = $round($declarationTotalValue, 2) ? null : {"code": "ERROR_0005", "path": ["tr_export_declaration", "total_value"], "args": [$declarationTotalValue, $invoiceTotalValue] }

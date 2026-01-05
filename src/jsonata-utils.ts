@@ -7,14 +7,14 @@ dayjs.extend(customParseFormat);
 /**
  * Converts a date input to a formatted date string without time component.
  * If the input is invalid, returns the current date.
- * 
+ *
  * @param input - The date to format (string, Date object, or null)
  * @returns A date string in 'YYYY-MM-DD' format
  * @example
  * getValidDateWithoutTime("2025-01-05T10:30:00") => "2025-01-05"
  * getValidDateWithoutTime(new Date()) => "2025-01-05"
  * getValidDateWithoutTime(null) => current date in "YYYY-MM-DD" format
- * 
+ *
  * @jsonata_signature `<(sl)-:s>` - Takes an optional string or null (uses context if missing), returns string
  */
 const getValidDateWithoutTime = (input: string | Date | null): string => {
@@ -186,7 +186,9 @@ const compact = (arr: unknown[] | unknown): unknown[] => {
  *
  * @jsonata_signature `<x:n>` - Takes any type, returns number
  */
-const length = (input: string | unknown[] | null | undefined | number): number => {
+const length = (
+  input: string | unknown[] | null | undefined | number,
+): number => {
   if (input == null) {
     return 0;
   }
@@ -418,7 +420,10 @@ const zip = (...arrays: (unknown[] | null | undefined)[]): unknown[][] => {
  *
  * @jsonata_signature `<as:o>` - Takes array and string key, returns object
  */
-const groupBy = (arr: unknown[] | null | undefined, key: string): Record<string, unknown[]> => {
+const groupBy = (
+  arr: unknown[] | null | undefined,
+  key: string,
+): Record<string, unknown[]> => {
   if (!Array.isArray(arr)) {
     return {};
   }
@@ -439,7 +444,10 @@ const groupBy = (arr: unknown[] | null | undefined, key: string): Record<string,
  *
  * @jsonata_signature `<as:o>` - Takes array and string key, returns object
  */
-const keyBy = (arr: unknown[] | null | undefined, key: string): Record<string, unknown> => {
+const keyBy = (
+  arr: unknown[] | null | undefined,
+  key: string,
+): Record<string, unknown> => {
   if (!Array.isArray(arr)) {
     return {};
   }
@@ -482,7 +490,11 @@ const pluck = (arr: unknown[] | null | undefined, path: string): unknown[] => {
  *
  * @jsonata_signature `<osx?:x>` - Takes object, string path, optional default, returns any type
  */
-const get = (obj: object | null | undefined, path: string, defaultValue?: unknown): unknown => {
+const get = (
+  obj: object | null | undefined,
+  path: string,
+  defaultValue?: unknown,
+): unknown => {
   if (obj == null) {
     return defaultValue;
   }
@@ -575,7 +587,9 @@ const entries = (obj: object | null | undefined): [string, unknown][] => {
  *
  * @jsonata_signature `<a:o>` - Takes array of pairs, returns object
  */
-const fromEntries = (pairs: [string, unknown][] | null | undefined): Record<string, unknown> => {
+const fromEntries = (
+  pairs: [string, unknown][] | null | undefined,
+): Record<string, unknown> => {
   if (!Array.isArray(pairs)) {
     return {};
   }
@@ -636,7 +650,9 @@ const omit = (obj: object | null | undefined, paths: string[]) => {
  *
  * @jsonata_signature `<o+:o>` - Takes one or more objects, returns object
  */
-const merge = (...objects: (object | null | undefined)[]): Record<string, unknown> => {
+const merge = (
+  ...objects: (object | null | undefined)[]
+): Record<string, unknown> => {
   const validObjects = objects.filter((obj) => obj != null);
   if (validObjects.length === 0) {
     return {};
@@ -769,7 +785,11 @@ const trim = (str: string | null | undefined, chars?: string): string => {
  *
  * @jsonata_signature `<sns?:s>` - Takes string, length number, optional padding string, returns string
  */
-const pad = (str: string | null | undefined, length: number, chars?: string): string => {
+const pad = (
+  str: string | null | undefined,
+  length: number,
+  chars?: string,
+): string => {
   if (str == null) {
     return '';
   }
@@ -915,13 +935,21 @@ export const assignFunctionList: {
    * DATE FUNCTIONS
    * ============================================ */
   /** Converts date to 'YYYY-MM-DD' format, returns current date if invalid */
-  { name: '_dateWithoutTime', func: getValidDateWithoutTime, type: '<(sl)-:s>' },
+  {
+    name: '_dateWithoutTime',
+    func: getValidDateWithoutTime,
+    type: '<(sl)-:s>',
+  },
 
   /** Checks if input is a valid date */
   { name: '_isValidDate', func: isValidDate, type: '<(sl)-:b>' },
 
   /** Checks if string is exactly in 'YYYY-MM-DD' format (strict parsing) */
-  { name: '_isValidDateWithoutTime', func: isValidDateWithoutTime, type: '<(sl)-:b>' },
+  {
+    name: '_isValidDateWithoutTime',
+    func: isValidDateWithoutTime,
+    type: '<(sl)-:b>',
+  },
 
   /* ============================================
    * STRING FUNCTIONS
@@ -1047,5 +1075,5 @@ export const assignFunctionList: {
   { name: '_isEmpty', func: isEmpty, type: '<x:b>' },
 
   /** Checks if value is null or undefined */
-  { name: '_isNil', func: isNil, type: '<x:b>' }
-]
+  { name: '_isNil', func: isNil, type: '<x:b>' },
+];
