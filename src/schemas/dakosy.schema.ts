@@ -218,6 +218,66 @@ export const DakosyZodSchema = z.object({
       }), 999), // [cite: 390]
     })
   })
+}).superRefine((data, ctx) => {
+  const warenPositionen = data.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung.WarenPosition;
+  
+  // Convert to array if single item
+  const positionen = Array.isArray(warenPositionen) ? warenPositionen : (warenPositionen ? [warenPositionen] : []);
+  
+  // Rule 1: Positionsnummer must start at 1 and be sequential (1, 2, 3, ...)
+  positionen.forEach((pos, index) => {
+    const expectedNumber = index + 1;
+    const actualNumber = parseInt(String(pos.Positionsnummer), 10);
+    if (actualNumber !== expectedNumber) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Positionsnummer must be sequential starting from 1. Position ${index + 1} should have Positionsnummer=${expectedNumber}, but got ${actualNumber}`,
+        path: ['FreierVerkehrAktVeredelUmwandlung', 'EinzelAnmeldung', 'WarenPosition', index, 'Positionsnummer'],
+      });
+    }
+  });
+
+  // Rule 2: At least one WarenPosition is required
+  if (positionen.length === 0) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'At least one WarenPosition is required',
+      path: ['FreierVerkehrAktVeredelUmwandlung', 'EinzelAnmeldung', 'WarenPosition'],
+    });
+  }
+
+  // Rule 3: Sum of Eigenmasse should not exceed GesamtRohMasse (if GesamtRohMasse is provided)
+  const gesamtRohMasse = data.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung.KopfDaten.GesamtRohMasse;
+  if (gesamtRohMasse) {
+    const totalEigenmasse = positionen.reduce((sum, pos) => {
+      const eigenmasse = parseFloat(String(pos.Eigenmasse)) || 0;
+      return sum + eigenmasse;
+    }, 0);
+    const gesamtRohMasseNum = parseFloat(String(gesamtRohMasse));
+    if (totalEigenmasse > gesamtRohMasseNum) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Sum of Eigenmasse (${totalEigenmasse}) exceeds GesamtRohMasse (${gesamtRohMasseNum})`,
+        path: ['FreierVerkehrAktVeredelUmwandlung', 'EinzelAnmeldung', 'KopfDaten', 'GesamtRohMasse'],
+      });
+    }
+  }
+
+  // Rule 4: Validate required address types (CN = Consignee, CZ = Exporter are typically required)
+  const adressen = data.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung.KopfDaten.Adressen;
+  if (adressen) {
+    const adressenArray = Array.isArray(adressen) ? adressen : [adressen];
+    const addressTypes = adressenArray.map(a => a.AdressTyp);
+    
+    // CN (Consignee) is typically required
+    if (!addressTypes.includes('CN')) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Address type CN (Consignee) is required',
+        path: ['FreierVerkehrAktVeredelUmwandlung', 'EinzelAnmeldung', 'KopfDaten', 'Adressen'],
+      });
+    }
+  }
 });
 
 const data = {
