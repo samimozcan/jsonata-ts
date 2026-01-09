@@ -1,4 +1,3 @@
-
 export type AiServiceResponse =
   | ({
       document_count: number;

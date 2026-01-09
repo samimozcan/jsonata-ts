@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import jsonata from 'jsonata';
-import { fileURLToPath } from 'url';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { assignFunctionList } from '../jsonata-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,7 +15,9 @@ async function loadJsonataTemplate(filename: string): Promise<string> {
 }
 
 // Helper function to load JSON test data from for-test folder
-async function loadTestInputs(filename: string): Promise<{ output_body: Record<string, unknown> }[]> {
+async function loadTestInputs(
+  filename: string
+): Promise<{ output_body: Record<string, unknown> }[]> {
   const filePath = path.join(__dirname, '../jsonata/for-test/', filename);
   const content = await fs.readFile(filePath, 'utf8');
   return JSON.parse(content);
@@ -41,7 +43,7 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
     validationTemplate = await loadJsonataTemplate('dakosy-validation.jsonata');
     globalAiValidationTemplate = await loadJsonataTemplate('global-ai-validation.jsonata');
     jsonataMainTemplate = await loadJsonataTemplate('jsonata-template.v15-works.jsonata');
-    
+
     // Load test inputs
     testInputs = await loadTestInputs('26-10-05-dakoy-ex-input.json');
   });
@@ -61,9 +63,7 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
       expect(input.output_body).toBeDefined();
 
       // Should not throw an exception
-      await expect(
-        evaluateJsonata(validationTemplate, input.output_body)
-      ).resolves.not.toThrow();
+      await expect(evaluateJsonata(validationTemplate, input.output_body)).resolves.not.toThrow();
 
       const result = await evaluateJsonata(validationTemplate, input.output_body);
       expect(result).toBeDefined();
@@ -72,7 +72,10 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
     it('should return valid structure for all inputs', async () => {
       for (let i = 0; i < testInputs.length; i++) {
         const input = testInputs[i];
-        const result = await evaluateJsonata(validationTemplate, input.output_body) as Record<string, unknown>;
+        const result = (await evaluateJsonata(validationTemplate, input.output_body)) as Record<
+          string,
+          unknown
+        >;
 
         // Validation template should return an object with section results
         expect(result).toBeDefined();
@@ -101,7 +104,10 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
     it('should return valid structure for all inputs', async () => {
       for (let i = 0; i < testInputs.length; i++) {
         const input = testInputs[i];
-        const result = await evaluateJsonata(globalAiValidationTemplate, input.output_body) as Record<string, unknown>;
+        const result = (await evaluateJsonata(
+          globalAiValidationTemplate,
+          input.output_body
+        )) as Record<string, unknown>;
 
         // Should return a defined result
         expect(result).toBeDefined();
@@ -119,9 +125,7 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
       expect(input.output_body).toBeDefined();
 
       // Should not throw an exception
-      await expect(
-        evaluateJsonata(jsonataMainTemplate, input.output_body)
-      ).resolves.not.toThrow();
+      await expect(evaluateJsonata(jsonataMainTemplate, input.output_body)).resolves.not.toThrow();
 
       const result = await evaluateJsonata(jsonataMainTemplate, input.output_body);
       expect(result).toBeDefined();
@@ -130,7 +134,10 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
     it('should return valid structure for all inputs', async () => {
       for (let i = 0; i < testInputs.length; i++) {
         const input = testInputs[i];
-        const result = await evaluateJsonata(jsonataMainTemplate, input.output_body) as Record<string, unknown>;
+        const result = (await evaluateJsonata(jsonataMainTemplate, input.output_body)) as Record<
+          string,
+          unknown
+        >;
 
         // Main template should return a defined result
         expect(result).toBeDefined();
@@ -157,7 +164,9 @@ describe('Dakosy Multiple Inputs - All Templates', () => {
             const result = await evaluateJsonata(template, input.output_body);
             expect(result).toBeDefined();
           } catch (error) {
-            errors.push(`Input ${i} failed on template "${name}": ${error instanceof Error ? error.message : String(error)}`);
+            errors.push(
+              `Input ${i} failed on template "${name}": ${error instanceof Error ? error.message : String(error)}`
+            );
           }
         }
       }

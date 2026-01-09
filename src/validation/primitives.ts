@@ -1,9 +1,4 @@
-import {
-  JSONataSchema,
-  ValidationResult,
-  ValidationContext,
-  ValidationError,
-} from "./index.js";
+import { JSONataSchema, type ValidationContext, type ValidationResult } from './index.js';
 
 /**
  * String validation schema
@@ -12,22 +7,22 @@ export class JSONataStringSchema extends JSONataSchema<string> {
   private minLength?: number;
   private maxLength?: number;
   private pattern?: RegExp;
-  private format?: "email" | "url" | "uuid" | "date" | "datetime";
+  private format?: 'email' | 'url' | 'uuid' | 'date' | 'datetime';
 
   _parse(value: any, context: ValidationContext): ValidationResult<string> {
     const optionalCheck = this.handleOptionalAndNullable(value, context);
     if (optionalCheck) return optionalCheck;
 
-    if (typeof value !== "string") {
+    if (typeof value !== 'string') {
       return {
         success: false,
         errors: [
           {
-            code: "invalid_type",
+            code: 'invalid_type',
             message: `Expected string, received ${typeof value}`,
             path: context.path,
             received: value,
-            expected: "string",
+            expected: 'string',
           },
         ],
       };
@@ -39,7 +34,7 @@ export class JSONataStringSchema extends JSONataSchema<string> {
         success: false,
         errors: [
           {
-            code: "string_too_short",
+            code: 'string_too_short',
             message: `String must be at least ${this.minLength} characters long`,
             path: context.path,
             received: value.length,
@@ -53,7 +48,7 @@ export class JSONataStringSchema extends JSONataSchema<string> {
         success: false,
         errors: [
           {
-            code: "string_too_long",
+            code: 'string_too_long',
             message: `String must be at most ${this.maxLength} characters long`,
             path: context.path,
             received: value.length,
@@ -68,7 +63,7 @@ export class JSONataStringSchema extends JSONataSchema<string> {
         success: false,
         errors: [
           {
-            code: "string_pattern_mismatch",
+            code: 'string_pattern_mismatch',
             message: `String does not match pattern ${this.pattern}`,
             path: context.path,
             received: value,
@@ -115,31 +110,31 @@ export class JSONataStringSchema extends JSONataSchema<string> {
 
   email(): JSONataStringSchema {
     const schema = this.clone();
-    schema.format = "email";
+    schema.format = 'email';
     return schema;
   }
 
   url(): JSONataStringSchema {
     const schema = this.clone();
-    schema.format = "url";
+    schema.format = 'url';
     return schema;
   }
 
   uuid(): JSONataStringSchema {
     const schema = this.clone();
-    schema.format = "uuid";
+    schema.format = 'uuid';
     return schema;
   }
 
   date(): JSONataStringSchema {
     const schema = this.clone();
-    schema.format = "date";
+    schema.format = 'date';
     return schema;
   }
 
   datetime(): JSONataStringSchema {
     const schema = this.clone();
-    schema.format = "datetime";
+    schema.format = 'datetime';
     return schema;
   }
 
@@ -158,15 +153,15 @@ export class JSONataStringSchema extends JSONataSchema<string> {
 
   private validateFormat(value: string): ValidationResult<string> {
     switch (this.format) {
-      case "email":
+      case 'email': {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
           return {
             success: false,
             errors: [
               {
-                code: "invalid_email",
-                message: "Invalid email format",
+                code: 'invalid_email',
+                message: 'Invalid email format',
                 path: [],
                 received: value,
               },
@@ -174,8 +169,9 @@ export class JSONataStringSchema extends JSONataSchema<string> {
           };
         }
         break;
+      }
 
-      case "url":
+      case 'url':
         try {
           new URL(value);
         } catch {
@@ -183,8 +179,8 @@ export class JSONataStringSchema extends JSONataSchema<string> {
             success: false,
             errors: [
               {
-                code: "invalid_url",
-                message: "Invalid URL format",
+                code: 'invalid_url',
+                message: 'Invalid URL format',
                 path: [],
                 received: value,
               },
@@ -193,7 +189,7 @@ export class JSONataStringSchema extends JSONataSchema<string> {
         }
         break;
 
-      case "uuid":
+      case 'uuid': {
         const uuidRegex =
           /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (!uuidRegex.test(value)) {
@@ -201,8 +197,8 @@ export class JSONataStringSchema extends JSONataSchema<string> {
             success: false,
             errors: [
               {
-                code: "invalid_uuid",
-                message: "Invalid UUID format",
+                code: 'invalid_uuid',
+                message: 'Invalid UUID format',
                 path: [],
                 received: value,
               },
@@ -210,16 +206,17 @@ export class JSONataStringSchema extends JSONataSchema<string> {
           };
         }
         break;
+      }
 
-      case "date":
+      case 'date': {
         const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateRegex.test(value) || isNaN(Date.parse(value))) {
+        if (!dateRegex.test(value) || Number.isNaN(Date.parse(value))) {
           return {
             success: false,
             errors: [
               {
-                code: "invalid_date",
-                message: "Invalid date format (expected YYYY-MM-DD)",
+                code: 'invalid_date',
+                message: 'Invalid date format (expected YYYY-MM-DD)',
                 path: [],
                 received: value,
               },
@@ -227,15 +224,16 @@ export class JSONataStringSchema extends JSONataSchema<string> {
           };
         }
         break;
+      }
 
-      case "datetime":
-        if (isNaN(Date.parse(value))) {
+      case 'datetime':
+        if (Number.isNaN(Date.parse(value))) {
           return {
             success: false,
             errors: [
               {
-                code: "invalid_datetime",
-                message: "Invalid datetime format",
+                code: 'invalid_datetime',
+                message: 'Invalid datetime format',
                 path: [],
                 received: value,
               },
@@ -263,16 +261,16 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
     const optionalCheck = this.handleOptionalAndNullable(value, context);
     if (optionalCheck) return optionalCheck;
 
-    if (typeof value !== "number" || isNaN(value)) {
+    if (typeof value !== 'number' || Number.isNaN(value)) {
       return {
         success: false,
         errors: [
           {
-            code: "invalid_type",
+            code: 'invalid_type',
             message: `Expected number, received ${typeof value}`,
             path: context.path,
             received: value,
-            expected: "number",
+            expected: 'number',
           },
         ],
       };
@@ -284,8 +282,8 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
         success: false,
         errors: [
           {
-            code: "not_integer",
-            message: "Expected integer",
+            code: 'not_integer',
+            message: 'Expected integer',
             path: context.path,
             received: value,
           },
@@ -299,7 +297,7 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
         success: false,
         errors: [
           {
-            code: "number_too_small",
+            code: 'number_too_small',
             message: `Number must be greater than or equal to ${this.minValue}`,
             path: context.path,
             received: value,
@@ -313,7 +311,7 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
         success: false,
         errors: [
           {
-            code: "number_too_large",
+            code: 'number_too_large',
             message: `Number must be less than or equal to ${this.maxValue}`,
             path: context.path,
             received: value,
@@ -328,8 +326,8 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
         success: false,
         errors: [
           {
-            code: "not_positive",
-            message: "Number must be positive",
+            code: 'not_positive',
+            message: 'Number must be positive',
             path: context.path,
             received: value,
           },
@@ -342,8 +340,8 @@ export class JSONataNumberSchema extends JSONataSchema<number> {
         success: false,
         errors: [
           {
-            code: "not_negative",
-            message: "Number must be negative",
+            code: 'not_negative',
+            message: 'Number must be negative',
             path: context.path,
             received: value,
           },

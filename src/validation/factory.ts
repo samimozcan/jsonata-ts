@@ -1,11 +1,11 @@
-import { JSONataStringSchema, JSONataNumberSchema } from "./primitives.js";
 import {
-  JSONataObjectSchema,
   JSONataArraySchema,
-  JSONataUnionSchema,
   JSONataLiteralSchema,
-} from "./complex.js";
-import { JSONataSchema } from "./index.js";
+  JSONataObjectSchema,
+  JSONataUnionSchema,
+} from './complex.js';
+import { JSONataSchema } from './index.js';
+import { JSONataNumberSchema, JSONataStringSchema } from './primitives.js';
 
 /**
  * Boolean validation schema
@@ -15,16 +15,16 @@ class JSONataBooleanSchema extends JSONataSchema<boolean> {
     const optionalCheck = this.handleOptionalAndNullable(value, context);
     if (optionalCheck) return optionalCheck;
 
-    if (typeof value !== "boolean") {
+    if (typeof value !== 'boolean') {
       return {
         success: false,
         errors: [
           {
-            code: "invalid_type",
+            code: 'invalid_type',
             message: `Expected boolean, received ${typeof value}`,
             path: context.path,
             received: value,
-            expected: "boolean",
+            expected: 'boolean',
           },
         ],
       };
@@ -75,17 +75,14 @@ export const jv = {
   any: () => new JSONataAnySchema(),
 
   // Complex types
-  object: <T extends Record<string, JSONataSchema>>(shape: T) =>
-    new JSONataObjectSchema(shape),
+  object: <T extends Record<string, JSONataSchema>>(shape: T) => new JSONataObjectSchema(shape),
 
-  array: <T>(elementSchema?: JSONataSchema<T>) =>
-    new JSONataArraySchema(elementSchema),
+  array: <T>(elementSchema?: JSONataSchema<T>) => new JSONataArraySchema(elementSchema),
 
   union: <T>(...schemas: JSONataSchema<T>[]) => new JSONataUnionSchema(schemas),
 
   // Literal values
-  literal: <T extends string | number | boolean>(value: T) =>
-    new JSONataLiteralSchema(value),
+  literal: <T extends string | number | boolean>(value: T) => new JSONataLiteralSchema(value),
 
   // Convenience methods
   enum: <T extends readonly [string, ...string[]]>(values: T) => {
@@ -115,9 +112,7 @@ export const jv = {
 };
 
 // Type inference helpers
-export type Infer<T extends JSONataSchema> = T extends JSONataSchema<infer U>
-  ? U
-  : never;
+export type Infer<T extends JSONataSchema> = T extends JSONataSchema<infer U> ? U : never;
 
 // Export all schemas for direct usage
 export {

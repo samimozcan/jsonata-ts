@@ -102,13 +102,12 @@ export abstract class JSONataSchema<T = any> {
     const schema = this.clone();
     schema.validators.push((value, context) => {
       if (!validator(value)) {
-        const errorMessage =
-          typeof message === "function" ? message(value) : message;
+        const errorMessage = typeof message === 'function' ? message(value) : message;
         return {
           success: false,
           errors: [
             {
-              code: "custom_validation_failed",
+              code: 'custom_validation_failed',
               message: errorMessage,
               path: context.path,
               received: value,
@@ -143,8 +142,8 @@ export abstract class JSONataSchema<T = any> {
         success: false,
         errors: [
           {
-            code: "required",
-            message: "Required field is missing",
+            code: 'required',
+            message: 'Required field is missing',
             path: context.path,
             received: undefined,
           },
@@ -160,8 +159,8 @@ export abstract class JSONataSchema<T = any> {
         success: false,
         errors: [
           {
-            code: "not_nullable",
-            message: "Field cannot be null",
+            code: 'not_nullable',
+            message: 'Field cannot be null',
             path: context.path,
             received: null,
           },
@@ -172,10 +171,7 @@ export abstract class JSONataSchema<T = any> {
     return null; // Continue with normal validation
   }
 
-  protected runCustomValidators(
-    value: T,
-    context: ValidationContext
-  ): ValidationResult<T> {
+  protected runCustomValidators(value: T, context: ValidationContext): ValidationResult<T> {
     for (const validator of this.validators) {
       const result = validator(value, context);
       if (!result.success) {
@@ -192,10 +188,8 @@ export abstract class JSONataSchema<T = any> {
 export class JSONataValidationError extends Error {
   constructor(public errors: ValidationError[]) {
     super(
-      `Validation failed: ${errors
-        .map((e) => `${e.path.join(".")}: ${e.message}`)
-        .join(", ")}`
+      `Validation failed: ${errors.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
     );
-    this.name = "JSONataValidationError";
+    this.name = 'JSONataValidationError';
   }
 }

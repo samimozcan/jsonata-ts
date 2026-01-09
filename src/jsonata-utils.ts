@@ -79,7 +79,7 @@ const isValidDateWithoutTime = (date: string | null) => {
 const removeAfter = (
   source: string | null,
   destination: string | null,
-  regexFlag?: string,
+  regexFlag?: string
 ): string => {
   if (!source || typeof source !== 'string') {
     return source ?? '';
@@ -132,13 +132,13 @@ const removeAfter = (
  */
 const floor = (value: number | string, decimalPlaces: number = 0): number => {
   const floorHelper = (val: number, places: number): number => {
-    const factor = Math.pow(10, places);
+    const factor = 10 ** places;
     return Math.floor(val * factor) / factor;
   };
 
   if (typeof value === 'string') {
     value = parseFloat(value);
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       return value;
     }
 
@@ -186,9 +186,7 @@ const compact = (arr: unknown[] | unknown): unknown[] => {
  *
  * @jsonata_signature `<x:n>` - Takes any type, returns number
  */
-const length = (
-  input: string | unknown[] | null | undefined | number,
-): number => {
+const length = (input: string | unknown[] | null | undefined | number): number => {
   if (input == null) {
     return 0;
   }
@@ -420,10 +418,7 @@ const zip = (...arrays: (unknown[] | null | undefined)[]): unknown[][] => {
  *
  * @jsonata_signature `<as:o>` - Takes array and string key, returns object
  */
-const groupBy = (
-  arr: unknown[] | null | undefined,
-  key: string,
-): Record<string, unknown[]> => {
+const groupBy = (arr: unknown[] | null | undefined, key: string): Record<string, unknown[]> => {
   if (!Array.isArray(arr)) {
     return {};
   }
@@ -444,10 +439,7 @@ const groupBy = (
  *
  * @jsonata_signature `<as:o>` - Takes array and string key, returns object
  */
-const keyBy = (
-  arr: unknown[] | null | undefined,
-  key: string,
-): Record<string, unknown> => {
+const keyBy = (arr: unknown[] | null | undefined, key: string): Record<string, unknown> => {
   if (!Array.isArray(arr)) {
     return {};
   }
@@ -490,11 +482,7 @@ const pluck = (arr: unknown[] | null | undefined, path: string): unknown[] => {
  *
  * @jsonata_signature `<osx?:x>` - Takes object, string path, optional default, returns any type
  */
-const get = (
-  obj: object | null | undefined,
-  path: string,
-  defaultValue?: unknown,
-): unknown => {
+const get = (obj: object | null | undefined, path: string, defaultValue?: unknown): unknown => {
   if (obj == null) {
     return defaultValue;
   }
@@ -587,9 +575,7 @@ const entries = (obj: object | null | undefined): [string, unknown][] => {
  *
  * @jsonata_signature `<a:o>` - Takes array of pairs, returns object
  */
-const fromEntries = (
-  pairs: [string, unknown][] | null | undefined,
-): Record<string, unknown> => {
+const fromEntries = (pairs: [string, unknown][] | null | undefined): Record<string, unknown> => {
   if (!Array.isArray(pairs)) {
     return {};
   }
@@ -650,9 +636,7 @@ const omit = (obj: object | null | undefined, paths: string[]) => {
  *
  * @jsonata_signature `<o+:o>` - Takes one or more objects, returns object
  */
-const merge = (
-  ...objects: (object | null | undefined)[]
-): Record<string, unknown> => {
+const merge = (...objects: (object | null | undefined)[]): Record<string, unknown> => {
   const validObjects = objects.filter((obj) => obj != null);
   if (validObjects.length === 0) {
     return {};
@@ -785,11 +769,7 @@ const trim = (str: string | null | undefined, chars?: string): string => {
  *
  * @jsonata_signature `<sns?:s>` - Takes string, length number, optional padding string, returns string
  */
-const pad = (
-  str: string | null | undefined,
-  length: number,
-  chars?: string,
-): string => {
+const pad = (str: string | null | undefined, length: number, chars?: string): string => {
   if (str == null) {
     return '';
   }

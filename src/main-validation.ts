@@ -1,29 +1,23 @@
-import fs from "fs/promises";
-import path from "path";
-import jsonata from "jsonata";
-import { execSync } from "child_process";
-import { fileURLToPath } from "url";
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import jsonata from 'jsonata';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const jsonataFilePath = path.join(
   __dirname,
-  "../src/jsonata/additional-data-validation.v17.works-well.jsonata"
+  '../src/jsonata/additional-data-validation.v17.works-well.jsonata'
 );
-const jsonataInputBodyPath = path.join(
-  __dirname,
-  "../src/jsonata/input-body.json"
-);
+const jsonataInputBodyPath = path.join(__dirname, '../src/jsonata/input-body.json');
 
 async function main() {
-  const template = await fs.readFile(jsonataFilePath, "utf8");
-  const inputBody = await fs.readFile(jsonataInputBodyPath, "utf8");
+  const template = await fs.readFile(jsonataFilePath, 'utf8');
+  const inputBody = await fs.readFile(jsonataInputBodyPath, 'utf8');
 
-  const jsonataResponse = await jsonata(template).evaluate(
-    JSON.parse(inputBody)
-  );
-  console.log("----------------------------------------------");
+  const jsonataResponse = await jsonata(template).evaluate(JSON.parse(inputBody));
+  console.log('----------------------------------------------');
   console.dir(jsonataResponse, { depth: null, colors: true });
   // execSync("pbcopy", {
   //   input: JSON.stringify(jsonataResponse, null, 2),
@@ -31,5 +25,5 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("Error in main function:", err);
+  console.error('Error in main function:', err);
 });

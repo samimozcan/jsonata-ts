@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import jsonata from 'jsonata';
-import { fileURLToPath } from 'url';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { assignFunctionList } from '../jsonata-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,30 +31,27 @@ async function evaluateJsonata(template: string, data: any): Promise<any> {
 }
 
 // Helper to create test data with only specific sections
-function createTestDataWithSections(
-  fullData: any,
-  sections: string[]
-): any {
+function createTestDataWithSections(fullData: any, sections: string[]): any {
   const result: any = {};
-  
+
   // Always include additional_data and additional_setting for proper structure
   if (sections.includes('additional_data')) {
     result.additional_data = fullData.additional_data;
     result.additional_setting = fullData.additional_setting;
   }
-  
+
   // Include dispatch/destination countries if they exist
   if (fullData.dispatch_country) result.dispatch_country = fullData.dispatch_country;
   if (fullData.destination_country) result.destination_country = fullData.destination_country;
   if (fullData.regime_type) result.regime_type = fullData.regime_type;
-  
+
   // Add requested sections
   sections.forEach((section) => {
     if (fullData[section] !== undefined) {
       result[section] = fullData[section];
     }
   });
-  
+
   return result;
 }
 
@@ -70,7 +67,7 @@ describe('Dakosy Validation JSONata', () => {
   describe('Full Data Validation', () => {
     it('should work successfully with all JSON file data', async () => {
       const result = await evaluateJsonata(validationTemplate, fullTestData);
-      
+
       expect(result).toBeDefined();
       expect(result).toHaveProperty('additional_data');
       expect(result).toHaveProperty('invoice');
@@ -84,9 +81,18 @@ describe('Dakosy Validation JSONata', () => {
 
     it('should return errors and warnings arrays for each section', async () => {
       const result = await evaluateJsonata(validationTemplate, fullTestData);
-      
-      const sections = ['additional_data', 'invoice', 'tr_export_declaration', 'cmr', 'atr', 'commercial_invoice', 'ftz', 'global'];
-      
+
+      const sections = [
+        'additional_data',
+        'invoice',
+        'tr_export_declaration',
+        'cmr',
+        'atr',
+        'commercial_invoice',
+        'ftz',
+        'global',
+      ];
+
       sections.forEach((section) => {
         expect(result[section]).toHaveProperty('errors');
         expect(result[section]).toHaveProperty('warnings');
@@ -100,7 +106,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should work with only invoice and additional_data', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'invoice']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.additional_data).toBeDefined();
       expect(result.invoice).toBeDefined();
@@ -111,7 +117,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate invoice dates correctly', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'invoice']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       // Check that invoice warnings array exists
       expect(Array.isArray(result.invoice.warnings)).toBe(true);
     });
@@ -119,7 +125,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate invoice commodity codes', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'invoice']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.invoice.errors).toBeDefined();
       expect(result.invoice.warnings).toBeDefined();
     });
@@ -127,52 +133,70 @@ describe('Dakosy Validation JSONata', () => {
 
   describe('TR Export Declaration and Additional Data Only', () => {
     it('should work with only tr_export_declaration and additional_data', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'tr_export_declaration']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'tr_export_declaration',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.additional_data).toBeDefined();
       expect(result.tr_export_declaration).toBeDefined();
     });
 
     it('should validate declaration item weights', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'tr_export_declaration']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'tr_export_declaration',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.tr_export_declaration.warnings).toBeDefined();
       expect(Array.isArray(result.tr_export_declaration.warnings)).toBe(true);
     });
 
     it('should validate declaration commodity codes do not exceed 11 characters', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'tr_export_declaration']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'tr_export_declaration',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.tr_export_declaration.errors).toBeDefined();
     });
   });
 
   describe('Commercial Invoice and Additional Data Only', () => {
     it('should work with only commercial_invoice and additional_data', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'commercial_invoice']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'commercial_invoice',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.additional_data).toBeDefined();
       expect(result.commercial_invoice).toBeDefined();
     });
 
     it('should validate commercial invoice dates', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'commercial_invoice']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'commercial_invoice',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.commercial_invoice.warnings).toBeDefined();
       expect(Array.isArray(result.commercial_invoice.warnings)).toBe(true);
     });
 
     it('should validate commercial invoice commodity codes', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'commercial_invoice']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'commercial_invoice',
+      ]);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.commercial_invoice.errors).toBeDefined();
     });
   });
@@ -181,7 +205,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should work with only ftz and additional_data', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.additional_data).toBeDefined();
       expect(result.ftz).toBeDefined();
@@ -190,7 +214,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate FTZ shipment date', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.ftz.warnings).toBeDefined();
       expect(Array.isArray(result.ftz.warnings)).toBe(true);
     });
@@ -198,14 +222,14 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate FTZ position commodity codes', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.ftz.errors).toBeDefined();
     });
 
     it('should validate FTZ total gross weight', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.ftz.warnings).toBeDefined();
     });
   });
@@ -221,9 +245,9 @@ describe('Dakosy Validation JSONata', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.additional_data.errors.length).toBeGreaterThan(0);
     });
 
@@ -237,9 +261,9 @@ describe('Dakosy Validation JSONata', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.additional_data.errors.length).toBeGreaterThan(0);
     });
 
@@ -253,9 +277,9 @@ describe('Dakosy Validation JSONata', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.additional_data.warnings.length).toBeGreaterThan(0);
     });
   });
@@ -264,7 +288,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate CMR date', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'cmr']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.cmr).toBeDefined();
       expect(result.cmr.warnings).toBeDefined();
     });
@@ -272,7 +296,7 @@ describe('Dakosy Validation JSONata', () => {
     it('should validate ATR date', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'atr']);
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.atr).toBeDefined();
       expect(result.atr.warnings).toBeDefined();
     });
@@ -288,9 +312,9 @@ describe('Dakosy Validation JSONata', () => {
           sender: 'Test Sender',
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.cmr.warnings.length).toBeGreaterThan(0);
     });
   });
@@ -305,9 +329,9 @@ describe('Dakosy Validation JSONata', () => {
         dispatch_country: 'TR',
         destination_country: 'TR', // Same as dispatch
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.global.warnings.length).toBeGreaterThan(0);
     });
 
@@ -320,9 +344,9 @@ describe('Dakosy Validation JSONata', () => {
         dispatch_country: 'TR',
         destination_country: 'DE',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.global.warnings.length).toBe(0);
     });
   });
@@ -340,7 +364,7 @@ describe('Dakosy Validation JSONata', () => {
         try {
           const testData = await loadJsonData(filename);
           const result = await evaluateJsonata(validationTemplate, testData);
-          
+
           expect(result).toBeDefined();
           expect(result.additional_data).toBeDefined();
           expect(result.global).toBeDefined();
@@ -367,9 +391,9 @@ describe('Dakosy Validation JSONata', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       if (result.additional_data.errors.length > 0) {
         const error = result.additional_data.errors[0];
         expect(error).toHaveProperty('code');
@@ -391,7 +415,7 @@ describe('Dakosy Template JSONata', () => {
   describe('Full Data Template Processing', () => {
     it('should generate valid output structure with all data', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       expect(result).toBeDefined();
       expect(result).toHaveProperty('FreierVerkehrAktVeredelUmwandlung');
       expect(result.FreierVerkehrAktVeredelUmwandlung).toHaveProperty('Transaktion');
@@ -400,7 +424,7 @@ describe('Dakosy Template JSONata', () => {
 
     it('should include transaction data from additional_data', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       const transaktion = result.FreierVerkehrAktVeredelUmwandlung.Transaktion;
       expect(transaktion.IOPartner).toBe(fullTestData.additional_data.transaction.ioPartner);
       expect(transaktion.IOReferenz).toBe(fullTestData.additional_data.transaction.ioReference);
@@ -408,7 +432,7 @@ describe('Dakosy Template JSONata', () => {
 
     it('should generate EinzelAnmeldung array', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       const einzelAnmeldung = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung;
       // EinzelAnmeldung can be a single object or array depending on declaration count
       expect(einzelAnmeldung).toBeDefined();
@@ -424,7 +448,7 @@ describe('Dakosy Template JSONata', () => {
     it('should work with only invoice and additional_data', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'invoice']);
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.FreierVerkehrAktVeredelUmwandlung).toBeDefined();
     });
@@ -432,7 +456,7 @@ describe('Dakosy Template JSONata', () => {
     it('should generate WarenPosition from invoice items', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'invoice']);
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
+
       const einzelAnmeldung = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung;
       if (einzelAnmeldung && einzelAnmeldung.length > 0) {
         const warenPosition = einzelAnmeldung[0].WarenPosition;
@@ -445,17 +469,23 @@ describe('Dakosy Template JSONata', () => {
 
   describe('Template with TR Export Declaration Only', () => {
     it('should work with only tr_export_declaration and additional_data', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'tr_export_declaration']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'tr_export_declaration',
+      ]);
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.FreierVerkehrAktVeredelUmwandlung).toBeDefined();
     });
 
     it('should generate WarenPosition from declaration items', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'tr_export_declaration']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'tr_export_declaration',
+      ]);
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
+
       const einzelAnmeldung = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung;
       if (einzelAnmeldung && einzelAnmeldung.length > 0 && einzelAnmeldung[0].WarenPosition) {
         expect(einzelAnmeldung[0].WarenPosition.length).toBeGreaterThan(0);
@@ -468,7 +498,7 @@ describe('Dakosy Template JSONata', () => {
       // Note: FTZ-only processing may fail if totalPackageQuantity cannot be resolved
       // This test validates that the template handles FTZ data gracefully
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
-      
+
       try {
         const result = await evaluateJsonata(dakosyTemplate, testData);
         expect(result).toBeDefined();
@@ -481,14 +511,16 @@ describe('Dakosy Template JSONata', () => {
 
     it('should generate WarenPosition from FTZ positions', async () => {
       const testData = createTestDataWithSections(fullTestData, ['additional_data', 'ftz']);
-      
+
       try {
         const result = await evaluateJsonata(dakosyTemplate, testData);
-        
+
         const einzelAnmeldung = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung;
         const anmeldung = Array.isArray(einzelAnmeldung) ? einzelAnmeldung[0] : einzelAnmeldung;
-        if (anmeldung && anmeldung.WarenPosition) {
-          expect(Array.isArray(anmeldung.WarenPosition) || anmeldung.WarenPosition !== undefined).toBe(true);
+        if (anmeldung?.WarenPosition) {
+          expect(
+            Array.isArray(anmeldung.WarenPosition) || anmeldung.WarenPosition !== undefined
+          ).toBe(true);
         }
       } catch (error) {
         // FTZ-only processing may throw - this is expected for incomplete data
@@ -499,9 +531,12 @@ describe('Dakosy Template JSONata', () => {
 
   describe('Template with Commercial Invoice Only', () => {
     it('should work with only commercial_invoice and additional_data', async () => {
-      const testData = createTestDataWithSections(fullTestData, ['additional_data', 'commercial_invoice']);
+      const testData = createTestDataWithSections(fullTestData, [
+        'additional_data',
+        'commercial_invoice',
+      ]);
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.FreierVerkehrAktVeredelUmwandlung).toBeDefined();
     });
@@ -510,9 +545,9 @@ describe('Dakosy Template JSONata', () => {
   describe('KopfDaten Generation', () => {
     it('should include all required header fields', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       const kopfDaten = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten;
-      
+
       if (kopfDaten) {
         expect(kopfDaten).toHaveProperty('AnmelderIstEmpfaenger');
         expect(kopfDaten).toHaveProperty('Vorsteuerabzug');
@@ -522,10 +557,10 @@ describe('Dakosy Template JSONata', () => {
 
     it('should correctly set AnmelderIstEmpfaenger based on declarantIsConsignee', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       const declaration = fullTestData.additional_data.declaration[0];
       const kopfDaten = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten;
-      
+
       if (kopfDaten && declaration) {
         const expectedValue = declaration.headerData.declarantIsConsignee ? 'J' : 'N';
         expect(kopfDaten.AnmelderIstEmpfaenger).toBe(expectedValue);
@@ -536,9 +571,10 @@ describe('Dakosy Template JSONata', () => {
   describe('Adressen Generation', () => {
     it('should generate address array', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
-      const adressen = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten?.Adressen;
-      
+
+      const adressen =
+        result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten?.Adressen;
+
       if (adressen) {
         expect(Array.isArray(adressen)).toBe(true);
         expect(adressen.length).toBeGreaterThan(0);
@@ -547,9 +583,10 @@ describe('Dakosy Template JSONata', () => {
 
     it('should add CZ address when less than 2 addresses provided', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
-      const adressen = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten?.Adressen;
-      
+
+      const adressen =
+        result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten?.Adressen;
+
       if (adressen) {
         const czAddress = adressen.find((addr: any) => addr.AdressTyp === 'CZ');
         expect(czAddress).toBeDefined();
@@ -560,9 +597,10 @@ describe('Dakosy Template JSONata', () => {
   describe('WarenPosition Item Fields', () => {
     it('should include required fields in WarenPosition items', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
-      const warenPosition = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
-      
+
+      const warenPosition =
+        result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
+
       if (warenPosition && warenPosition.length > 0) {
         const item = warenPosition[0];
         expect(item).toHaveProperty('Positionsnummer');
@@ -573,9 +611,10 @@ describe('Dakosy Template JSONata', () => {
 
     it('should set PackstueckAnzahl only on first item', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
-      const warenPosition = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
-      
+
+      const warenPosition =
+        result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
+
       if (warenPosition && warenPosition.length > 1) {
         expect(warenPosition[0].PackstueckAnzahl).toBeDefined();
         expect(warenPosition[1].PackstueckAnzahl).toBeUndefined();
@@ -597,11 +636,12 @@ describe('Dakosy Template JSONata', () => {
           ],
         },
       };
-      
+
       const result = await evaluateJsonata(dakosyTemplate, testData);
-      
-      const warenPosition = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
-      
+
+      const warenPosition =
+        result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
+
       if (warenPosition && warenPosition.length > 0) {
         // Should be empty string for invalid commodity code
         expect(warenPosition[0].WarenNummerEZT).toBe('');
@@ -612,14 +652,15 @@ describe('Dakosy Template JSONata', () => {
   describe('Delivery Terms Processing', () => {
     it('should set LieferbedingungSchluessel based on delivery term', async () => {
       const result = await evaluateJsonata(dakosyTemplate, fullTestData);
-      
+
       const kopfDaten = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.KopfDaten;
-      
+
       if (kopfDaten) {
         // DAP starts with 'D', so should be '3'
-        const deliveryTerm = fullTestData.tr_export_declaration?.delivery_term || 
-                            fullTestData.invoice?.[0]?.invoice_delivery_term;
-        
+        const deliveryTerm =
+          fullTestData.tr_export_declaration?.delivery_term ||
+          fullTestData.invoice?.[0]?.invoice_delivery_term;
+
         if (deliveryTerm) {
           const firstChar = deliveryTerm.charAt(0).toUpperCase();
           if (['C', 'D'].includes(firstChar)) {
@@ -637,7 +678,7 @@ describe('Dakosy Template JSONata', () => {
       try {
         const ftzOnlyData = await loadJsonData('25-12-29-dakosy-only-ftz.json');
         const result = await evaluateJsonata(dakosyTemplate, ftzOnlyData);
-        
+
         expect(result).toBeDefined();
         expect(result.FreierVerkehrAktVeredelUmwandlung).toBeDefined();
       } catch (error) {
@@ -655,11 +696,12 @@ describe('Dakosy Template JSONata', () => {
       try {
         const declOnlyData = await loadJsonData('25-12-29-dakosy-only-declaration.json');
         const result = await evaluateJsonata(dakosyTemplate, declOnlyData);
-        
+
         expect(result).toBeDefined();
         expect(result.FreierVerkehrAktVeredelUmwandlung).toBeDefined();
-        
-        const warenPosition = result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
+
+        const warenPosition =
+          result.FreierVerkehrAktVeredelUmwandlung.EinzelAnmeldung[0]?.WarenPosition;
         if (warenPosition) {
           expect(warenPosition.length).toBeGreaterThan(0);
         }

@@ -1,15 +1,15 @@
 import {
   JSONataSchema,
-  ValidationResult,
-  ValidationContext,
-  ValidationError,
-} from "./index.js";
+  type ValidationContext,
+  type ValidationError,
+  type ValidationResult,
+} from './index.js';
 
 /**
  * Object validation schema
  */
 export class JSONataObjectSchema<
-  T extends Record<string, any> = Record<string, any>
+  T extends Record<string, any> = Record<string, any>,
 > extends JSONataSchema<T> {
   private shape: Record<string, JSONataSchema> = {};
   private _strict = false;
@@ -26,18 +26,16 @@ export class JSONataObjectSchema<
     const optionalCheck = this.handleOptionalAndNullable(value, context);
     if (optionalCheck) return optionalCheck;
 
-    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       return {
         success: false,
         errors: [
           {
-            code: "invalid_type",
-            message: `Expected object, received ${
-              Array.isArray(value) ? "array" : typeof value
-            }`,
+            code: 'invalid_type',
+            message: `Expected object, received ${Array.isArray(value) ? 'array' : typeof value}`,
             path: context.path,
             received: value,
-            expected: "object",
+            expected: 'object',
           },
         ],
       };
@@ -69,7 +67,7 @@ export class JSONataObjectSchema<
       for (const key of Object.keys(value)) {
         if (!shapeKeys.has(key)) {
           errors.push({
-            code: "unknown_key",
+            code: 'unknown_key',
             message: `Unknown key: ${key}`,
             path: [...context.path, key],
             received: value[key],
@@ -135,9 +133,7 @@ export class JSONataObjectSchema<
    */
   extend<U extends Record<string, JSONataSchema>>(
     extension: U
-  ): JSONataObjectSchema<
-    T & { [K in keyof U]: U[K] extends JSONataSchema<infer R> ? R : never }
-  > {
+  ): JSONataObjectSchema<T & { [K in keyof U]: U[K] extends JSONataSchema<infer R> ? R : never }> {
     const newShape = { ...this.shape, ...extension };
     return new JSONataObjectSchema(newShape);
   }
@@ -177,11 +173,11 @@ export class JSONataArraySchema<T = any> extends JSONataSchema<T[]> {
         success: false,
         errors: [
           {
-            code: "invalid_type",
+            code: 'invalid_type',
             message: `Expected array, received ${typeof value}`,
             path: context.path,
             received: value,
-            expected: "array",
+            expected: 'array',
           },
         ],
       };
@@ -193,7 +189,7 @@ export class JSONataArraySchema<T = any> extends JSONataSchema<T[]> {
         success: false,
         errors: [
           {
-            code: "array_too_small",
+            code: 'array_too_small',
             message: `Array must have at least ${this.minLength} elements`,
             path: context.path,
             received: value.length,
@@ -207,7 +203,7 @@ export class JSONataArraySchema<T = any> extends JSONataSchema<T[]> {
         success: false,
         errors: [
           {
-            code: "array_too_large",
+            code: 'array_too_large',
             message: `Array must have at most ${this.maxLength} elements`,
             path: context.path,
             received: value.length,
@@ -221,7 +217,7 @@ export class JSONataArraySchema<T = any> extends JSONataSchema<T[]> {
         success: false,
         errors: [
           {
-            code: "array_wrong_length",
+            code: 'array_wrong_length',
             message: `Array must have exactly ${this.exactLength} elements`,
             path: context.path,
             received: value.length,
@@ -242,10 +238,7 @@ export class JSONataArraySchema<T = any> extends JSONataSchema<T[]> {
           data: value[i],
         };
 
-        const elementResult = this.elementSchema._parse(
-          value[i],
-          elementContext
-        );
+        const elementResult = this.elementSchema._parse(value[i], elementContext);
         if (!elementResult.success) {
           errors.push(...(elementResult.errors || []));
         } else if (elementResult.data !== undefined) {
@@ -329,8 +322,8 @@ export class JSONataUnionSchema<T = any> extends JSONataSchema<T> {
       success: false,
       errors: [
         {
-          code: "union_mismatch",
-          message: "Value does not match any of the union types",
+          code: 'union_mismatch',
+          message: 'Value does not match any of the union types',
           path: context.path,
           received: value,
         },
@@ -351,9 +344,7 @@ export class JSONataUnionSchema<T = any> extends JSONataSchema<T> {
 /**
  * Literal validation schema (exact value match)
  */
-export class JSONataLiteralSchema<
-  T extends string | number | boolean
-> extends JSONataSchema<T> {
+export class JSONataLiteralSchema<T extends string | number | boolean> extends JSONataSchema<T> {
   constructor(private value: T) {
     super();
   }
@@ -367,7 +358,7 @@ export class JSONataLiteralSchema<
         success: false,
         errors: [
           {
-            code: "literal_mismatch",
+            code: 'literal_mismatch',
             message: `Expected literal value ${JSON.stringify(this.value)}`,
             path: context.path,
             received: value,

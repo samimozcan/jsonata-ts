@@ -1,9 +1,8 @@
-import fs from "fs/promises";
-import path from "path";
-import jsonata from "jsonata";
-import { fileURLToPath } from "url";
-import { assignFunctionList } from "./jsonata-utils.js";
-
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import jsonata from 'jsonata';
+import { assignFunctionList } from './jsonata-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,48 +11,37 @@ const __dirname = path.dirname(__filename);
 const args = process.argv.slice(2);
 
 if (args.length === 0) {
-  console.error("Usage: npm run jsonata <filename.jsonata>");
-  console.error("       npm run jsonata:watch <filename.jsonata>");
-  console.error("Example: npm run jsonata evrim.jsonata");
-  console.error("Example: npm run jsonata:watch evrim.jsonata");
+  console.error('Usage: npm run jsonata <filename.jsonata>');
+  console.error('       npm run jsonata:watch <filename.jsonata>');
+  console.error('Example: npm run jsonata evrim.jsonata');
+  console.error('Example: npm run jsonata:watch evrim.jsonata');
   process.exit(1);
 }
 
 const jsonataFileName = args[0];
-const inputBodyFileName = args[1] || "input-body.json";
-const jsonataFilePath = path.join(
-  __dirname,
-  "../src/jsonata/",
-  jsonataFileName
-);
-const jsonataInputBodyPath = path.join(
-  __dirname,
-  "../src/jsonata/",
-  inputBodyFileName
-);
-
+const inputBodyFileName = args[1] || 'input-body.json';
+const jsonataFilePath = path.join(__dirname, '../src/jsonata/', jsonataFileName);
+const jsonataInputBodyPath = path.join(__dirname, '../src/jsonata/', inputBodyFileName);
 
 async function main() {
   try {
     // Check if the JSONata file exists
     await fs.access(jsonataFilePath);
 
-    const template = await fs.readFile(jsonataFilePath, "utf8");
-    const inputBody = await fs.readFile(jsonataInputBodyPath, "utf8");
+    const template = await fs.readFile(jsonataFilePath, 'utf8');
+    const inputBody = await fs.readFile(jsonataInputBodyPath, 'utf8');
 
-    const expression = jsonata(template)
+    const expression = jsonata(template);
 
     assignFunctionList.forEach((func) => {
-      expression.registerFunction(func.name, func.func, func.type)
-    })
-    
-    const jsonataResponse = await expression.evaluate(
-      JSON.parse(inputBody)
-    );
+      expression.registerFunction(func.name, func.func, func.type);
+    });
+
+    const jsonataResponse = await expression.evaluate(JSON.parse(inputBody));
 
     console.clear();
     console.log(`🚀 Running JSONata file: ${jsonataFileName}`);
-    console.log("----------------------------------------------");
+    console.log('----------------------------------------------');
     console.dir(jsonataResponse, { depth: null, colors: true });
 
     // Copy result to clipboard
@@ -61,26 +49,24 @@ async function main() {
     //   input: JSON.stringify(jsonataResponse, null, 2),
     // });
 
-    console.log("----------------------------------------------");
-    console.log("✅ Result copied to clipboard!");
+    console.log('----------------------------------------------');
+    console.log('✅ Result copied to clipboard!');
     console.log(`⏰ Executed at: ${new Date().toLocaleTimeString()}`);
   } catch (error) {
     console.clear();
     console.log(`❌ Error running JSONata file: ${jsonataFileName}`);
-    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
-      console.error(
-        `❌ Error: JSONata file '${jsonataFileName}' not found in ../src/jsonata/`
-      );
-      console.error("Available files:");
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
+      console.error(`❌ Error: JSONata file '${jsonataFileName}' not found in ../src/jsonata/`);
+      console.error('Available files:');
       try {
-        const files = await fs.readdir(path.join(__dirname, "../src/jsonata/"));
-        const jsonataFiles = files.filter((file) => file.endsWith(".jsonata"));
-        jsonataFiles.forEach((file) => console.error(`  - ${file}`));
-      } catch (dirError) {
-        console.error("Could not list available files");
+        const files = await fs.readdir(path.join(__dirname, '../src/jsonata/'));
+        const jsonataFiles = files.filter((file) => file.endsWith('.jsonata'));
+        jsonataFiles.map((file) => console.error(`  - ${file}`));
+      } catch (_dirError) {
+        console.error('Could not list available files');
       }
     } else {
-      console.error("❌ Error:");
+      console.error('❌ Error:');
       console.dir(error, { depth: null, colors: true });
     }
     process.exit(1);
@@ -88,6 +74,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("❌ Error in main function:", err);
+  console.error('❌ Error in main function:', err);
   process.exit(1);
 });

@@ -1,8 +1,5 @@
-import { jv, Infer } from "./validation/factory.js";
-import {
-  createValidatedJSONata,
-  validateJSONataResult,
-} from "./validation/jsonata-integration.js";
+import { type Infer, jv } from './validation/factory.js';
+import { createValidatedJSONata } from './validation/jsonata-integration.js';
 
 /**
  * Example usage of the JSONata Validation Library
@@ -27,7 +24,7 @@ const UserSchema = jv.object({
 const InvoiceSchema = jv.object({
   invoice_id: jv.string(),
   invoice_date: jv.date(),
-  invoice_currency: jv.enum(["USD", "EUR", "GBP"] as const),
+  invoice_currency: jv.enum(['USD', 'EUR', 'GBP'] as const),
   invoice_total_amount: jv.number().positive(),
   items: jv
     .array(
@@ -50,11 +47,7 @@ type Invoice = Infer<typeof InvoiceSchema>;
 export function validateUser(userData: any): User {
   const result = UserSchema.parse(userData);
   if (!result.success) {
-    throw new Error(
-      `User validation failed: ${result.errors
-        ?.map((e) => e.message)
-        .join(", ")}`
-    );
+    throw new Error(`User validation failed: ${result.errors?.map((e) => e.message).join(', ')}`);
   }
   return result.data!;
 }
@@ -63,9 +56,7 @@ export function validateInvoice(invoiceData: any): Invoice {
   const result = InvoiceSchema.parse(invoiceData);
   if (!result.success) {
     throw new Error(
-      `Invoice validation failed: ${result.errors
-        ?.map((e) => e.message)
-        .join(", ")}`
+      `Invoice validation failed: ${result.errors?.map((e) => e.message).join(', ')}`
     );
   }
   return result.data!;
@@ -119,14 +110,14 @@ export function createCustomValidationSchema() {
     .regex(/^\d{10}$/)
     .refine((value) => {
       // Turkish tax ID validation algorithm
-      const digits = value.split("").map(Number);
+      const digits = value.split('').map(Number);
       let sum = 0;
       for (let i = 0; i < 9; i++) {
         sum += digits[i] * (10 - i);
       }
       const checkDigit = (11 - (sum % 11)) % 11;
       return checkDigit === digits[9];
-    }, "Invalid Turkish Tax ID");
+    }, 'Invalid Turkish Tax ID');
 
   return TurkishTaxIdSchema;
 }
@@ -148,14 +139,14 @@ export function validateAndTransformInvoice(invoiceData: any) {
 export function processInvoiceWithValidation(rawData: any) {
   try {
     // Validate input data
-    console.log("Validating invoice data...");
+    console.log('Validating invoice data...');
     const validatedInvoice = validateInvoice(rawData);
-    console.log("✅ Invoice validation passed");
+    console.log('✅ Invoice validation passed');
 
     // Transform data
-    console.log("Transforming invoice data...");
+    console.log('Transforming invoice data...');
     const transformed = validateAndTransformInvoice(validatedInvoice);
-    console.log("✅ Transformation completed");
+    console.log('✅ Transformation completed');
 
     return {
       success: true,
@@ -163,10 +154,10 @@ export function processInvoiceWithValidation(rawData: any) {
       originalData: validatedInvoice,
     };
   } catch (error) {
-    console.error("❌ Validation/transformation failed:", error);
+    console.error('❌ Validation/transformation failed:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
       originalData: rawData,
     };
   }
@@ -206,7 +197,7 @@ export function createComplexSchema() {
         })
       )
       .nonempty(),
-    delivery_term: jv.enum(["FCA", "FOB", "CIF", "DAP"] as const),
+    delivery_term: jv.enum(['FCA', 'FOB', 'CIF', 'DAP'] as const),
     total_value: jv.string().regex(/^\d+\.?\d*$/), // Money as string
     destination_country: jv.string().length(2),
   });

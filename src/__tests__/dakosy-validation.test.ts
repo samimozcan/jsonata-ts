@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import jsonata from 'jsonata';
-import { fileURLToPath } from 'url';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { assignFunctionList } from '../jsonata-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -35,7 +35,7 @@ function findErrorByCode(errors: any[], code: string): any {
   return errors.find((e: any) => e.code === code);
 }
 
-// Helper to find warning by code  
+// Helper to find warning by code
 function findWarningByCode(warnings: any[], code: string): any {
   return warnings.find((w: any) => w.code === code);
 }
@@ -62,10 +62,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'MISSING_0002');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('IO Partner is required');
       });
@@ -80,10 +80,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0001');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('IO Partner must not exceed 100 characters');
       });
@@ -98,10 +98,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0001');
-        
+
         expect(warning).toBeUndefined();
       });
     });
@@ -117,10 +117,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'MISSING_0003');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('IO Reference is required');
       });
@@ -135,10 +135,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0003');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('IO Reference must not exceed 35 characters');
       });
@@ -156,10 +156,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             declaration: [],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0002');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('IO Division 3 must not exceed 10 characters');
       });
@@ -172,23 +172,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: '',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: '',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'MISSING_0005');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('Object name is required');
       });
@@ -197,23 +199,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: '',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: '',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'MISSING_0006');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('Username is required');
       });
@@ -222,23 +226,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'O'.repeat(36),
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'O'.repeat(36),
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0004');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Object name must not exceed 35 characters');
       });
@@ -247,24 +253,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                objectAlias: 'A'.repeat(36),
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  objectAlias: 'A'.repeat(36),
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0005');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Object alias must not exceed 35 characters');
       });
@@ -273,24 +281,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                declarationType: 'TOOLONG',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  declarationType: 'TOOLONG',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0006');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Declaration type must not exceed 5 characters');
       });
@@ -299,23 +309,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'U'.repeat(71),
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'U'.repeat(71),
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0007');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Username must not exceed 70 characters');
       });
@@ -326,23 +338,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: 'yes', // Not boolean
+                  inputTaxDeduction: true,
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: 'yes', // Not boolean
-                inputTaxDeduction: true,
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'INVALID_0034');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('Declarant is consignee flag must be boolean');
       });
@@ -351,23 +365,25 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: 'yes', // Not boolean
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: 'yes', // Not boolean
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const error = findErrorByCode(result.additional_data.errors, 'INVALID_0035');
-        
+
         expect(error).toBeDefined();
         expect(error.message).toBe('Input tax deduction flag must be boolean');
       });
@@ -376,24 +392,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                  transportMeansArrivalIdentity: 'T'.repeat(31),
+                },
+                addresses: [],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-                transportMeansArrivalIdentity: 'T'.repeat(31),
-              },
-              addresses: [],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0019');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Transport means identity must not exceed 30 characters');
       });
@@ -404,25 +422,29 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [
+                  {
+                    participantEORI: 'E'.repeat(18),
+                  },
+                ],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [{
-                participantEORI: 'E'.repeat(18),
-              }],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0026');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Participant EORI must not exceed 17 characters');
       });
@@ -431,25 +453,29 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [
+                  {
+                    companyName: 'C'.repeat(121),
+                  },
+                ],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [{
-                companyName: 'C'.repeat(121),
-              }],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0028');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('Company name must not exceed 120 characters');
       });
@@ -458,25 +484,29 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         const testData = {
           additional_data: {
             transaction: { ioPartner: 'test', ioReference: 'test-ref' },
-            declaration: [{
-              objectIdentification: {
-                objectName: 'test-object',
-                username: 'testuser',
+            declaration: [
+              {
+                objectIdentification: {
+                  objectName: 'test-object',
+                  username: 'testuser',
+                },
+                headerData: {
+                  declarantIsConsignee: true,
+                  inputTaxDeduction: true,
+                },
+                addresses: [
+                  {
+                    city: 'C'.repeat(36),
+                  },
+                ],
               },
-              headerData: {
-                declarantIsConsignee: true,
-                inputTaxDeduction: true,
-              },
-              addresses: [{
-                city: 'C'.repeat(36),
-              }],
-            }],
+            ],
           },
         };
-        
+
         const result = await evaluateJsonata(validationTemplate, testData);
         const warning = findWarningByCode(result.additional_data.warnings, 'INVALID_0033');
-        
+
         expect(warning).toBeDefined();
         expect(warning.message).toBe('City must not exceed 35 characters');
       });
@@ -493,16 +523,18 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        invoice: [{
-          invoice_id: 'INV-001',
-          invoice_date: 'invalid-date',
-          items: [],
-        }],
+        invoice: [
+          {
+            invoice_id: 'INV-001',
+            invoice_date: 'invalid-date',
+            items: [],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.invoice.warnings, 'MISSING_0007');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('Invoice date is missing or invalid');
     });
@@ -513,16 +545,18 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        invoice: [{
-          invoice_id: 'INV-001',
-          invoice_date: '2025-12-30',
-          items: [],
-        }],
+        invoice: [
+          {
+            invoice_id: 'INV-001',
+            invoice_date: '2025-12-30',
+            items: [],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.invoice.warnings, 'MISSING_0007');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -532,18 +566,22 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        invoice: [{
-          invoice_id: 'INV-001',
-          invoice_date: '2025-12-30',
-          items: [{
-            invoice_item_commodity_code: '123456789012', // 12 characters
-          }],
-        }],
+        invoice: [
+          {
+            invoice_id: 'INV-001',
+            invoice_date: '2025-12-30',
+            items: [
+              {
+                invoice_item_commodity_code: '123456789012', // 12 characters
+              },
+            ],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.invoice.warnings, 'INVALID_0038');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('Invoice commodity code must not exceed 11 characters');
     });
@@ -554,18 +592,22 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        invoice: [{
-          invoice_id: 'INV-001',
-          invoice_date: '2025-12-30',
-          items: [{
-            invoice_item_commodity_code: '12345678901', // 11 characters
-          }],
-        }],
+        invoice: [
+          {
+            invoice_id: 'INV-001',
+            invoice_date: '2025-12-30',
+            items: [
+              {
+                invoice_item_commodity_code: '12345678901', // 11 characters
+              },
+            ],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.invoice.warnings, 'INVALID_0038');
-      
+
       expect(warning).toBeUndefined();
     });
   });
@@ -586,12 +628,14 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           items: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0010');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toBe('Total gross weight in TR Export Declaration could not retrieved.');
+      expect(warning.message).toBe(
+        'Total gross weight in TR Export Declaration could not retrieved.'
+      );
     });
 
     it('should warn when total net weight is null (MISSING_0011)', async () => {
@@ -606,12 +650,14 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           items: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0011');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toBe('Total net weight in TR Export Declaration could not retrieved.');
+      expect(warning.message).toBe(
+        'Total net weight in TR Export Declaration could not retrieved.'
+      );
     });
 
     it('should warn when item gross weight is null (MISSING_0012)', async () => {
@@ -623,22 +669,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: null,
-            net_weight: 100,
-            statistical_value: 500,
-            quantity: 10,
-            item_value: 1000,
-            commodity_code: '12345678901',
-          }],
+          items: [
+            {
+              gross_weight: null,
+              net_weight: 100,
+              statistical_value: 500,
+              quantity: 10,
+              item_value: 1000,
+              commodity_code: '12345678901',
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0012');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toContain('Item gross weight in TR Export Declaration could not retrieved');
+      expect(warning.message).toContain(
+        'Item gross weight in TR Export Declaration could not retrieved'
+      );
     });
 
     it('should warn when item net weight is null (MISSING_0013)', async () => {
@@ -650,22 +700,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: 100,
-            net_weight: null,
-            statistical_value: 500,
-            quantity: 10,
-            item_value: 1000,
-            commodity_code: '12345678901',
-          }],
+          items: [
+            {
+              gross_weight: 100,
+              net_weight: null,
+              statistical_value: 500,
+              quantity: 10,
+              item_value: 1000,
+              commodity_code: '12345678901',
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0013');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toContain('Item net weight in TR Export Declaration could not retrieved');
+      expect(warning.message).toContain(
+        'Item net weight in TR Export Declaration could not retrieved'
+      );
     });
 
     it('should warn when item statistical value is null (MISSING_0014)', async () => {
@@ -677,22 +731,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: 100,
-            net_weight: 90,
-            statistical_value: null,
-            quantity: 10,
-            item_value: 1000,
-            commodity_code: '12345678901',
-          }],
+          items: [
+            {
+              gross_weight: 100,
+              net_weight: 90,
+              statistical_value: null,
+              quantity: 10,
+              item_value: 1000,
+              commodity_code: '12345678901',
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0014');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toContain('Item statistical value in TR Export Declaration could not retrieved');
+      expect(warning.message).toContain(
+        'Item statistical value in TR Export Declaration could not retrieved'
+      );
     });
 
     it('should warn when item quantity is null (MISSING_0015)', async () => {
@@ -704,22 +762,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: 100,
-            net_weight: 90,
-            statistical_value: 500,
-            quantity: null,
-            item_value: 1000,
-            commodity_code: '12345678901',
-          }],
+          items: [
+            {
+              gross_weight: 100,
+              net_weight: 90,
+              statistical_value: 500,
+              quantity: null,
+              item_value: 1000,
+              commodity_code: '12345678901',
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0015');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toContain('Item quantity in TR Export Declaration could not retrieved');
+      expect(warning.message).toContain(
+        'Item quantity in TR Export Declaration could not retrieved'
+      );
     });
 
     it('should warn when item value is null (MISSING_0016)', async () => {
@@ -731,20 +793,22 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: 100,
-            net_weight: 90,
-            statistical_value: 500,
-            quantity: 10,
-            item_value: null,
-            commodity_code: '12345678901',
-          }],
+          items: [
+            {
+              gross_weight: 100,
+              net_weight: 90,
+              statistical_value: 500,
+              quantity: 10,
+              item_value: null,
+              commodity_code: '12345678901',
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'MISSING_0016');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('Item value in TR Export Declaration could not retrieved');
     });
@@ -758,20 +822,22 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         tr_export_declaration: {
           total_gross_weight: 1000,
           total_net_weight: 900,
-          items: [{
-            gross_weight: 100,
-            net_weight: 90,
-            statistical_value: 500,
-            quantity: 10,
-            item_value: 1000,
-            commodity_code: '123456789012', // 12 characters
-          }],
+          items: [
+            {
+              gross_weight: 100,
+              net_weight: 90,
+              statistical_value: 500,
+              quantity: 10,
+              item_value: 1000,
+              commodity_code: '123456789012', // 12 characters
+            },
+          ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.tr_export_declaration.warnings, 'INVALID_0039');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('Declaration commodity code must not exceed 11 characters');
     });
@@ -792,10 +858,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           sender: 'Test Sender',
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.cmr.warnings, 'INVALID_0040');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toBe('CMR date is invalid, default date is used.');
     });
@@ -811,10 +877,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           sender: 'Test Sender',
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.cmr.warnings, 'INVALID_0040');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -825,9 +891,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result.cmr.errors).toEqual([]);
       expect(result.cmr.warnings).toEqual([]);
     });
@@ -848,10 +914,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           sender: 'Test Sender',
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.atr.warnings, 'INVALID_0041');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toBe('ATR date is invalid, default date is used.');
     });
@@ -867,10 +933,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           sender: 'Test Sender',
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.atr.warnings, 'INVALID_0041');
-      
+
       expect(warning).toBeUndefined();
     });
   });
@@ -885,16 +951,18 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        commercial_invoice: [{
-          invoice_id: 'CI-001',
-          invoice_date: 'invalid-date',
-          items: [],
-        }],
+        commercial_invoice: [
+          {
+            invoice_id: 'CI-001',
+            invoice_date: 'invalid-date',
+            items: [],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.commercial_invoice.warnings, 'MISSING_0017');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('Commercial invoice date is missing');
     });
@@ -905,16 +973,18 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        commercial_invoice: [{
-          invoice_id: 'CI-001',
-          invoice_date: '2025-12-30',
-          items: [],
-        }],
+        commercial_invoice: [
+          {
+            invoice_id: 'CI-001',
+            invoice_date: '2025-12-30',
+            items: [],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.commercial_invoice.warnings, 'MISSING_0017');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -924,20 +994,26 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           transaction: { ioPartner: 'test', ioReference: 'test-ref' },
           declaration: [],
         },
-        commercial_invoice: [{
-          invoice_id: 'CI-001',
-          invoice_date: '2025-12-30',
-          items: [{
-            invoice_item_commodity_code: '123456789012', // 12 characters
-          }],
-        }],
+        commercial_invoice: [
+          {
+            invoice_id: 'CI-001',
+            invoice_date: '2025-12-30',
+            items: [
+              {
+                invoice_item_commodity_code: '123456789012', // 12 characters
+              },
+            ],
+          },
+        ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.commercial_invoice.warnings, 'INVALID_0042');
-      
+
       expect(warning).toBeDefined();
-      expect(warning.message).toContain('Commercial invoice commodity code must not exceed 11 characters');
+      expect(warning.message).toContain(
+        'Commercial invoice commodity code must not exceed 11 characters'
+      );
     });
   });
 
@@ -960,10 +1036,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'INVALID_0044');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toBe('FTZ shipment date is invalid');
     });
@@ -983,10 +1059,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'INVALID_0044');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -1005,10 +1081,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'MISSING_0020');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toBe('FTZ total gross weight could not be retrieved');
     });
@@ -1024,18 +1100,20 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             id: 'FTZ-001',
             date: '2025-12-30',
             total_gross_weight: 1000,
-            positions: [{
-              quantity: null,
-              value: 500,
-              commodity_code: '12345678901',
-            }],
+            positions: [
+              {
+                quantity: null,
+                value: 500,
+                commodity_code: '12345678901',
+              },
+            ],
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'MISSING_0021');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('FTZ item quantity could not be retrieved');
     });
@@ -1051,18 +1129,20 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             id: 'FTZ-001',
             date: '2025-12-30',
             total_gross_weight: 1000,
-            positions: [{
-              quantity: 10,
-              value: null,
-              commodity_code: '12345678901',
-            }],
+            positions: [
+              {
+                quantity: 10,
+                value: null,
+                commodity_code: '12345678901',
+              },
+            ],
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'MISSING_0022');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('FTZ item value could not be retrieved');
     });
@@ -1078,18 +1158,20 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
             id: 'FTZ-001',
             date: '2025-12-30',
             total_gross_weight: 1000,
-            positions: [{
-              quantity: 10,
-              value: 500,
-              commodity_code: '123456789012', // 12 characters
-            }],
+            positions: [
+              {
+                quantity: 10,
+                value: 500,
+                commodity_code: '123456789012', // 12 characters
+              },
+            ],
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.ftz.warnings, 'INVALID_0045');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toContain('FTZ commodity code must not exceed 11 characters');
     });
@@ -1108,10 +1190,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         dispatch_country: 'TR',
         destination_country: 'TR',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.global.warnings, 'ERROR_0007');
-      
+
       expect(warning).toBeDefined();
       expect(warning.message).toBe('Dispatch country and destination country cannot be the same');
     });
@@ -1125,10 +1207,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         dispatch_country: 'tr',
         destination_country: 'TR',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.global.warnings, 'ERROR_0007');
-      
+
       expect(warning).toBeDefined();
     });
 
@@ -1141,10 +1223,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         dispatch_country: 'TR',
         destination_country: 'DE',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.global.warnings, 'ERROR_0007');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -1156,10 +1238,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         },
         destination_country: 'DE',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.global.warnings, 'ERROR_0007');
-      
+
       expect(warning).toBeUndefined();
     });
 
@@ -1171,10 +1253,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
         },
         dispatch_country: 'TR',
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const warning = findWarningByCode(result.global.warnings, 'ERROR_0007');
-      
+
       expect(warning).toBeUndefined();
     });
   });
@@ -1190,9 +1272,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toHaveProperty('additional_data');
       expect(result).toHaveProperty('invoice');
       expect(result).toHaveProperty('tr_export_declaration');
@@ -1210,11 +1292,20 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
-      const sections = ['additional_data', 'invoice', 'tr_export_declaration', 'cmr', 'atr', 'commercial_invoice', 'ftz', 'global'];
-      
+
+      const sections = [
+        'additional_data',
+        'invoice',
+        'tr_export_declaration',
+        'cmr',
+        'atr',
+        'commercial_invoice',
+        'ftz',
+        'global',
+      ];
+
       sections.forEach((section) => {
         expect(result[section]).toHaveProperty('errors');
         expect(result[section]).toHaveProperty('warnings');
@@ -1230,10 +1321,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           declaration: [],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const error = result.additional_data.errors[0];
-      
+
       expect(error).toHaveProperty('code');
       expect(error).toHaveProperty('message');
       expect(error).toHaveProperty('path');
@@ -1247,7 +1338,7 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
     it('should validate 25-12-29-dakosy.json successfully', async () => {
       const testData = await loadJsonData('25-12-29-dakosy.json');
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       expect(result.additional_data).toBeDefined();
       expect(result.global).toBeDefined();
@@ -1257,7 +1348,7 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
       try {
         const testData = await loadJsonData('25-12-29-dakosy-only-ftz.json');
         const result = await evaluateJsonata(validationTemplate, testData);
-        
+
         expect(result).toBeDefined();
         expect(result.ftz).toBeDefined();
       } catch (error) {
@@ -1273,7 +1364,7 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
       try {
         const testData = await loadJsonData('25-12-29-dakosy-only-declaration.json');
         const result = await evaluateJsonata(validationTemplate, testData);
-        
+
         expect(result).toBeDefined();
         expect(result.tr_export_declaration).toBeDefined();
       } catch (error) {
@@ -1292,9 +1383,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
   describe('Edge Cases', () => {
     it('should handle empty data gracefully', async () => {
       const testData = {};
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
       // Empty data still triggers required field validations for IO Partner and IO Reference
       expect(result.additional_data.errors.length).toBeGreaterThanOrEqual(0);
@@ -1307,9 +1398,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           declaration: null,
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(result).toBeDefined();
     });
 
@@ -1325,9 +1416,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           { invoice_id: 'INV-003', invoice_date: '2025-12-31', items: [] },
         ],
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       // Should have warning for INV-002 only
       const warnings = result.invoice.warnings;
       expect(warnings.length).toBe(1);
@@ -1352,10 +1443,10 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           ],
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
       const error = findErrorByCode(result.additional_data.errors, 'MISSING_0005');
-      
+
       expect(error).toBeDefined();
     });
 
@@ -1378,9 +1469,9 @@ describe('Dakosy Validation JSONata - Comprehensive Tests', () => {
           },
         },
       };
-      
+
       const result = await evaluateJsonata(validationTemplate, testData);
-      
+
       expect(findWarningByCode(result.ftz.warnings, 'MISSING_0021')).toBeDefined();
       expect(findWarningByCode(result.ftz.warnings, 'MISSING_0022')).toBeDefined();
     });
